@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:ace="http://www.icefaces.org/icefaces/components">      
+    <ui:composition template="./layout.xhtml">
+        <ui:define name="content">
+            <h:form id="formEditarUsuario" title=" ">
+                <ace:panel id="editarUsuario" header="Editar contraseña" class="panel-buttons">
+                    <table>
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="(*) Clave Actual:" />
+                            </td>
+                            <td align="left">
+                                <ace:textEntry id="claveActual"  label="Clave Actual" value="#{usuarioManagedBean.passActual}" required="true" size="">
+                                    <ace:ajax render="@this claveActual claveActualMsg" event="blur"/>                                
+                                </ace:textEntry>
+                            </td>
+                            <td align="left">
+                                <ace:message id="claveActualMsg" for="claveActual" initEffect="slide" changeEffect="shake"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="(*) Clave nueva:" />
+                            </td>
+                            <td align="left">
+                                <ace:textEntry id="claveNueva"  label="Clave Nueva" value="#{usuarioManagedBean.claveAcceso}" required="true" size="55">
+                                    <ace:ajax render="@this claveNueva claveNuevaMsg" event="blur"/>                                
+                                </ace:textEntry>
+                            </td>
+                            <td align="left">
+                                <ace:message id="claveNuevaMsg" for="claveNueva" initEffect="slide" changeEffect="shake"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="(*) Confirmar clave nueva:" />
+                            </td>
+                            <td align="left">
+                                <ace:textEntry id="claveNuevaConfirmar"  label="Confirmar Clave Nueva" value="#{usuarioManagedBean.passConfirmar}" required="true" size="55">
+                                    <ace:ajax render="@this claveNuevaConfirmar claveNuevaConfirmarMsg" event="blur"/>                                
+                                </ace:textEntry>
+                            </td>
+                            <td align="left">
+                                <ace:message id="claveNuevaConfirmarMsg" for="claveNuevaConfirmar" initEffect="slide" changeEffect="shake"/>
+                            </td>
+                        </tr>
+                    </table>                    
+                    
+                    <h:inputHidden value="#{usuarioManagedBean.id}" />
+                    
+                    <h:panelGrid id="buttonGrid" columns="2" class="panel-buttons">
+                        <ace:pushButton id="save" value="#{msg.saveEdit}" action="#{usuarioManagedBean.guardarConfiguracion()}"/>                        
+                        <ace:pushButton id="cancel" value="#{msg.cancel}" action="administracion" immediate="true" actionListener="#{usuarioManagedBean.limpiar()}"/>
+                    </h:panelGrid>
+                </ace:panel>                
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+

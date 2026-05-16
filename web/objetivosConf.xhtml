@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">      
+    <ui:composition template="./layout.xhtml">
+        <ui:define name="content">
+            <h:form id="formObjetivos" title=" ">
+                <ace:panel id="ObjetivosPanelActualizar" header="#{msg.confObjetivo}">
+                    <h:panelGrid  columns="2" class="panel-buttons">
+                        <h:panelGroup>
+                            <img src="images/symbolRefresh.png" align="absmiddle" border="0" alt="" title="Refrescar" style="margin-right: 5px;"/>
+                            <ace:linkButton action="objetivosConf" actionListener="#{objetivosManagedBean.actualizar}" value="#{msg.confObjetivo}"/>
+                            |
+                        </h:panelGroup>
+
+                        <h:panelGroup rendered="#{objetivosManagedBean.alta}" >
+                            <img src="images/symbolAdd.png" align="absmiddle" border="0" alt="" title="Nuevo" style="margin-right: 5px;"/>
+                            <ace:linkButton action="nuevoObjetivos" value="#{msg.newObjetivo}"/>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                   
+                    <ace:panel id="objetivosPanelBusqueda" collapsed="TRUE" header="#{msg.busqueda}" toggleable="true" toggleSpeed="200" class="panel-buttons" >
+                            <h:panelGrid  columns="2" cellpadding="5" cellspacing="5">
+                                <!--<ace:textEntry id="nombre" value="#{objetivosManagedBean.leyendaBuscar}" label="#{msg.findley}:" labelPosition="left"/>-->
+                                <h:outputLabel value="Organismo:" />                          
+                                <ace:simpleSelectOneMenu id="sltOrganismoBusq" value="#{objetivosManagedBean.idOrganismo}" label="organismo"  required="true" style="width: 100%" >
+                                        <f:selectItem  itemValue="0" itemLabel="NINGUNO"/>
+                                        <f:selectItems value="#{objetivosManagedBean.listaOrganismo}" /> 
+                                        <ace:ajax render="@this sltOrganismoBusq sltOrganismoMsg" event="blur"/> 
+                                </ace:simpleSelectOneMenu>
+
+                                <h:outputLabel value="Leyenda:" />
+                                <ace:textEntry id="nombre" value="#{objetivosManagedBean.leyendaBuscar}" labelPosition="left" style="width: 98%"/>
+
+                                
+                            </h:panelGrid> 
+                            <div align="right">    
+                                    <h:panelGrid columns="2">
+                                        <ace:pushButton id="find" value="${msg.find}" actionListener="#{objetivosManagedBean.aplicarFiltro()}" style="float: right"/>
+                                        <ace:pushButton id="actualizar" value="#{msg.actualizar}" actionListener="#{objetivosManagedBean.actualizar}"/>
+                                    </h:panelGrid>
+                            </div>
+                        </ace:panel>
+                    
+
+                    <ace:dataTable id="ObjetivoDataTable"  value="#{objetivosManagedBean.listElements}"  var="item" paginator="true" paginatorPosition="bottom" rows="10" class="panel-buttons">
+
+
+
+                        <ace:column id="org" headerText="Organismo" >
+                            <center>
+                                <h:outputText id="cellorg" value="#{item.organismo.leyenda}"/>
+                            </center>
+                        </ace:column>
+                        
+                        <ace:column id="nombre" headerText="#{msg.findley}">
+                            <center>
+                                <h:outputText id="cellNombre" value="#{item.leyenda}"/>
+                                <ace:tooltip style="line-height: 20px" id="tooltipNombre" for="cellNombre" value="Descripción: #{item.descripcion}" showEffect="slide"/>
+                            </center>
+                        </ace:column>
+                        
+                         
+
+                        <ace:column id="leyendaObj" headerText="#{msg.sit}"  >
+                            <center>
+                                <h:outputText id="cellleyendaObj" value="#{item.situacion.leyenda}" style="max-width: 200px"/>
+                            </center>    
+                        </ace:column>
+
+
+
+                        <ace:column id="accion" headerText="#{msg.actionT}" style="width: 15%">
+                            <h:panelGrid  columns="3"> 
+
+                                <ace:pushButton id="detalle"  action="detalleObjetivos" actionListener="#{objetivosManagedBean.verDetalle}" rendered="#{objetivosManagedBean.detalle}">
+                                    <img src="images/symbolZoomInWhite.png" />
+                                    <f:param name="id" value="#{item.id}"/>
+                                </ace:pushButton>
+
+                                <ace:pushButton id="editar" action="editarObjetivos" actionListener="#{objetivosManagedBean.prepararParaEditar()}" rendered="#{objetivosManagedBean.modificacion}">
+                                    <img src="images/symbolEditWhite.png" />
+                                    <f:param name="id" value="#{item.id}"/>
+                                </ace:pushButton>
+
+                                <ace:pushButton id="eliminar"  rendered="#{objetivosManagedBean.baja}" p:onclick="ice.ace.instance('#{confirmDialogObjetivos.clientId}').show();return false;">
+                                    <img src="images/symbolDeleteWhite.png" /> 
+                                </ace:pushButton>
+                                <ace:confirmationDialog id="confirmDialogObjetivos" binding="#{confirmDialogObjetivos}"
+                                                        message="${msg.msgDelete}"
+                                                        header="${msg.confirm}"
+                                                        modal="true"
+                                                        width="300"
+                                                        height="155"
+                                                        position="center">
+                                    <h:panelGrid columns="2" class="panel-confirm-buttons">
+                                        <ace:pushButton id="yes" value="${msg.acep}" p:onclick="ice.ace.instance('#{confirmDialogObjetivos.clientId}').hide();" actionListener="#{objetivosManagedBean.guardarBorrado()}">
+                                            <f:param name="id" value="#{item.id}" />
+                                            <f:ajax execute="@this" render="@all"/>
+                                        </ace:pushButton>
+                                        <ace:pushButton id="no" value="${msg.cancel}" p:onclick="ice.ace.instance('#{confirmDialogObjetivos.clientId}').hide();">
+                                            <f:ajax execute="@this" render="@all"/>
+                                        </ace:pushButton>
+                                    </h:panelGrid>
+                                </ace:confirmationDialog>
+
+                            </h:panelGrid>
+                        </ace:column> 
+
+
+
+
+
+                    </ace:dataTable>
+                </ace:panel>
+
+
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+
+
+

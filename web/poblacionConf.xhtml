@@ -1,0 +1,130 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">      
+    <ui:composition template="./layout.xhtml">
+        <ui:define name="content">
+            <h:form id="formPoblacion" title=" ">
+                <ace:panel id="PoblacionPanelActualizar" header="Población Info">
+                      <h:panelGrid  columns="2" class="panel-buttons">
+                        <h:panelGroup>
+                            <img src="images/symbolRefresh.png" align="absmiddle" border="0" alt="" title="Refrescar" style="margin-right: 5px;"/>
+                            <ace:linkButton action="poblacionConf" actionListener="#{poblacionManagedBean.actualizar}" value="Población Info"/>
+                            |
+                        </h:panelGroup>
+
+                          <h:panelGroup rendered="#{poblacionManagedBean.alta}" >
+                            <img src="images/symbolAdd.png" align="absmiddle" border="0" alt="" title="Nuevo" style="margin-right: 5px;"/>
+                            <ace:linkButton action="nuevaPoblacion" value="Nueva Poblacion"/>
+                        </h:panelGroup>
+                    </h:panelGrid>
+
+                    <ace:panel id="poblacionPanelBusqueda" header="#{msg.busqueda}" toggleable="true" closeSpeed="200" class="panel-buttons">
+                        <h:panelGrid  columns="3">
+                            <ace:textEntry id="nombre" value="#{poblacionManagedBean.anioBuscar}" label="Año" labelPosition="left"/>
+                            <ace:pushButton id="find" value="${msg.find}" actionListener="#{poblacionManagedBean.aplicarFiltro()}"/>
+                            <ace:pushButton id="actualizar" value="#{msg.actualizar}" actionListener="#{poblacionManagedBean.actualizar}"/>
+                        </h:panelGrid>                     
+                    </ace:panel>
+
+                    <ace:dataTable id="PoblacionDataTable" value="#{poblacionManagedBean.listElements}" var="item" paginator="true" paginatorPosition="bottom" rows="10" class="panel-buttons">
+                        
+                        <ace:column id="id" headerText="#{msg.idT}" style="width: 7%">
+                            <center>
+                                <h:outputText id="cellId" value="#{item.id}"/>
+                            </center>
+                        </ace:column>
+
+                        <ace:column id="anio" headerText="Año">
+                            <center>
+                                <h:outputText id="cellAnio" value="#{item.anio}"/>
+                            </center>
+                        </ace:column>
+                        
+                        <ace:column id="cuatrimestre" headerText="Trimestre Nº">
+                            <center>
+                                <h:outputText id="cellCuatrimestre" value="#{item.cuatrimestre}"/>
+                            </center>
+                        </ace:column>
+                        
+                        <ace:column id="totalDeHogares" headerText="Total de Hogares por Debajo de La Canasta Básica">
+                            <center>
+                                <h:outputText id="celltotalDeHogares" value="#{item.totalDeHogares}"/>
+                            </center>
+                        </ace:column>
+                        
+                        <ace:column id="total" headerText="Total de Hogares">
+                            <center>
+                                <h:outputText id="celltotal" value="#{item.total}"/>
+                            </center>
+                        </ace:column>
+                        
+                        
+                        
+                        
+
+
+                                              
+                        
+
+                        <ace:column id="accion" headerText="#{msg.actionT}" style="width: 15%">
+                            <h:panelGrid  columns="3"> 
+                                
+                                <ace:pushButton id="detalle" action="detallePoblacion" actionListener="#{poblacionManagedBean.verDetalle}" rendered="#{poblacionManagedBean.detalle}">
+                                    <img src="images/symbolZoomInWhite.png" />
+                                    <f:param name="id" value="#{item.id}"/>
+                                </ace:pushButton>
+
+                                <ace:pushButton id="editar" action="editarPoblacion" actionListener="#{poblacionManagedBean.prepararParaEditar()}" rendered="#{poblacionManagedBean.modificacion}">
+                                    <img src="images/symbolEditWhite.png" />
+                                    <f:param name="id" value="#{item.id}"/>
+                                </ace:pushButton>
+                                
+                                <ace:pushButton id="eliminar"  rendered="#{poblacionManagedBean.baja}" p:onclick="ice.ace.instance('#{confirmDialogPoblacion.clientId}').show();return false;">
+                                    <img src="images/symbolDeleteWhite.png" /> 
+                                </ace:pushButton>
+                                <ace:confirmationDialog id="confirmDialogPoblacion" binding="#{confirmDialogPoblacion}"
+                                                        message="${msg.msgDelete}"
+                                                        header="${msg.confirm}"
+                                                        modal="true"
+                                                        width="300"
+                                                        height="155"
+                                                        position="center">
+                                    <h:panelGrid columns="2" class="panel-confirm-buttons">
+                                        <ace:pushButton id="yes" value="${msg.acep}" p:onclick="ice.ace.instance('#{confirmDialogPoblacion.clientId}').hide();" actionListener="#{poblacionManagedBean.guardarBorrado()}">
+                                            <f:param name="id" value="#{item.id}" />
+                                            <f:ajax execute="@this" render="@all"/>
+                                        </ace:pushButton>
+                                        <ace:pushButton id="no" value="${msg.cancel}" p:onclick="ice.ace.instance('#{confirmDialogPoblacion.clientId}').hide();">
+                                            <f:ajax execute="@this" render="@all"/>
+                                        </ace:pushButton>
+                                    </h:panelGrid>
+                                </ace:confirmationDialog>
+
+                            </h:panelGrid>
+                        </ace:column> 
+                        
+                        
+                            
+                        
+                        
+                    </ace:dataTable>
+                </ace:panel>
+               
+                
+                </h:form>
+            
+           
+            
+            
+        </ui:define>
+    </ui:composition>
+</html>
+
+
+
+

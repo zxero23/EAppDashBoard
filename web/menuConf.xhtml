@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">      
+    <ui:composition template="./layout.xhtml">
+        <ui:define name="content">
+            <h:form id="formMenu" title=" ">
+                <ace:panel id="MenuPanelActualizar" header="#{msg.confMenu}">
+                    <h:panelGrid  columns="2" class="panel-buttons">
+                        <h:panelGroup>
+                            <img src="images/symbolRefresh.png" align="absmiddle" border="0" alt="" title="Refrescar" style="margin-right: 5px;"/>
+                            <ace:linkButton action="menuConf" actionListener="#{menuManagedBean.actualizar}" value="#{msg.confMenu}"/>
+                            |
+                        </h:panelGroup>
+
+                        <h:panelGroup rendered="#{menuManagedBean.alta}">
+                            <img src="images/symbolAdd.png" align="absmiddle" border="0" alt="" title="Nuevo" style="margin-right: 5px;"/>
+                            <ace:linkButton action="nuevoMenu" value="#{msg.newMenu}"/>
+                        </h:panelGroup>
+                    </h:panelGrid>
+
+                    <ace:panel id="MenuPanelBusqueda" header="#{msg.busqueda}" toggleable="true" closeSpeed="200" class="panel-buttons">
+                        <h:panelGrid  columns="3">
+                            <ace:textEntry id="nombre" value="#{menuManagedBean.nombreBuscar}" label="#{msg.name}" labelPosition="left"/>
+                            <ace:pushButton id="find" value="${msg.find}" actionListener="#{menuManagedBean.aplicarFiltro}"/>
+                            <ace:pushButton id="actualizar" value="#{msg.actualizar}" actionListener="#{menuManagedBean.actualizar}"/>
+                        </h:panelGrid>                     
+                    </ace:panel>
+
+                    <ace:dataTable id="MenuPanelDataTable" value="#{menuManagedBean.listElements}" var="item" paginator="true" paginatorPosition="bottom" rows="10" class="panel-buttons">
+                        
+                        <ace:column id="id" headerText="#{msg.idT}" style="width: 7%">
+                            <h:outputText id="cellId" value="#{item.id}"/>
+                        </ace:column>
+                        
+                        <ace:column id="nombre" headerText="#{msg.nameT}">
+                            <div class="panel-column-data-left">
+                                <h:outputText id="cellNombre" value="#{item.nombre}"/>
+                            </div>                            
+                        </ace:column>
+
+                        <ace:column id="accion" headerText="#{msg.actionT}" style="width: 15%">
+                            <h:panelGrid  columns="3"> 
+                
+                                <ace:pushButton id="detalle"  action="detalleMenu" actionListener="#{menuManagedBean.verDetalle}" rendered="#{menuManagedBean.detalle}">
+                                    <img src="images/symbolZoomInWhite.png" />
+                                    <f:param name="id" value="#{item.id}"/>
+                                </ace:pushButton>
+
+                                <ace:pushButton id="editar"  action="editarMenu" actionListener="#{menuManagedBean.prepararParaEditar()}" rendered="#{menuManagedBean.modificacion}">
+                                    <img src="images/symbolEditWhite.png" />
+                                    <f:param name="id" value="#{item.id}"/>
+                                </ace:pushButton>
+                                
+                                <ace:pushButton id="eliminar"  rendered="#{menuManagedBean.baja}" p:onclick="ice.ace.instance('#{confirmDialogMenu.clientId}').show();return false;">
+                                     <img src="images/symbolDeleteWhite.png" />
+                                </ace:pushButton>     
+                                <ace:confirmationDialog id="confirmDialogMenu" binding="#{confirmDialogMenu}"
+                                                        message="${msg.msgDelete}"
+                                                        header="${msg.confirm}"
+                                                        modal="true"
+                                                        width="300"
+                                                        height="155"
+                                                        position="center">
+                                    <h:panelGrid columns="2" class="panel-confirm-buttons">
+                                        <ace:pushButton id="yes" value="${msg.acep}" p:onclick="ice.ace.instance('#{confirmDialogMenu.clientId}').hide();" actionListener="#{menuManagedBean.guardarBorrado()}">
+                                            <f:param name="id" value="#{item.id}" />
+                                            <f:ajax execute="@this" render="@all"/>
+                                        </ace:pushButton>
+                                        <ace:pushButton id="no" value="${msg.cancel}" p:onclick="ice.ace.instance('#{confirmDialogMenu.clientId}').hide();">
+                                            <f:ajax execute="@this" render="@all"/>
+                                        </ace:pushButton>
+                                    </h:panelGrid>
+                                </ace:confirmationDialog>
+
+                            </h:panelGrid>
+                        </ace:column>                    
+                    </ace:dataTable>
+                </ace:panel>           
+                
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+

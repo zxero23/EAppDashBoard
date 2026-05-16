@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">      
+    <ui:composition template="./layout.xhtml">
+        <ui:define name="content">
+            <h:form id="formNuevoMenu" title=" ">
+                <ace:panel id="nuevoMenu" header="#{msg.newMenu}">
+                    <table border="0" cellspacing="5" class="panel-buttons">
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="(*) #{msg.nameMenuPadre}" />
+                            </td>
+                            <td align="left">
+                                <ace:selectMenu id="selectMenuNew" value="#{menuManagedBean.idMenuPadre}" label="menú"  required="true">
+                                    <f:selectItem  itemValue="0"  itemLabel="NINGUNO"/>
+                                    <f:selectItems value="#{menuManagedBean.selectItems}" /> 
+                                    <ace:ajax render="@this selectMenuNew selectMenuNewMsg" event="blur"/> 
+                                </ace:selectMenu>
+                            </td>
+                            <td align="left">
+                                <ace:message id="selectMenuNewMsg" for="selectMenuNew" initEffect="slide" changeEffect="shake"/>
+                            </td>
+                        </tr>  
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="(*) #{msg.name}" />
+                            </td>
+                            <td align="left">
+                                <ace:textEntry id="nombre" label="nombre" value="#{menuManagedBean.nombre}" required="true">
+                                    <ace:ajax render="@this nombre nombreMsg" event="blur"/>                                
+                                </ace:textEntry> 
+                            </td>
+                            <td align="left">
+                                <ace:message id="nombreMsg" for="nombre" initEffect="slide" changeEffect="shake"/>
+                            </td>
+                        </tr> 
+                    </table>
+                    
+                    <h:panelGrid id="buttonGrid" columns="3" class="panel-buttons">
+                        <ace:pushButton id="save" value="#{msg.save}" action="#{menuManagedBean.crear()}"/>
+                        <ace:pushButton id="saveCreate" value="#{msg.saveCreate}" action="#{menuManagedBean.crearOtro()}"/>
+                        <ace:pushButton id="cancel" value="#{msg.cancel}" action="menuConf" immediate="true" actionListener="#{menuManagedBean.limpiar()}"/>
+                    </h:panelGrid>
+                </ace:panel>                
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+

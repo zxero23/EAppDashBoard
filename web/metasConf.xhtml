@@ -1,0 +1,163 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">      
+    <ui:composition template="./layout.xhtml">
+        <ui:define name="content">
+            <h:form id="formMetas" title=" ">
+                <ace:panel id="MetasPanelActualizar" header="#{msg.confMeta}">
+                    <h:panelGrid  columns="2" class="panel-buttons">
+                        <h:panelGroup>
+                            <img src="images/symbolRefresh.png" align="absmiddle" border="0" alt="" title="Refrescar" style="margin-right: 5px;"/>
+                            <ace:linkButton action="metasConf" actionListener="#{metasManagedBean.actualizar}" value="#{msg.confMeta}"/>
+                            |
+                        </h:panelGroup>
+
+                        <h:panelGroup rendered="#{metasManagedBean.alta}">
+                            <img src="images/symbolAdd.png" align="absmiddle" border="0" alt="" title="Nuevo" style="margin-right: 5px;"/>
+                            <ace:linkButton action="nuevaMeta" value="Nueva Meta"/>
+                        </h:panelGroup>
+                    </h:panelGrid>
+
+                    <ace:panel id="metasPanelBusqueda" header="#{msg.busqueda}"  collapsed="TRUE" toggleable="true" toggleSpeed="200" class="panel-buttons">
+                        <h:panelGrid  columns="2" cellspacing="5" cellpadding="5">
+                            <!--<ace:textEntry id="nombre" value="#{metasManagedBean.leyendaBuscar}" label="#{msg.findley}" labelPosition="left"/>-->
+                            <h:outputLabel value="Organismo:" />                          
+                            <ace:simpleSelectOneMenu id="sltOrganismoBusqMeta" value="#{metasManagedBean.idOrganismo}" label="organismo"  required="true" style="width: 100%">
+                                    <f:selectItem  itemValue="0" itemLabel="NINGUNO"/>
+                                    <f:selectItems value="#{objetivosManagedBean.selectItems}" /> 
+                                    <ace:ajax render="@this sltOrganismoBusqMeta sltOrganismoMsgMeta" event="blur"/> 
+                            </ace:simpleSelectOneMenu>
+                            
+                            <h:outputLabel value="Objetivo" />
+                            <ace:simpleSelectOneMenu id="sltObjetivoMeta" value="#{metasManagedBean.idObjetivos}" label="objetivo"  required="true" style="width: 550px">
+                                    <f:selectItem  itemValue="0" itemLabel="NINGUNO"/>
+                                    <f:selectItems value="#{metasManagedBean.selectItems}" /> 
+                                    <ace:ajax render="@this sltObjetivoMeta sltObjetivoMsgMeta" event="blur"/> 
+                            </ace:simpleSelectOneMenu>
+                            <h:outputLabel value="Leyenda:" />
+                            <ace:textEntry id="nombre" value="#{metasManagedBean.leyendaBuscar}" labelPosition="left" style="width: 98%"/>
+                            
+                        </h:panelGrid> 
+                        <div align="right">
+                            <h:panelGrid columns="2">
+                                <ace:pushButton id="find" value="${msg.find}" actionListener="#{metasManagedBean.aplicarFiltro}"/>
+                                <ace:pushButton id="actualizar" value="#{msg.actualizar}" actionListener="#{metasManagedBean.actualizar}"/>
+                            </h:panelGrid>
+                        </div>
+                    </ace:panel>
+
+                    <ace:dataTable id="MetasDataTable" value="#{metasManagedBean.listElements}" var="item" paginator="true" paginatorPosition="bottom" rows="10" class="panel-buttons">
+                        
+                       
+
+                        <ace:column id="Organismo" headerText="Organismo">
+                            <center>
+                                <h:outputText id="cellOrganismo" value="#{item.objetivos.organismo.leyenda}"/>
+                            </center>
+                        </ace:column>
+                        
+                        <ace:column id="descripcion" headerText="Objetivo" >
+                            <center>
+                                <h:outputText id="cellDescripcion" value="#{item.objetivos.leyenda}" />
+                            </center>
+                            
+                        </ace:column>
+                        
+                        <ace:column id="leyendaMeta" headerText="Meta" style="max-width: 200px">
+                            <center>
+                                <h:outputText id="cellleyendaMeta" value="#{item.leyenda}" />
+                                <ace:tooltip style="line-height: 20px " id="tooltipMeta" for="cellleyendaMeta" value="Descripción: #{item.descripcion}" showEffect="slide"/>
+                            </center>
+                        </ace:column>
+
+                        <ace:column id="situacion" headerText="Situación" >
+                            <center>
+                                <h:outputText id="cellSituacion" value="#{item.situacion.leyenda}"/>
+                            </center>
+                        </ace:column>
+                        
+                        <ace:column id="cantidad" headerText="Porcentaje">
+                            <center>
+                                <h:outputText id="cellCantidad" value="#{item.cantidad}"/>
+                            </center>
+                        </ace:column>
+                        
+                        <ace:column id="fechaInicio" headerText="Fecha Inicio." >
+                            <center>
+                                <h:outputText id="cellfechaInicio" value="#{item.fechaInicio}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" locale="es_AR" timeZone="America/Argentina/Buenos_Aires"/>   
+                                </h:outputText>
+                            </center>
+                        </ace:column>
+                        
+                        <ace:column id="fechaFinal" headerText="Fecha Final." >
+                            <center>
+                                <h:outputText id="cellfechaFinal" value="#{item.fechaFinal}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" locale="es_AR" timeZone="America/Argentina/Buenos_Aires"/>
+                                </h:outputText>
+                            </center>
+                        </ace:column>
+                        
+                        <ace:column id="IndicadorColumn" headerText="Indicador" >
+                            <ace:pushButton id="CrearIndicador" actionListener="#{indicadorManagedBean.setIdMeta(item.id)}" action="nuevoIndicador">
+                                <img src="images/indicadorIcono.png" />
+                                <f:param name="id" value="#{item.id}"/>
+                            </ace:pushButton>
+                            <ace:tooltip style="line-height: 20px " id="tooltipInd" for="CrearIndicador" value="NUEVO INDICADOR" showEffect="slide"/>
+                        </ace:column>
+
+                        <ace:column id="accion" headerText="#{msg.actionT}" >
+                            <h:panelGrid  columns="3"> 
+                                                       
+                                <ace:pushButton  id="detalle"  action="detalleMeta" actionListener="#{metasManagedBean.verDetalle}" rendered="#{metasManagedBean.detalle}" >
+                                    <img src="images/symbolZoomInWhite.png" />
+                                    <f:param name="id" value="#{item.id}"/>
+                                </ace:pushButton >
+
+                                <ace:pushButton id="editar"  action="editarMeta" actionListener="#{metasManagedBean.prepararParaEditar()}" rendered="#{metasManagedBean.modificacion}" immediate="true"  >
+                                    <img src="images/symbolEditWhite.png" />
+                                    <f:param name="id" value="#{item.id}"/>
+                                </ace:pushButton>
+                                
+                                <ace:pushButton id="eliminar"  rendered="#{metasManagedBean.baja}" p:onclick="ice.ace.instance('#{confirmDialogMetas.clientId}').show();return false;" >
+                                <img src="images/symbolDeleteWhite.png" />
+                                </ace:pushButton>
+                                                               
+                                <ace:confirmationDialog id="confirmDialogMetas" binding="#{confirmDialogMetas}"
+                                                        message="${msg.msgDelete}"
+                                                        header="${msg.confirm}"
+                                                        modal="true"
+                                                        width="300"
+                                                        height="155"
+                                                        position="center">
+                                    <h:panelGrid columns="2" class="panel-confirm-buttons">
+                                        <ace:pushButton id="yes" value="${msg.acep}" p:onclick="ice.ace.instance('#{confirmDialogMetas.clientId}').hide();" actionListener="#{metasManagedBean.guardarBorrado()}">
+                                            <f:param name="id" value="#{item.id}" />
+                                            <f:ajax execute="@this" render="@all"/>
+                                        </ace:pushButton>
+                                        <ace:pushButton id="no" value="${msg.cancel}" p:onclick="ice.ace.instance('#{confirmDialogMetas.clientId}').hide();">
+                                            <f:ajax execute="@this" render="@all"/>
+                                        </ace:pushButton>
+                                    </h:panelGrid>
+                                </ace:confirmationDialog>
+
+                            </h:panelGrid>
+                        </ace:column>
+                        
+                        
+                        
+                    </ace:dataTable>
+                </ace:panel>           
+                
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+
+
+

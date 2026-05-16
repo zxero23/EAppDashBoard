@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://earth.google.com/kml/2.2">
+<Document>
+	<name>Misiones Provincial.kml</name>
+	<Style id="s_ylw-pushpin">
+		<IconStyle>
+			<color>ffff0000</color>
+			<scale>1.2</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/triangle.png</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+	<Style id="s_ylw-pushpin_hl">
+		<IconStyle>
+			<color>ffff0000</color>
+			<scale>1.4</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/shapes/triangle.png</href>
+			</Icon>
+		</IconStyle>
+	</Style>
+	<StyleMap id="m_ylw-pushpin">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#s_ylw-pushpin</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#s_ylw-pushpin_hl</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Folder>
+		<name>Misiones Provincial</name>
+		<Style>
+		</Style>
+		<Placemark>
+			<name>95S 100</name>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<coordinates>-56.02679999999999,-27.4421,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>95S 101</name>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<coordinates>-55.76309999999999,-27.8821,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>95S 102</name>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<coordinates>-55.96530000000001,-27.3695,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>95S 103</name>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<coordinates>-55.81639999999999,-27.6349,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>95S 104</name>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<coordinates>-55.68820000000001,-28.0514,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>95S 105</name>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<coordinates>-55.5559,-27.6463,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>95S 106</name>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<coordinates>-55.5391,-27.3111,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>95S 107</name>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<coordinates>-55.2691,-27.5988,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>95S 108</name>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<coordinates>-55.135,-27.88980000000001,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>95S 109</name>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<coordinates>-55.26220000000001,-27.27,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>95S 110</name>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<coordinates>-55.1132,-27.5017,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>95S 111</name>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<coordinates>-55.2797,-27.0107,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>95S 112</name>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<coordinates>-54.97140000000001,-27.2205,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>95S 113</name>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<coordinates>-54.6842,-27.5703,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>95S 114</name>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<coordinates>-54.0193,-26.7946,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>95S 115</name>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<coordinates>-54.72290000000001,-26.9263,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>95S 116</name>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<coordinates>-54.6441,-27.2442,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>95S 117</name>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<coordinates>-54.3833,-27.4127,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>95S 118</name>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<coordinates>-54.74849999999999,-26.6293,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>95S 119</name>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<coordinates>-54.4955,-26.9995,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>95S 120</name>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<coordinates>-54.1959,-27.2958,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>95S 121</name>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<coordinates>-54.6424,-26.4152,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>95S 122</name>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<coordinates>-54.2976,-26.743,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>95S 123</name>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<coordinates>-54.0901,-26.9426,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>95S 124</name>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<coordinates>-53.9514,-27.1255,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>95S 125</name>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<coordinates>-54.59259999999999,-26.2311,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>95S 126</name>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<coordinates>-54.4165,-26.40050000000002,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>95S 127</name>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<coordinates>-54.1232,-26.462,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>95S 128</name>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<coordinates>-53.7991,-26.7678,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>95S 129</name>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<coordinates>-54.0158,-26.3434,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>95S 130</name>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<coordinates>-54.24780000000001,-26.1939,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>95S 131</name>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<coordinates>-53.6448,-26.2481,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>95S 132</name>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<coordinates>-54.58320000000001,-25.9863,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>95S 133</name>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<coordinates>-54.25899999999999,-25.9782,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>95S 134</name>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<coordinates>-53.7412,-26.0562,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>95S 135</name>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<coordinates>-54.5904,-25.5951,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>95S 136</name>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<coordinates>-54.4761,-25.73100000000001,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>95S 137</name>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<coordinates>-54.1414,-25.682,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>95S 138</name>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<coordinates>-53.85789999999999,-25.7763,0</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<name>95S 139</name>
+			<styleUrl>#m_ylw-pushpin</styleUrl>
+			<Point>
+				<coordinates>-53.9914,-25.5214,0</coordinates>
+			</Point>
+		</Placemark>
+	</Folder>
+</Document>
+</kml>

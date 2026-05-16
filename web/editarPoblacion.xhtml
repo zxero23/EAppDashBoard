@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:ace="http://www.icefaces.org/icefaces/components">      
+    <ui:composition template="./layout.xhtml">
+        <ui:define name="content">
+            <h:form id="formEditarPoblacion" title=" ">
+                <ace:panel id="editarPoblacion" header="Editar Población">
+                    <table border="0" cellspacing="5" class="panel-buttons">
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="(*) #{msg.name}" />
+                            </td>
+                            <td align="left">
+                                <ace:textEntry id="anio" label="#{msg.name}" value="#{poblacionManagedBean.anio}" required="true" size="55">
+                                    <ace:ajax render="@this anio anioMsg" event="blur"/>                                
+                                </ace:textEntry>
+                            </td>
+                            <td align="left">
+                                <ace:message id="anioMsg" for="anio" initEffect="slide" changeEffect="shake"/>  
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="(*) Trimestre" />
+                            </td>
+                            <td align="left">
+                                <ace:textEntry id="cuatrimestre" label="Trimestre" value="#{poblacionManagedBean.cuatrimestre}" required="true" size="55">
+                                    <ace:ajax render="@this cuatrimestre cuatrimestreMsg" event="blur"/>                                
+                                </ace:textEntry>
+                            </td>
+                            <td align="left">
+                                <ace:message id="cuatrimestreMsg" for="cuatrimestre" initEffect="slide" changeEffect="shake"/>  
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="(*) Total De Hogares" />
+                            </td>
+                            <td align="left">
+                                <ace:textEntry id="totaldehogares" label="totaldehogares" value="#{poblacionManagedBean.totalDeHogares}" required="true" size="55">
+                                    <ace:ajax render="@this totaldehogares totaldehogaresMsg" event="blur"/>                                
+                                </ace:textEntry>
+                            </td>
+                            <td align="left">
+                                <ace:message id="totaldehogaresMsg" for="totaldehogares" initEffect="slide" changeEffect="shake"/>  
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="(*) Total " />
+                            </td>
+                            <td align="left">
+                                <ace:textEntry id="total" label="total" value="#{poblacionManagedBean.total}" required="true" size="55">
+                                    <ace:ajax render="@this total totalMsg" event="blur"/>                                
+                                </ace:textEntry>
+                            </td>
+                            <td align="left">
+                                <ace:message id="totalMsg" for="total" initEffect="slide" changeEffect="shake"/>  
+                            </td>
+                        </tr>
+                    </table>                    
+                    
+                    <h:inputHidden value="#{poblacionManagedBean.id}" />
+                    
+                    <h:panelGrid id="buttonGrid" columns="2" class="panel-buttons">
+                        <ace:pushButton id="save" value="#{msg.saveEdit}" action="#{poblacionManagedBean.guardarEdicion}"/>                        
+                        <ace:pushButton id="cancel" value="#{msg.cancel}" action="poblacionConf" immediate="true" actionListener="#{poblacionManagedBean.limpiar()}"/>
+                    </h:panelGrid>
+                </ace:panel>                
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+
+

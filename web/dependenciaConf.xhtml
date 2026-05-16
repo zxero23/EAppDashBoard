@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">      
+    <ui:composition template="./layout.xhtml">
+        <ui:define name="content">
+            <h:form id="formDependencia" title=" ">
+                <ace:panel id="DependenciaPanelActualizar" header="#{msg.confDependencia}">
+                    <h:panelGrid  columns="2" class="panel-buttons">
+                        <h:panelGroup>
+                            <img src="images/symbolRefresh.png" align="absmiddle" border="0" alt="" title="Refrescar" style="margin-right: 5px;"/>
+                            <ace:linkButton action="objetivosConf" actionListener="#{objetivosManagedBean.actualizar}" value="#{msg.confDependencia}"/>
+                            |
+                        </h:panelGroup>
+
+                        <h:panelGroup rendered="#{objetivosManagedBean.alta}">
+                            <img src="images/symbolAdd.png" align="absmiddle" border="0" alt="" title="Nuevo" style="margin-right: 5px;"/>
+                            <ace:linkButton action="nuevaDependencia" value="#{msg.newDependencia}"/>
+                        </h:panelGroup>
+                    </h:panelGrid>
+
+                    <ace:panel id="objetivosPanelBusqueda" header="#{msg.busqueda}" toggleable="true" closeSpeed="200" class="panel-buttons">
+                        <h:panelGrid  columns="3">
+                            <ace:textEntry id="nombre" value="#{objetivosManagedBean.nombreBuscar}" label="#{msg.name}" labelPosition="left"/>
+                            <ace:pushButton id="find" value="${msg.find}" actionListener="#{objetivosManagedBean.aplicarFiltro}"/>
+                            <ace:pushButton id="actualizar" value="#{msg.actualizar}" actionListener="#{objetivosManagedBean.actualizar}"/>
+                        </h:panelGrid>                     
+                    </ace:panel>
+
+                    <ace:dataTable id="TipoBienPanelDataTable" value="#{objetivosManagedBean.listElements}" var="item" paginator="true" paginatorPosition="bottom" rows="10" class="panel-buttons">
+                        
+                        <ace:column id="id" headerText="#{msg.idT}" style="width: 7%">
+                            <h:outputText id="cellId" value="#{item.id}"/>
+                        </ace:column>
+
+                        <ace:column id="nombre" headerText="#{msg.nameT}">
+                            <h:outputText id="cellNombre" value="#{item.nombre}"/>
+                        </ace:column>
+
+                        <ace:column id="descripcion" headerText="Org.">
+                            <h:outputText id="cellDescripcion" value="#{item.organismo.nombre}"/>
+                        </ace:column>
+
+                        <ace:column id="accion" headerText="#{msg.actionT}" style="width: 15%">
+                            <h:panelGrid  columns="3"> 
+                                
+                                <ace:pushButton  value=" " id="detalle"  action="detalleDependencia" actionListener="#{objetivosManagedBean.verDetalle}" rendered="#{objetivosManagedBean.detalle}" >
+                                    <img src="images/symbolZoomInWhite.png" />
+                                    <f:param name="id" value="#{item.id}"/>
+                                </ace:pushButton >
+
+                                <ace:pushButton id="editar"  action="editarDependencia" actionListener="#{objetivosManagedBean.prepararParaEditar()}" rendered="#{objetivosManagedBean.modificacion}" immediate="true"  >
+                                    <img src="images/symbolEditWhite.png" />
+                                    <f:param name="id" value="#{item.id}"/>
+                                </ace:pushButton>
+                                
+                                <ace:pushButton id="eliminar"  rendered="#{objetivosManagedBean.baja}" p:onclick="ice.ace.instance('#{confirmDialogDependencia.clientId}').show();return false;" >
+                                <img src="images/symbolDeleteWhite.png" />
+                                </ace:pushButton>
+                                                               
+                                <ace:confirmationDialog id="confirmDialogDependencia" binding="#{confirmDialogDependencia}"
+                                                        message="${msg.msgDelete}"
+                                                        header="${msg.confirm}"
+                                                        modal="true"
+                                                        width="300"
+                                                        height="155"
+                                                        position="center">
+                                    <h:panelGrid columns="2" class="panel-confirm-buttons">
+                                        <ace:pushButton id="yes" value="${msg.acep}" p:onclick="ice.ace.instance('#{confirmDialogDependencia.clientId}').hide();" actionListener="#{objetivosManagedBean.guardarBorrado()}">
+                                            <f:param name="id" value="#{item.id}" />
+                                            <f:ajax execute="@this" render="@all"/>
+                                        </ace:pushButton>
+                                        <ace:pushButton id="no" value="${msg.cancel}" p:onclick="ice.ace.instance('#{confirmDialogDependencia.clientId}').hide();">
+                                            <f:ajax execute="@this" render="@all"/>
+                                        </ace:pushButton>
+                                    </h:panelGrid>
+                                </ace:confirmationDialog>
+
+                            </h:panelGrid>
+                        </ace:column>                    
+                    </ace:dataTable>
+                </ace:panel>           
+                
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+
+

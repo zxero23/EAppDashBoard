@@ -1,0 +1,2 @@
+create-jdbc-connection-pool --restype javax.sql.DataSource --datasourceclassname org.postgresql.ds.PGSimpleDataSource --property User=postgres:Password=admin:URL="jdbc:postgresql://localhost:5432/tableroDB" PostgreSQLPool
+create-jdbc-resource --connectionpoolid PostgreSQLPool jdbc/tablero

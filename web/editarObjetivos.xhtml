@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">      
+    <ui:composition template="./layout.xhtml">
+        <ui:define name="content">
+            <h:form id="formEditarObjetivo" title=" ">
+                <ace:panel id="editarObjetivo" header="#{msg.editObjetivo}">
+                    <table border="0" cellspacing="5" class="panel-buttons">
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="(*) Organismo:" />
+                            </td>
+                            <td align="left">
+                                <ace:simpleSelectOneMenu id="sltOrganismo" value="#{objetivosManagedBean.idOrganismo}" label="organismo"  required="true">
+                                    <f:selectItem  itemValue="0" itemLabel="NINGUNO"/>
+                                    <f:selectItems value="#{objetivosManagedBean.selectItems}" /> 
+                                    <ace:ajax render="@this sltOrganismo sltOrganismoMsg" event="blur"/> 
+                                </ace:simpleSelectOneMenu>
+                            </td>
+                            <td align="left">
+                                <ace:message id="sltOrganismoMsg" for="sltOrganismo" initEffect="slide" changeEffect="shake"/>
+                            </td>
+                        </tr>
+                          <tr>
+                            <td align="right">
+                                <h:outputLabel value="(*) Situacion:" />
+                            </td>
+                            <td align="left">
+                                <ace:simpleSelectOneMenu id="sltSituacion" value="#{objetivosManagedBean.idSituacion}" label="situacion"  required="true">
+                                    
+                                    <f:selectItems value="#{objetivosManagedBean.selectItemsSituacion}" /> 
+                                    <ace:ajax render="@this sltSituacion sltSituacionMsg" event="blur"/> 
+                                </ace:simpleSelectOneMenu>
+                            </td>
+                            <td align="left">
+                                <ace:message id="sltSituacionMsg" for="sltSituacion" initEffect="slide" changeEffect="shake"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="(*) #{msg.name}" />
+                            </td>
+                            <td align="left">
+                                <ace:textEntry id="leyenda" label="#{msg.name}" value="#{objetivosManagedBean.leyenda}" required="true" size="55">
+                                    <ace:ajax render="@this leyenda leyendaMsg" event="blur"/>                                
+                                </ace:textEntry>
+                            </td>
+                            <td align="left">
+                                <ace:message id="leyendaMsg" for="leyenda" initEffect="slide" changeEffect="shake"/>  
+                            </td>
+                        </tr>
+                         <tr>
+                            <td align="right">
+                                <h:outputLabel value="(*) Descripción" />
+                            </td>
+                            <td align="left">
+                                <ace:textAreaEntry id="descripcionEditarObjetivo" label="#{msg.name}" value="#{objetivosManagedBean.descripcion}" required="true">
+                                    <ace:ajax render="@this descripcionEditarObjetivo descripcionEditarObjetivoMsg" event="blur"/>                                
+                                </ace:textAreaEntry>
+                            </td>
+                            <td align="left">
+                                <ace:message id="descripcionEditarObjetivoMsg" for="descripcionEditarObjetivo" initEffect="slide" changeEffect="shake"/> 
+                            </td>
+                        </tr>
+                    </table>                    
+                    
+                    <h:inputHidden value="#{objetivosManagedBean.id}" />
+                    
+                    <h:panelGrid id="buttonGrid" columns="2" class="panel-buttons">
+                        <ace:pushButton id="save" value="#{msg.saveEdit}" action="#{objetivosManagedBean.guardarEdicion}"/>                        
+                        <ace:pushButton id="cancel" value="#{msg.cancel}" action="objetivosConf" immediate="true" actionListener="#{objetivosManagedBean.limpiar()}"/>
+                    </h:panelGrid>
+                </ace:panel>                
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+

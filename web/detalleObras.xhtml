@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">      
+    <ui:composition template="./layout.xhtml">
+        <ui:define name="content">
+            <h:form id="formDetalleObra" title=" ">
+                <ace:panel id="detalleObra" header="#{msg.detailsObra}">
+                    <table border="0" cellspacing="5" class="panel-buttons">
+                        
+                        <tr>
+                            <td align="right">
+                                <strong><h:outputLabel value="#{msg.name}"/></strong>
+                            </td>
+                            <td align="left">
+                                <h:outputLabel value="#{obrasManagedBean.obras.leyenda}"/>
+                            </td>                            
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                <strong><h:outputLabel value="Situación"/></strong>
+                            </td>
+                            <td align="left">
+                                <h:outputLabel value="#{obrasManagedBean.obras.situacion.leyenda}"/>
+                            </td>                            
+                        </tr>
+                         <tr>
+                            <td align="right">
+                                <strong><h:outputLabel value="latitud"/></strong>
+                            </td>
+                            <td align="left">
+                                <h:outputLabel value="#{obrasManagedBean.obras.latitud}"/>
+                            </td>                            
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                <strong><h:outputLabel value="longitud"/></strong>
+                            </td>
+                            <td align="left">
+                                <h:outputLabel value="#{obrasManagedBean.obras.longitud}"/>
+                            </td>                            
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                <strong><h:outputLabel value="Fecha de Inicio:"/></strong>
+                            </td>
+                            <td align="left">
+                                <h:outputLabel value="#{obrasManagedBean.obras.fechaInicio}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" locale="es_AR" timeZone="America/Argentina/Buenos_Aires"/>    
+                                </h:outputLabel>
+                            </td>                            
+                        </tr>
+                         <tr>
+                            <td align="right">
+                                <strong><h:outputLabel value="Fecha Final:"/></strong>
+                            </td>
+                            <td align="left">
+                                <h:outputLabel value="#{obrasManagedBean.obras.fechaFinal}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" locale="es_AR" timeZone="America/Argentina/Buenos_Aires"/>    
+                                </h:outputLabel>
+                            </td>                            
+                        </tr>
+                        
+                    
+                        
+                     </table>
+                    
+                    <ace:panel id="panelAdjunto" header="Archivo Adjunto">
+                        <ace:dynamicResource id="dynamicResource"
+                                         resource="#{obrasManagedBean.resource}"
+                                         target="_blank"
+                                         label="#{obrasManagedBean.obras.adjunto}" 
+                                         mimeType="application/pdf" 
+                                         type="link" 
+                         />
+                    </ace:panel>
+                    
+                    
+                    
+                </ace:panel>
+                <ace:panelStack id="stack1" selectedId="stackPane1">
+                <ace:stackPane id="stackPane1" client="true" > <!-- Siempre se pone el mapa en un container con propiedad client-->
+                    <ace:panel id="panel1" header="Mapa">
+                        <ace:gMap id="gMapLayer"  style="width: 475px; height: 400px" zoomLevel="7" latitude="-26.8250059" 
+                                  longitude="-55.970294" >
+                            <ace:gMapMarker latitude="#{obrasManagedBean.obras.latitud}" 
+                                            longitude="#{obrasManagedBean.obras.longitud}">
+                                        </ace:gMapMarker>
+                        </ace:gMap>
+                    </ace:panel>
+                </ace:stackPane>
+              </ace:panelStack>
+                
+              <h:panelGrid id="buttonGrid" columns="1" class="panel-buttons">                     
+                        <ace:pushButton id="VolverObra" value="Volver" action="obrasConf" immediate="true" />
+              </h:panelGrid>
+                 </h:form>  
+          
+                                  
+                        
+                    
+                
+           
+        </ui:define>
+    </ui:composition>
+</html>
+
+

@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:ace="http://www.icefaces.org/icefaces/components">      
+    <ui:composition template="./layout.xhtml">
+        <ui:define name="content">
+            <h:form id="formEditarGrupo" title=" ">
+                <ace:panel id="editarGrupo" header="#{msg.editGrupo}">
+                    <table border="0" cellspacing="5" class="panel-buttons">
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="(*) #{msg.name}" />
+                            </td>
+                            <td align="left">
+                                <ace:textEntry id="nombre" label="#{msg.name}" value="#{grupoManagedBean.nombre}" required="true">
+                                    <ace:ajax render="@this nombre nombreMsg" event="blur"/>                                
+                                </ace:textEntry>
+                            </td>
+                            <td align="left">
+                                <ace:message id="nombreMsg" for="nombre" initEffect="slide" changeEffect="shake"/>  
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="(*) #{msg.descri}" />
+                            </td>
+                            <td align="left">
+                                <ace:textEntry id="descripcion" label=" #{msg.descri}" value="#{grupoManagedBean.descripcion}" required="true">
+                                    <ace:ajax render="@this descripcion descripcionMsg" event="blur"/>                                
+                                </ace:textEntry>
+                            </td>
+                            <td align="left">
+                                <ace:message id="descripcionMsg" for="descripcion" initEffect="slide" changeEffect="shake"/> 
+                            </td>
+                        </tr>
+                    </table>                    
+                    
+                    <h:inputHidden value="#{grupoManagedBean.id}" />
+                    
+                    <h:panelGrid id="buttonGrid" columns="2" class="panel-buttons">
+                        <ace:pushButton id="save" value="#{msg.saveEdit}" action="#{grupoManagedBean.guardarEdicion}"/>                        
+                        <ace:pushButton id="cancel" value="#{msg.cancel}" action="grupoConf" immediate="true" actionListener="#{grupoManagedBean.limpiar()}"/>
+                    </h:panelGrid>
+                </ace:panel>                
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

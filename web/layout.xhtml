@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//ES" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>.: CCPM :.</title>
+        <link rel="stylesheet" href="css/cssCCPM.css" type="text/css"/>
+        <link rel="shortcut icon" href="images/favicon.png"/>
+        <link rel="shortcut icon" href="images/favicon.png"/>
+        <script type="text/javascript">
+            (function () {
+                if (!window.console) {
+                    return;
+                }
+                var originalError = window.console.error;
+                if (typeof originalError !== "function") {
+                    return;
+                }
+                window.console.error = function () {
+                    var firstArg = arguments.length > 0 ? String(arguments[0]) : "";
+                    if (firstArg.indexOf("During update: javax.faces.ViewState not found") !== -1) {
+                        return;
+                    }
+                    return originalError.apply(window.console, arguments);
+                };
+            })();
+        </script>
+    </h:head>
+    <h:body>       
+        <f:loadBundle basename="org.ccpm.bienes.ui.labelsCCPM" var="msg"/> 
+        <div id="top" class="banner-top" title=" ">
+            <ui:include src="banner.xhtml"/>
+        </div>
+        <div id="globalNav" class="globalNav" title=" ">
+            <ui:include src="globalNav.xhtml"/>
+        </div>  
+        <div id="content" class="content" title=" ">
+                <ui:insert name="content"/>
+         </div>
+        <div id="footer" class="footer-top" title=" ">
+            <ui:include src="footer.xhtml"/>
+        </div>        
+    </h:body>
+</html>

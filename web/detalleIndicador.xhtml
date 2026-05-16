@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">      
+    <ui:composition template="./layout.xhtml">
+        <ui:define name="content">
+            <h:form id="formDetalleIndicador" title=" ">
+                <ace:panel id="detalleIndicador" header="#{msg.detailsIndicador}">
+                    <table border="0" cellspacing="5" class="panel-buttons">
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="#{msg.id}"/>
+                            </td>
+                            <td align="left">
+                                <h:outputLabel value="#{indicadorManagedBean.id}"/>
+                            </td>                            
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="#{msg.findley}:"/>
+                            </td>
+                            <td align="left">
+                                <h:outputLabel value="#{indicadorManagedBean.leyenda}"/>
+                            </td>                            
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="Fórmula:"/>
+                            </td>
+                            <td align="left">
+                                <h:outputLabel value="#{indicadorManagedBean.formula}"/>
+                            </td>                            
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="url KML"/>
+                            </td>
+                            <td align="left">
+                                <h:outputLabel value="#{indicadorManagedBean.kml}"/>
+                            </td>                            
+                        </tr>
+                        
+                     </table>   
+                    
+                    
+                 
+                
+                   
+                  
+                    <ace:chart id="chartIndicador77"
+                                   animated="true"
+                                   value="#{chartBean2.barData2}"
+                                   stackSeries="false"
+                                   defaultAxesConfig="#{chartBean2.barDemoDefaultAxis}"
+                                   xAxis="#{chartBean2.barDemoXAxis}"
+                                   yAxis="#{chartBean2.barDemoYAxis}"
+                                   legend="true"
+                                   legendPlacement="OUTSIDE_GRID"
+                                   highlighter="true"
+                                   highlighterLocation="N"
+                                   highlighterShowMarker="false"
+                                   highlighterBringSeriesToFront="true" />
+               
+               </ace:panel>
+                 <ace:pushButton value="ver Indicador"  actionListener="#{chartBean2.getSelectItems(indicadorManagedBean.idMeta)}"/>
+                <div align="center">                        
+                        <ace:linkButton action="indicadorConf" value="- Volver -"/>
+                </div>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+

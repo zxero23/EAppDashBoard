@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//ES" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:ace="http://www.icefaces.org/icefaces/components">
+    <h:head>
+        <title>.: CCPM :.</title>
+        <meta http-equiv="pragma" content="no-cache" />
+        <meta http-equiv="cache-control" value="no-cache, no-store, must-revalidate" />
+        <meta http-equiv="expires" content="0" />
+        <link rel="stylesheet" href="css/cssCCPM.css" type="text/css"/>
+        <link rel="shortcut icon" href="images/favicon.png"/>
+        <link rel="stylesheet" href="css/dashboard.css" type="text/css"/>
+        <link rel="stylesheet" href="css/font-awesome.css" type="text/css"/>
+        
+        <link rel="shortcut icon" href="images/favicon.png"/>
+        <script type="text/javascript">
+            (function () {
+                if (!window.console) {
+                    return;
+                }
+                var originalError = window.console.error;
+                if (typeof originalError !== "function") {
+                    return;
+                }
+                window.console.error = function () {
+                    var firstArg = arguments.length > 0 ? String(arguments[0]) : "";
+                    if (firstArg.indexOf("During update: javax.faces.ViewState not found") !== -1) {
+                        return;
+                    }
+                    return originalError.apply(window.console, arguments);
+                };
+            })();
+        </script>
+        
+    </h:head>
+    <h:body>       
+        <f:loadBundle basename="org.ccpm.bienes.ui.labelsCCPM" var="msg"/> 
+        <div id="top" class="banner-top" title=" ">
+            <ui:include src="banner.xhtml"/>
+        </div>
+        
+        <div id="tablero" class="tablero">
+        
+              <ui:insert name="content"/>
+        
+         
+        </div>
+             
+        
+       
+               
+    </h:body>
+</html>

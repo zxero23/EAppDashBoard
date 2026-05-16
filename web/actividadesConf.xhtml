@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">      
+    <ui:composition template="./layout.xhtml">
+        <ui:define name="content">
+            <h:form id="formActividades" title=" ">
+                <ace:panel id="ActividadesPanelActualizar" header="#{msg.confActividades}">
+                    <h:panelGrid  columns="2" class="panel-buttons">
+                        <h:panelGroup>
+                            <img src="images/symbolRefresh.png" align="absmiddle" border="0" alt="" title="Refrescar" style="margin-right: 5px;"/>
+                            <ace:linkButton action="actividadesConf" actionListener="#{actividadesManagedBean.actualizar}" value="#{msg.confActividades}"/>
+                            |
+                        </h:panelGroup>
+
+                        <h:panelGroup rendered="#{actividadesManagedBean.alta}">
+                            <img src="images/symbolAdd.png" align="absmiddle" border="0" alt="" title="Nuevo" style="margin-right: 5px;"/>
+                            <ace:linkButton action="nuevaActividades" value="#{msg.newActividades}"/>
+                        </h:panelGroup>
+                    </h:panelGrid>
+
+                    <ace:panel id="actividadesPanelBusqueda" header="#{msg.busqueda}" toggleable="true" closeSpeed="200" class="panel-buttons">
+                        <h:panelGrid  columns="3">
+                            <ace:textEntry id="nombre" value="#{actividadesManagedBean.leyenda}" label="#{msg.msjO}" labelPosition="left"/>
+                            <ace:pushButton id="find" value="${msg.find}" actionListener="#{actividadesManagedBean.aplicarFiltro}"/>
+                            <ace:pushButton id="actualizar" value="#{msg.actualizar}" actionListener="#{actividadesManagedBean.actualizar}"/>
+                        </h:panelGrid>                     
+                    </ace:panel>
+
+                    <ace:dataTable id="ActividadesDataTable" value="#{actividadesManagedBean.listElements}" var="item" paginator="true" paginatorPosition="bottom" rows="10" class="panel-buttons">
+                        
+                        <ace:column id="id" headerText="#{msg.idT}" style="width: 7%">
+                            <h:outputText id="cellId" value="#{item.id}"/>
+                        </ace:column>
+
+                        <ace:column id="nombre" headerText="#Actividad">
+                            <h:outputText id="cellNombre" value="#{item.leyenda}"/>
+                        </ace:column>
+
+                        <ace:column id="descripcion" headerText="Meta">
+                            <h:outputText id="cellDescripcion" value="#{item.metas.leyenda}"/>
+                        </ace:column>
+                        
+                        <ace:column id="cantidad" headerText="cantidad">
+                            <h:outputText id="cellCantidad" value="#{item.cantidad}"/>
+                        </ace:column>
+                        
+                                                
+                        
+
+                        <ace:column id="accion" headerText="#{msg.actionT}" style="width: 15%">
+                            <h:panelGrid  columns="3"> 
+                                                       
+                                
+                                <ace:pushButton  id="detalle"  action="detalleObjetivo" actionListener="#{actividadesManagedBean.verDetalle}" rendered="#{actividadesManagedBean.detalle}" >
+                                    <img src="images/symbolZoomInWhite.png" />
+                                    <f:param name="id" value="#{item.id}"/>
+                                </ace:pushButton >
+
+                                <ace:pushButton id="editar"  action="editarObjetivo" actionListener="#{actividadesManagedBean.prepararParaEditar()}" rendered="#{actividadesManagedBean.modificacion}" immediate="true"  >
+                                    <img src="images/symbolEditWhite.png" />
+                                    <f:param name="id" value="#{item.id}"/>
+                                </ace:pushButton>
+                                
+                                <ace:pushButton id="eliminar"  rendered="#{actividadesManagedBean.baja}" p:onclick="ice.ace.instance('#{confirmDialogActividades.clientId}').show();return false;" >
+                                <img src="images/symbolDeleteWhite.png" />
+                                </ace:pushButton>
+                                                               
+                                <ace:confirmationDialog id="confirmDialogActividades" binding="#{confirmDialogActividades}"
+                                                        message="${msg.msgDelete}"
+                                                        header="${msg.confirm}"
+                                                        modal="true"
+                                                        width="300"
+                                                        height="155"
+                                                        position="center">
+                                    <h:panelGrid columns="2" class="panel-confirm-buttons">
+                                        <ace:pushButton id="yes" value="${msg.acep}" p:onclick="ice.ace.instance('#{confirmDialogActividades.clientId}').hide();" actionListener="#{actividadesManagedBean.guardarBorrado()}">
+                                            <f:param name="id" value="#{item.id}" />
+                                            <f:ajax execute="@this" render="@all"/>
+                                        </ace:pushButton>
+                                        <ace:pushButton id="no" value="${msg.cancel}" p:onclick="ice.ace.instance('#{confirmDialogActividades.clientId}').hide();">
+                                            <f:ajax execute="@this" render="@all"/>
+                                        </ace:pushButton>
+                                    </h:panelGrid>
+                                </ace:confirmationDialog>
+
+                            </h:panelGrid>
+                        </ace:column> 
+                        
+                        <ace:column id="graficoActividades" headerText="estado" style="width: 15%">
+                             <ace:chart id="chart" animated="true" value="#{chartGaugeBean.gaugeData}" />
+                        </ace:column>
+                        
+                        
+                    </ace:dataTable>
+                </ace:panel>           
+                
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+
+
+

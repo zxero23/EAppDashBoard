@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.0.2  -->
+<!-- 2016-12-12T09:32:24 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Objetivos" pageWidth="595" pageHeight="842" columnWidth="539" leftMargin="28" rightMargin="28" topMargin="28" bottomMargin="28" uuid="5b1f9be5-f4e9-4586-bc08-5d98395cde82">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Tablero"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value="cHVibGljLm9yZ2FuaXNtb3MgQVMgLDE5MiwxMiwzZDZiNjc1Yi0yYWZlLTQyZWYtOWRhOC00ODBl&#xA;MDIxZjExZWI7cHVibGljLm9iamV0aXZvcyBBUyAsMjAsMTExLDM0NzM1MmQyLWJjYTEtNDRkMC1h&#xA;NzFlLTZiYTllNzRiZjI0YTtwdWJsaWMubWV0YXMgQVMgLDM1MywyNDAsMjE0YTA5ZTYtNjU4Ni00&#xA;NDk5LTkzNTktOGQwODNlM2YxNmI1O3B1YmxpYy5zaXR1YWNpb24gQVMgLDIwMiwzOTEsNGQ0NTk4&#xA;OTgtY2FiNi00OTIyLTlkYzYtZGM3ZWRjNGNkYjMyOw=="/>
+	<parameter name="imagen" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT public.objetivos.leyenda AS objetivo,
+	public.objetivos.organismo_id AS org_id,
+	public.metas.leyenda AS leyenda,
+	public.metas.descripcion AS descripcion,
+	public.situacion.leyenda AS situacion,
+	public.organismos.leyenda AS organismo,
+	public.metas.fechafinal,
+	public.metas.fechainicio
+FROM public.metas
+	INNER JOIN public.objetivos ON 
+	 public.metas.objetivos_id = public.objetivos.id 
+	INNER JOIN public.organismos ON 
+	 public.objetivos.organismo_id = public.organismos.id 
+	INNER JOIN public.situacion ON 
+	 public.metas.situacion_id = public.situacion.id 
+	 AND public.metas.situacion_id = public.situacion.id 
+ORDER BY public.objetivos.organismo_id DESC]]>
+	</queryString>
+	<field name="objetivo" class="java.lang.String"/>
+	<field name="org_id" class="java.lang.Long"/>
+	<field name="leyenda" class="java.lang.String"/>
+	<field name="descripcion" class="java.lang.String"/>
+	<field name="situacion" class="java.lang.String"/>
+	<field name="organismo" class="java.lang.String"/>
+	<field name="fechafinal" class="java.sql.Timestamp"/>
+	<field name="fechainicio" class="java.sql.Timestamp"/>
+	<variable name="V_CURRENT_PAGE_NUMBER" class="java.lang.Integer" resetType="Page">
+		<variableExpression><![CDATA[$V{PAGE_NUMBER}]]></variableExpression>
+		<initialValueExpression><![CDATA[1]]></initialValueExpression>
+	</variable>
+	<group name="Organismo" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{organismo}]]></groupExpression>
+		<groupHeader>
+			<band height="17">
+				<textField>
+					<reportElement x="0" y="0" width="539" height="17" uuid="0b625a6a-9afc-43ae-8a95-3daeaaa18320">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Dotted"/>
+						<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Times New Roman" size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{organismo}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="Objetivo" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{objetivo}]]></groupExpression>
+		<groupHeader>
+			<band height="29">
+				<textField>
+					<reportElement positionType="Float" x="0" y="0" width="539" height="29" uuid="013fbc99-7814-4e43-b4eb-1196a07c2c61">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Times New Roman" size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Objetivo - "+$F{objetivo}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="80" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="312" height="40" uuid="12c2e743-bce3-4d32-915d-b3dacc2601d0"/>
+				<imageExpression><![CDATA[$P{imagen}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="0" y="50" width="539" height="30" uuid="8e8b00e3-5c34-4073-9e8a-81f45af064da">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="19" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Metas del Tablero de Gestión de la Provincia de Misiones]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="54" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<printWhenExpression><![CDATA[$V{PAGE_NUMBER}.intValue() > 1 ? Boolean.TRUE : Boolean.FALSE]]></printWhenExpression>
+			<image>
+				<reportElement x="0" y="0" width="312" height="40" uuid="23ce9b66-1e0a-4b5c-82f4-db6970bed2ba"/>
+				<imageExpression><![CDATA[$P{imagen}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="320" y="10" width="218" height="30" uuid="c9a920f6-2f5d-48c6-b275-bfaa7ac85a64"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="Times New Roman" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[- Metas -]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="59" splitType="Prevent">
+			<staticText>
+				<reportElement positionType="Float" x="0" y="1" width="60" height="13" uuid="1bccc7aa-afff-4705-9f89-0743f35cbbe4">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Meta:]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="60" y="1" width="479" height="13" uuid="2d2cf78b-b66a-4a60-9c74-7e8f879aa032">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{leyenda}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="46" width="60" height="13" uuid="b77c516e-6820-4310-8898-64887c5842f3">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Descripción:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" x="60" y="46" width="479" height="13" isPrintWhenDetailOverflows="true" uuid="5a8493b3-7d0d-4a23-8143-504f42fcad82">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box bottomPadding="10"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="16" width="60" height="13" uuid="ce843ec8-3236-4fea-a372-e42b3a9fe560">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Situación:]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="60" y="16" width="119" height="13" uuid="9967240e-1456-4a5c-9cc5-44f6e241d110">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{situacion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="31" width="62" height="13" uuid="fa139982-7c93-4959-9b55-6c1fae81ee34">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Fecha Inicio:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/YYY">
+				<reportElement positionType="Float" x="62" y="31" width="80" height="13" uuid="6347bc37-e6a5-4dda-93cc-a878dab9cd6b">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fechainicio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="150" y="31" width="62" height="13" uuid="81db687a-bbf5-4865-8c53-a95fc9c62d67">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="11" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Fecha Final:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/YYY">
+				<reportElement positionType="Float" x="212" y="31" width="80" height="13" uuid="09d0c07f-6ebc-441a-9025-fb6454a12fa4">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fechafinal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="26" splitType="Stretch">
+			<textField evaluationTime="Auto">
+				<reportElement x="400" y="12" width="138" height="12" uuid="82023c81-1b7d-4872-8321-f6efa744e980">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[msg("Página {0} de {1}", $V{V_CURRENT_PAGE_NUMBER}, $V{PAGE_NUMBER})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="14" width="138" height="12" uuid="dc28fdba-c2b9-42f0-b91d-27c500a0c7fa">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Fecha de Impresión: "+new SimpleDateFormat("dd/MM/yyyy").format(new Date()
+)]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
