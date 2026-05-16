@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:ace="http://www.icefaces.org/icefaces/components"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">      
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">      
     <h:head>
         <title>.: CCPM :.</title>
         <link rel="stylesheet" href="css/cssCCPM.css" type="text/css"/>
@@ -19,7 +19,7 @@
             
         </div>  
         <div id="content" class="content" title=" ">
-            <ace:panel id="nuevaEmpresa" header="ENTRAR EN TABLERO-CCPM">
+            <p:panel id="nuevaEmpresa" header="ENTRAR EN TABLERO-CCPM">
                 <p>
                     <h:outputLabel value="Vuelve a ingresar tu contraseña." />
                 </p>
@@ -33,12 +33,13 @@
                                 <h:outputLabel value="(*) #{msg.uss}" />
                             </td>
                             <td align="left">
-                                <ace:textEntry id="uss" value="#{webManagedBean.nombreUsuario}" required="true">
-                                    <ace:ajax render="@this uss ussMsg" event="blur"/>                                
-                                </ace:textEntry>
+                                <p:inputText id="uss"
+                                             value="#{webManagedBean.nombreUsuario}"
+                                             required="true"
+                                             requiredMessage="Usuario requerido"/>
                             </td>
                             <td align="left">
-                                <ace:message id="usMsg" for="uss" initEffect="slide" changeEffect="shake"/>
+                                <p:message id="usMsg" for="uss"/>
                             </td>
                         </tr>
                         <tr>
@@ -46,24 +47,27 @@
                                 <h:outputLabel value="(*) #{msg.pass}" />
                             </td>
                             <td align="left">
-                                <ace:textEntry id="pass" value="#{webManagedBean.claveAcceso}" required="true" secret="true">
-                                    <ace:ajax render="@this pass passMsg" event="blur"/>                                
-                                </ace:textEntry>
+                                <p:password id="pass"
+                                            value="#{webManagedBean.claveAcceso}"
+                                            required="true"
+                                            requiredMessage="Contraseña requerida"
+                                            feedback="false"
+                                            toggleMask="true"/>
                             </td>
                             <td align="left">
-                                <ace:message id="passMsg" for="pass" initEffect="slide" changeEffect="shake"/>
+                                <p:message id="passMsg" for="pass"/>
                             </td>
                         </tr>
                     </table>
                     <table border="0" cellspacing="5">
                         <tr>                            
                             <td>
-                                <ace:pushButton id="save" action="#{webManagedBean.login}" value="Iniciar sesión"/>
+                                <p:commandButton id="save" action="#{webManagedBean.login}" value="Iniciar sesión" ajax="false"/>
                             </td>                            
                         </tr>
                     </table>
                 </h:form>
-            </ace:panel>                
+            </p:panel>                
         </div>
         <div id="footer" class="footer-top" title=" ">
             <ui:include src="footer.xhtml"/>

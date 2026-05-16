@@ -9,15 +9,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
-import javax.faces.application.Resource;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.annotation.PostConstruct;
+import jakarta.ejb.EJB;
+import jakarta.faces.application.Resource;
+import jakarta.inject.Named;
+import jakarta.faces.view.ViewScoped;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.model.SelectItem;
+import jakarta.servlet.http.HttpServletRequest;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import org.ccpm.dashboard.entity.ActionItem;
@@ -38,7 +37,7 @@ import org.ccpm.util.*;
  *
  * @author Alvarenga Angel
  */
-@ManagedBean
+@Named
 @ViewScoped
 public class MetaPresentacionManagedBean extends UtilManagedBean implements Serializable{
     @EJB
@@ -74,8 +73,8 @@ public class MetaPresentacionManagedBean extends UtilManagedBean implements Seri
     private boolean mostrarPanelObra=false; //panel con obras por estado y organismo.
     private boolean mostrarIndicador=false;
     private boolean reduccion=false;
-    public String focus="";
-    public String grafico="";
+    private String focus="";
+    private String grafico="";
     private boolean organismoRealizaObras=true;
     
     /** Creates a new instance of MetasManagedBean */

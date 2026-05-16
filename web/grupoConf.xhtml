@@ -1,67 +1,67 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:ace="http://www.icefaces.org/icefaces/components"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">      
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="jakarta.faces.core"
+      xmlns:pt="jakarta.faces.passthrough">      
     <ui:composition template="./layout.xhtml">
         <ui:define name="content">
             <h:form id="formGrupo" title=" ">
-                <ace:panel id="GrupoPanelActualizar" header="#{msg.confGrupo}">
+                <p:panel id="GrupoPanelActualizar" header="#{msg.confGrupo}">
                     <h:panelGrid  columns="2" class="panel-buttons">
                         <h:panelGroup>
                             <img src="images/symbolRefresh.png" align="absmiddle" border="0" alt="" title="Refrescar" style="margin-right: 5px;"/>
-                            <ace:linkButton action="grupoConf" actionListener="#{grupoManagedBean.actualizar}" value="#{msg.confGrupo}"/>
+                            <p:commandLink action="grupoConf" actionListener="#{grupoManagedBean.actualizar}" value="#{msg.confGrupo}"/>
                             |
                         </h:panelGroup>
 
                         <h:panelGroup rendered="#{grupoManagedBean.alta}">
                             <img src="images/symbolAdd.png" align="absmiddle" border="0" alt="" title="Nuevo" style="margin-right: 5px;"/>
-                            <ace:linkButton action="nuevoGrupo" value="#{msg.newGrupo}"/>
+                            <p:commandLink action="nuevoGrupo" value="#{msg.newGrupo}"/>
                         </h:panelGroup>
                     </h:panelGrid>
 
-                    <ace:panel id="GrupoPanelBusqueda" header="#{msg.busqueda}" toggleable="true" closeSpeed="200" class="panel-buttons">
+                    <p:panel id="GrupoPanelBusqueda" header="#{msg.busqueda}" toggleable="true" closeSpeed="200" class="panel-buttons">
                         <h:panelGrid  columns="3">
-                            <ace:textEntry id="nombre" value="#{grupoManagedBean.nombreBuscar}" label="#{msg.name}" labelPosition="left"/>
-                            <ace:pushButton id="find" value="${msg.find}" actionListener="#{grupoManagedBean.aplicarFiltro}"/>
-                            <ace:pushButton id="actualizar" value="#{msg.actualizar}" actionListener="#{grupoManagedBean.actualizar}"/>
+                            <p:inputText id="nombre" value="#{grupoManagedBean.nombreBuscar}" label="#{msg.name}" labelPosition="left"/>
+                            <p:commandButton id="find" value="${msg.find}" actionListener="#{grupoManagedBean.aplicarFiltro}"/>
+                            <p:commandButton id="actualizar" value="#{msg.actualizar}" actionListener="#{grupoManagedBean.actualizar}"/>
                         </h:panelGrid>                     
-                    </ace:panel>
+                    </p:panel>
 
-                    <ace:dataTable id="GrupoPanelDataTable" value="#{grupoManagedBean.listElements}" var="item" paginator="true" paginatorPosition="bottom" rows="10" class="panel-buttons">
+                    <p:dataTable id="GrupoPanelDataTable" value="#{grupoManagedBean.listElements}" var="item" paginator="true" paginatorPosition="bottom" rows="10" class="panel-buttons">
                         
-                        <ace:column id="id" headerText="#{msg.idT}" style="width: 7%">
+                        <p:column id="id" headerText="#{msg.idT}" style="width: 7%">
                             <h:outputText id="cellId" value="#{item.id}"/>
-                        </ace:column>
+                        </p:column>
 
-                        <ace:column id="nombre" headerText="#{msg.nameT}">
+                        <p:column id="nombre" headerText="#{msg.nameT}">
                             <h:outputText id="cellNombre" value="#{item.nombre}"/>
-                        </ace:column>
+                        </p:column>
 
-                        <ace:column id="descripcion" headerText="#{msg.descriT}">
+                        <p:column id="descripcion" headerText="#{msg.descriT}">
                             <h:outputText id="cellDescripcion" value="#{item.descripcion}"/>
-                        </ace:column>
+                        </p:column>
 
-                        <ace:column id="accion" headerText="#{msg.actionT}" style="width: 15%">
+                        <p:column id="accion" headerText="#{msg.actionT}" style="width: 15%">
                             <h:panelGrid  columns="3"> 
                                 
-                                <ace:pushButton id="detalle" action="detalleGrupo" actionListener="#{grupoManagedBean.verDetalle}" rendered="#{grupoManagedBean.detalle}">
+                                <p:commandButton id="detalle" action="detalleGrupo" actionListener="#{grupoManagedBean.verDetalle}" rendered="#{grupoManagedBean.detalle}">
                                     <img src="images/symbolZoomInWhite.png" />
                                     <f:param name="id" value="#{item.id}"/>
-                                </ace:pushButton>
+                                </p:commandButton>
 
-                                <ace:pushButton id="editar"  action="editarGrupo" actionListener="#{grupoManagedBean.prepararParaEditar()}" rendered="#{grupoManagedBean.modificacion}">
+                                <p:commandButton id="editar"  action="editarGrupo" actionListener="#{grupoManagedBean.prepararParaEditar()}" rendered="#{grupoManagedBean.modificacion}">
                                     <img src="images/symbolEditWhite.png" />
                                     <f:param name="id" value="#{item.id}"/>
-                                </ace:pushButton>
+                                </p:commandButton>
                                 
-                                <ace:pushButton id="eliminar" rendered="#{grupoManagedBean.baja}" p:onclick="ice.ace.instance('#{confirmDialogGrupo.clientId}').show();return false;">
+                                <p:commandButton id="eliminar" rendered="#{grupoManagedBean.baja}" >
                                     <img src="images/symbolDeleteWhite.png" />   
-                                </ace:pushButton>
-                                <ace:confirmationDialog id="confirmDialogGrupo" binding="#{confirmDialogGrupo}"
+                                </p:commandButton>
+                                <h:panelGroup id="confirmDialogGrupo" binding="#{confirmDialogGrupo}"
                                                         message="${msg.msgDelete}"
                                                         header="${msg.confirm}"
                                                         modal="true"
@@ -69,20 +69,20 @@
                                                         height="155"
                                                         position="center">
                                     <h:panelGrid columns="2" class="panel-confirm-buttons">
-                                        <ace:pushButton id="yes" value="${msg.acep}" p:onclick="ice.ace.instance('#{confirmDialogGrupo.clientId}').hide();" actionListener="#{grupoManagedBean.guardarBorrado()}">
+                                        <p:commandButton id="yes" value="${msg.acep}"  actionListener="#{grupoManagedBean.guardarBorrado()}">
                                             <f:param name="id" value="#{item.id}" />
                                             <f:ajax execute="@this" render="@all"/>
-                                        </ace:pushButton>
-                                        <ace:pushButton id="no" value="${msg.cancel}" p:onclick="ice.ace.instance('#{confirmDialogGrupo.clientId}').hide();">
+                                        </p:commandButton>
+                                        <p:commandButton id="no" value="${msg.cancel}" >
                                             <f:ajax execute="@this" render="@all"/>
-                                        </ace:pushButton>
+                                        </p:commandButton>
                                     </h:panelGrid>
-                                </ace:confirmationDialog>
+                                </h:panelGroup>
 
                             </h:panelGrid>
-                        </ace:column>                    
-                    </ace:dataTable>
-                </ace:panel>           
+                        </p:column>                    
+                    </p:dataTable>
+                </p:panel>           
                 
             </h:form>
         </ui:define>

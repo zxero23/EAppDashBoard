@@ -18,14 +18,14 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
-import javax.faces.application.Resource;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.annotation.PostConstruct;
+import jakarta.ejb.EJB;
+import jakarta.faces.application.Resource;
+import jakarta.inject.Named;
+import jakarta.faces.view.ViewScoped;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.model.SelectItem;
+import jakarta.servlet.http.HttpServletRequest;
 import org.ccpm.dashboard.entity.ActionItem;
 import org.ccpm.dashboard.entity.Obras;
 import org.ccpm.dashboard.entity.Grupo;
@@ -37,17 +37,15 @@ import org.ccpm.dashboard.facade.LocalidadFacadeLocal;
 import org.ccpm.dashboard.facade.ObrasFacadeLocal;
 import org.ccpm.dashboard.facade.OrganismoFacadeLocal;
 import org.ccpm.dashboard.facade.SituacionFacadeLocal;
-import org.icefaces.ace.component.fileentry.FileEntry;
-import org.icefaces.ace.component.fileentry.FileEntryEvent;
-import org.icefaces.ace.component.fileentry.FileEntryResults;
-import org.icefaces.ace.util.IceOutputResource;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.file.UploadedFile;
 
 
 /**
  *
  * @author Alvarenga Angel
  */
-@ManagedBean
+@Named
 @ViewScoped
 public class ObrasPresentacionManagedBean extends UtilManagedBean implements Serializable{
     @EJB
@@ -87,7 +85,7 @@ public class ObrasPresentacionManagedBean extends UtilManagedBean implements Ser
     private Resource[] arrayResource=new Resource[5];
     private String reemplazar="DatosTablero";
     private int tamanioFotos=0;
-    private IceOutputResource resourceImage;
+    private Resource resourceImage;
     private byte[] byteArrayImage;
     private boolean organismoRealizaObras=true;
     private Long idOrgAux=0L;
@@ -247,11 +245,11 @@ public class ObrasPresentacionManagedBean extends UtilManagedBean implements Ser
 
     
     
-    public IceOutputResource getResourceImage() {
+    public Resource getResourceImage() {
         return resourceImage;
     }
 
-    public void setResourceImage(IceOutputResource resourceImage) {
+    public void setResourceImage(Resource resourceImage) {
         this.resourceImage = resourceImage;
     }
 
@@ -629,17 +627,10 @@ public class ObrasPresentacionManagedBean extends UtilManagedBean implements Ser
     }
      
     //devuelve el evento de la carga de archivos, como por ej el path del archivo subido
-     public void customValidator(FileEntryEvent entryEvent) { //aaandaaaa
-        FileEntryResults results = ((FileEntry) entryEvent.getComponent()).getResults();
-        for (FileEntryResults.FileInfo file : results.getFiles()) {
-            this.setAdjunto(file.getFile().getAbsolutePath());
-            if (file.isSaved()) {
-                System.out.println(file.getFileName());
-                System.out.println(file.getContentType());
-                System.out.println(file.getFile().getAbsolutePath());
-                this.setAdjunto(file.getFile().getAbsolutePath());
-                
-            }
+     public void customValidator(FileUploadEvent entryEvent) {
+        UploadedFile file = entryEvent.getFile();
+        if (file != null) {
+            this.setAdjunto(file.getFileName());
         }
      }
      
@@ -776,12 +767,12 @@ public class ObrasPresentacionManagedBean extends UtilManagedBean implements Ser
         File file = new File(resourcePath);
         try {
             //es muy importante colocar Math.random() para que la imagen cambie dentro del la vista!!!!! (un dolor de cabeza)
-            this.arrayResource[i] = new IceOutputResource("resourceGraphicImage"+Math.random(), readIntoByteArray2(new FileInputStream(file)), "image/png");
+            this.arrayResource[i] = new ObrasPresentacionManagedBean.MyResource(readIntoByteArray2(new FileInputStream(file)));
             
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
-            this.arrayResource[i] = new IceOutputResource("resourceGraphicImage", new byte[0], "image/png");
+            this.arrayResource[i] = new ObrasPresentacionManagedBean.MyResource(new byte[0]);
         }
       }
        

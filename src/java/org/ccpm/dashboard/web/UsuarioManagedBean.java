@@ -9,13 +9,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.annotation.PostConstruct;
+import jakarta.ejb.EJB;
+
+import jakarta.enterprise.context.SessionScoped;
+import jakarta.inject.Named;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.model.SelectItem;
+import jakarta.servlet.http.HttpServletRequest;
 import org.ccpm.dashboard.entity.ActionItem;
 import org.ccpm.dashboard.entity.Grupo;
 import org.ccpm.dashboard.entity.Organismo;
@@ -29,8 +30,8 @@ import org.ccpm.dashboard.facade.UsuarioFacadeLocal;
  *
  * @author Alvarenga Angel
  */
-@ManagedBean
-@CustomScoped(value = "#{window}")
+@Named
+@SessionScoped
 public class UsuarioManagedBean extends UtilManagedBean implements Serializable{
     @EJB
     private UsuarioFacadeLocal usuarioFacade; 

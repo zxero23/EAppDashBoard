@@ -1,26 +1,26 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">      
     <ui:composition template="./layout.xhtml">
         <ui:define name="content">
             <h:form id="formEditarIndicador" title=" ">
-                <ace:panel id="editarIndicador" header="#{msg.editIndicador}">
+                <p:panel id="editarIndicador" header="#{msg.editIndicador}">
                     <table border="0" cellspacing="5" class="panel-buttons">
                         <tr>
                             <td align="right">
                                 <h:outputLabel value="(*) #{msg.name}" />
                             </td>
                             <td align="left">
-                                <ace:textEntry id="leyenda" label="#{msg.name}" value="#{indicadorManagedBean.leyenda}" required="true" size="55">
-                                    <ace:ajax render="@this leyenda leyendaMsg" event="blur"/>                                
-                                </ace:textEntry>
+                                <p:inputText id="leyenda" label="#{msg.name}" value="#{indicadorManagedBean.leyenda}" required="true" size="55">
+                                    <p:ajax render="@this leyenda leyendaMsg" event="blur"/>                                
+                                </p:inputText>
                             </td>
                             <td align="left">
-                                <ace:message id="leyendaMsg" for="leyenda" initEffect="slide" changeEffect="shake"/>  
+                                <p:message id="leyendaMsg" for="leyenda" initEffect="slide" changeEffect="shake"/>  
                             </td>
                         </tr>
                         <tr>
@@ -28,12 +28,12 @@
                                 <h:outputLabel value="(*) Descripción" />
                             </td>
                             <td align="left">
-                                <ace:textEntry id="descripcion" label="descripcion" value="#{indicadorManagedBean.descripcion}" required="true" size="55">
-                                    <ace:ajax render="@this descripcion descripcionMsg" event="blur"/>                                
-                                </ace:textEntry>
+                                <p:inputText id="descripcion" label="descripcion" value="#{indicadorManagedBean.descripcion}" required="true" size="55">
+                                    <p:ajax render="@this descripcion descripcionMsg" event="blur"/>                                
+                                </p:inputText>
                             </td>
                             <td align="left">
-                                <ace:message id="descripcionMsg" for="descripcion" initEffect="slide" changeEffect="shake"/>  
+                                <p:message id="descripcionMsg" for="descripcion" initEffect="slide" changeEffect="shake"/>  
                             </td>
                         </tr>
                       
@@ -44,46 +44,46 @@
                                 <h:outputLabel value="Tamaño de Serie" />
                             </td>
                             <td align="left">
-                                 <ace:textEntry id="serieSize" value="#{indicadorManagedBean.serieSize}">
-                                    <ace:ajax event="valueChange" render="@this serieSizeOutput panelSerie panelValores"/>
-                                </ace:textEntry>
+                                 <p:inputText id="serieSize" value="#{indicadorManagedBean.serieSize}">
+                                    <p:ajax event="valueChange" render="@this serieSizeOutput panelSerie panelValores"/>
+                                </p:inputText>
                             </td>
                             <td align="left">
-                                <ace:message id="serieSizeMsg" for="serieSize" initEffect="slide" changeEffect="shake"/>  
+                                <p:message id="serieSizeMsg" for="serieSize" initEffect="slide" changeEffect="shake"/>  
                             </td>
                         </tr>
                     
                     </table> 
                      
-                    <ace:panel id="panelSerie" header="SERIE">
+                    <p:panel id="panelSerie" header="SERIE">
                         <h:panelGrid  columns="5">
                             <c:forEach var="i" begin="0" end="#{indicadorManagedBean.serieSize-1}">  
-                                <ace:textEntry id="serieSizeOutput" value="#{indicadorManagedBean.serie[i]}"/>
+                                <p:inputText id="serieSizeOutput" value="#{indicadorManagedBean.serie[i]}"/>
                             </c:forEach>
                         </h:panelGrid>
-                    </ace:panel>
-                     <ace:panel header="VARIABLE">
+                    </p:panel>
+                     <p:panel header="VARIABLE">
                         <h:panelGrid columns="3">
-                                <ace:textEntry value="#{indicadorManagedBean.variableIndicador[0]}"/>
-                                <ace:textEntry value="#{indicadorManagedBean.variableIndicador[1]}"/>
-                                <ace:textEntry value="#{indicadorManagedBean.variableIndicador[2]}"/>
+                                <p:inputText value="#{indicadorManagedBean.variableIndicador[0]}"/>
+                                <p:inputText value="#{indicadorManagedBean.variableIndicador[1]}"/>
+                                <p:inputText value="#{indicadorManagedBean.variableIndicador[2]}"/>
                         </h:panelGrid>
-                    </ace:panel>
-                    <ace:panel id="panelValores" header="VALORES">
+                    </p:panel>
+                    <p:panel id="panelValores" header="VALORES">
                         <h:panelGrid columns="3">
                             <c:forEach var="i" begin="0" end="#{indicadorManagedBean.serieSize*3-1}">
-                                <h:inputText value="#{indicadorManagedBean.valores[i]}"/>
+                                <p:inputText value="#{indicadorManagedBean.valores[i]}"/>
                             </c:forEach>
                         </h:panelGrid>
-                    </ace:panel>
+                    </p:panel>
                     
                     <h:inputHidden value="#{indicadorManagedBean.id}" />
                     
                     <h:panelGrid id="buttonGrid" columns="2" class="panel-buttons">
-                        <ace:pushButton id="save" value="#{msg.saveEdit}" action="#{indicadorManagedBean.guardarEdicion}"/>                        
-                        <ace:pushButton id="cancel" value="#{msg.cancel}" action="indicadorConf" immediate="true" actionListener="#{indicadorManagedBean.limpiar()}"/>
+                        <p:commandButton id="save" value="#{msg.saveEdit}" action="#{indicadorManagedBean.guardarEdicion}"/>                        
+                        <p:commandButton id="cancel" value="#{msg.cancel}" action="indicadorConf" immediate="true" actionListener="#{indicadorManagedBean.limpiar()}"/>
                     </h:panelGrid>
-                </ace:panel>                
+                </p:panel>                
             </h:form>
         </ui:define>
     </ui:composition>

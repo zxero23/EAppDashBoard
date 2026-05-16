@@ -1,28 +1,28 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:ace="http://www.icefaces.org/icefaces/components"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="jakarta.faces.core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">      
     <ui:composition template="./layout.xhtml">
         <ui:define name="content">
             <h:form id="formNuevaObra" title=" ">
-                <ace:panel id="nuevaObra" header="#{msg.newObra}">
+                <p:panel id="nuevaObra" header="#{msg.newObra}">
                     <table border="0" cellspacing="5" class="panel-buttons">
                          <tr>
                             <td align="right">
                                 <h:outputLabel value="(*) Organismo:" />
                             </td>
                             <td align="left">
-                                <ace:simpleSelectOneMenu id="sltOrganismoObra" value="#{obrasManagedBean.idOrganismo}" label="organismo"  required="true" >
+                                <p:selectOneMenu id="sltOrganismoObra" value="#{obrasManagedBean.idOrganismo}" label="organismo"  required="true" >
                                     <f:selectItems value="#{obrasManagedBean.selectItemsOrg}" /> 
-                                    <ace:ajax render="@this sltOrganismoObra sltOrganismoObraMsg" event="blur"/> 
-                                </ace:simpleSelectOneMenu>
+                                    <p:ajax render="@this sltOrganismoObra sltOrganismoObraMsg" event="blur"/> 
+                                </p:selectOneMenu>
                             </td>
                             <td align="left">
-                                <ace:message id="sltOrganismoObraMsg" for="sltOrganismoObra" initEffect="slide" changeEffect="shake"/>
+                                <p:message id="sltOrganismoObraMsg" for="sltOrganismoObra" initEffect="slide" changeEffect="shake"/>
                             </td>
                         </tr>         
                         <tr>
@@ -30,13 +30,13 @@
                                 <h:outputLabel value="(*) Situacion:" />
                             </td>
                             <td align="left">
-                                <ace:simpleSelectOneMenu id="sltSituacion" value="#{obrasManagedBean.idSituacion}" label="situacion"  required="true">
+                                <p:selectOneMenu id="sltSituacion" value="#{obrasManagedBean.idSituacion}" label="situacion"  required="true">
                                     <f:selectItems value="#{obrasManagedBean.selectItems}" /> 
-                                    <ace:ajax render="@this sltSituacion sltSituacionMsg" event="blur"/> 
-                                </ace:simpleSelectOneMenu>
+                                    <p:ajax render="@this sltSituacion sltSituacionMsg" event="blur"/> 
+                                </p:selectOneMenu>
                             </td>
                             <td align="left">
-                                <ace:message id="sltSituacionMsg" for="sltSituacion" initEffect="slide" changeEffect="shake"/>
+                                <p:message id="sltSituacionMsg" for="sltSituacion" initEffect="slide" changeEffect="shake"/>
                             </td>
                         </tr>
                          <tr>
@@ -44,13 +44,13 @@
                                 <h:outputLabel value="(*) Localidad" />
                             </td>
                             <td align="left">
-                                <ace:simpleSelectOneMenu id="sltLocalidad" value="#{obrasManagedBean.idLocalidad}" label="localidad"  required="true">
+                                <p:selectOneMenu id="sltLocalidad" value="#{obrasManagedBean.idLocalidad}" label="localidad"  required="true">
                                     <f:selectItems value="#{obrasManagedBean.selectItemsLocalidad}" /> 
-                                    <ace:ajax render="@this sltLocalidad sltLocalidadMsg" event="blur"/> 
-                                </ace:simpleSelectOneMenu>
+                                    <p:ajax render="@this sltLocalidad sltLocalidadMsg" event="blur"/> 
+                                </p:selectOneMenu>
                             </td>
                             <td align="left">
-                                <ace:message id="sltLocalidadMsg" for="sltLocalidad" initEffect="slide" changeEffect="shake"/>
+                                <p:message id="sltLocalidadMsg" for="sltLocalidad" initEffect="slide" changeEffect="shake"/>
                             </td>
                         </tr>
                         <tr>
@@ -58,9 +58,9 @@
                                 <h:outputLabel value="(*) Leyenda" />
                             </td>
                             <td align="left">
-                                <ace:textEntry id="leyenda" label="leyenda" value="#{obrasManagedBean.leyenda}" required="true" size="53">
+                                <p:inputText id="leyenda" label="leyenda" value="#{obrasManagedBean.leyenda}" required="true" size="53">
                                                                     
-                                </ace:textEntry>
+                                </p:inputText>
                             </td>
                         </tr>
                            
@@ -69,9 +69,9 @@
                                 <h:outputLabel value="(*) Latitud" />
                             </td>
                             <td align="left">
-                                <ace:textEntry id="latitud" label="#{msg.name}" value="#{obrasManagedBean.latitud}" required="true" size="53">
+                                <p:inputText id="latitud" label="#{msg.name}" value="#{obrasManagedBean.latitud}" required="true" size="53">
                                                                   
-                                </ace:textEntry>
+                                </p:inputText>
                             </td>
                         </tr>
                         <tr>
@@ -79,9 +79,9 @@
                                 <h:outputLabel value="(*) Longitud" />
                             </td>
                             <td align="left">
-                                <ace:textEntry id="longitud" label="longitud" value="#{obrasManagedBean.longitud}" required="true" size="53">
+                                <p:inputText id="longitud" label="longitud" value="#{obrasManagedBean.longitud}" required="true" size="53">
                                                                   
-                                </ace:textEntry>
+                                </p:inputText>
                             </td>
                         </tr>
                          <tr>
@@ -89,13 +89,13 @@
                                 <h:outputLabel value="(*) FechaInicio" />
                             </td>
                             <td align="left">
-                                <ace:maskedEntry id="fechainicioObra" value="#{obrasManagedBean.fechaInicio}" mask="99/99/9999" required="true" size="45">
-                                    <ace:ajax render="@this fechainicioObra fechainicioObraMsg" event="blur"/>
+                                <p:inputMask id="fechainicioObra" value="#{obrasManagedBean.fechaInicio}" mask="99/99/9999" required="true" size="45">
+                                    <p:ajax render="@this fechainicioObra fechainicioObraMsg" event="blur"/>
                                     <f:convertDateTime pattern="dd/MM/yyyy" locale="es_AR" timeZone="America/Argentina/Buenos_Aires"/> 
-                                </ace:maskedEntry>
+                                </p:inputMask>
                             </td>
                             <td align="left">
-                                <ace:message id="fechainicioObraMsg" for="fechainicioObra" initEffect="slide" changeEffect="shake"/> 
+                                <p:message id="fechainicioObraMsg" for="fechainicioObra" initEffect="slide" changeEffect="shake"/> 
                             </td>
                         </tr>
                          <tr>
@@ -103,13 +103,13 @@
                                 <h:outputLabel value="(*) FechaFinal" />
                             </td>
                             <td align="left">
-                                <ace:maskedEntry id="fechafinalObra" value="#{obrasManagedBean.fechaFinal}" mask="99/99/9999" required="true" size="45">
-                                    <ace:ajax render="@this fechafinalObra fechafinalObraMsg" event="blur"/>
+                                <p:inputMask id="fechafinalObra" value="#{obrasManagedBean.fechaFinal}" mask="99/99/9999" required="true" size="45">
+                                    <p:ajax render="@this fechafinalObra fechafinalObraMsg" event="blur"/>
                                     <f:convertDateTime pattern="dd/MM/yyyy" locale="es_AR" timeZone="America/Argentina/Buenos_Aires"/> 
-                                </ace:maskedEntry>
+                                </p:inputMask>
                             </td>
                             <td align="left">
-                                <ace:message id="fechafinalObraMsg" for="fechafinalObra" initEffect="slide" changeEffect="shake"/> 
+                                <p:message id="fechafinalObraMsg" for="fechafinalObra" initEffect="slide" changeEffect="shake"/> 
                             </td>
                         </tr>
                         <tr>
@@ -117,16 +117,16 @@
                                 <h:outputLabel value="(*) Archivo PDF Adjunto" />
                             </td>
                             <td align="left">
-                                <ace:fileEntry  id="adjunto" absolutePath="/home/DatosTablero" label="Archivo"
+                                <p:fileUpload  id="adjunto" absolutePath="/home/DatosTablero" label="Archivo"
                                     fileEntryListener="#{obrasManagedBean.customValidator}"  
                                     useOriginalFilename="true"
                                     useSessionSubdir="false"
                                     autoUpload="false"
                                     multiple="false"
                                     class="inferior">
-                                    <h:commandButton id="submitBtn" type="submit" value="Enviar Archivo" actionListener="#{obrasManagedBean.setearAdjunto(obrasManagedBean.adjunto)}"/>
-                                </ace:fileEntry>
-                                    <h:inputText value="#{obrasManagedBean.adjunto}"/> <!-- Esto para que guarde el nombre del adjunto en la bd -->
+                                    <p:commandButton id="submitBtn" type="submit" value="Enviar Archivo" actionListener="#{obrasManagedBean.setearAdjunto(obrasManagedBean.adjunto)}"/>
+                                </p:fileUpload>
+                                    <p:inputText value="#{obrasManagedBean.adjunto}"/> <!-- Esto para que guarde el nombre del adjunto en la bd -->
                             </td>
                             
                         </tr>
@@ -136,7 +136,7 @@
                             </td>
                             <td align="left">
                                 
-                                <ace:fileEntry  id="adjuntoFotos" absolutePath="C:/home/DatosTablero" label="Archivo"
+                                <p:fileUpload  id="adjuntoFotos" absolutePath="C:/home/DatosTablero" label="Archivo"
                                     fileEntryListener="#{obrasManagedBean.customValidatorFotos}"  
                                     useOriginalFilename="true"
                                     useSessionSubdir="false"
@@ -146,15 +146,15 @@
                                    
                                         
                                    
-                                </ace:fileEntry>
-                                <ace:panel rendered="#{obrasManagedBean.verBoton}">
-                                    <ace:pushButton value="cargar" rendered="#{obrasManagedBean.verBoton}">
+                                </p:fileUpload>
+                                <p:panel rendered="#{obrasManagedBean.verBoton}">
+                                    <p:commandButton value="cargar" rendered="#{obrasManagedBean.verBoton}">
                                 
                                         <c:forEach var="i" begin="0" end="4">
-                                             <h:inputText value="#{obrasManagedBean.fotos[i]}"/>
+                                             <p:inputText value="#{obrasManagedBean.fotos[i]}"/>
                                         </c:forEach>
-                                    </ace:pushButton>
-                                </ace:panel>
+                                    </p:commandButton>
+                                </p:panel>
                                 
                                      <!-- Esto para que guarde el nombre del adjunto en la bd -->
                             </td>
@@ -163,11 +163,11 @@
                         
                      </table>
                     <h:panelGrid id="buttonGrid" columns="3" class="panel-buttons">
-                        <ace:pushButton id="save" value="#{msg.save}" action="#{obrasManagedBean.crear()}"/>
-                        <ace:pushButton id="saveCreate" value="#{msg.saveCreate}" action="#{obrasManagedBean.crearOtro()}"/>
-                        <ace:pushButton id="cancel" value="#{msg.cancel}" action="obrasConf" immediate="true" actionListener="#{obrasManagedBean.limpiar()}"/>
+                        <p:commandButton id="save" value="#{msg.save}" action="#{obrasManagedBean.crear()}"/>
+                        <p:commandButton id="saveCreate" value="#{msg.saveCreate}" action="#{obrasManagedBean.crearOtro()}"/>
+                        <p:commandButton id="cancel" value="#{msg.cancel}" action="obrasConf" immediate="true" actionListener="#{obrasManagedBean.limpiar()}"/>
                     </h:panelGrid>
-                </ace:panel>                
+                </p:panel>                
             </h:form>
         </ui:define>
     </ui:composition>

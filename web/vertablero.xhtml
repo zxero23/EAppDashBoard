@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:ace="http://www.icefaces.org/icefaces/components"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="jakarta.faces.core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">      
+      xmlns:pt="jakarta.faces.passthrough">      
     <ui:composition template="./layoutIndex.xhtml">
        
         <ui:define name="content">
@@ -15,72 +15,62 @@
                 <!-- Aca empieza el Menu lateral izquierdo -->
                 <div id="menuLateral" class="menuLateral" title=" "  style="width:29%;float:left">
                     <h:form>
-                        <ace:panel id="OrganismoActualizar" header="MONITOREO DE OBJETIVOS">
-                            <ace:dataTable id="OrganismoPanelDataTable" value="#{organismoManagedBean.listElementsOrg}" var="item" paginator="true" paginatorPosition="bottom" rows="10" class="panel-buttons">
-                                <ace:column id="nombreOrg" headerText="Organismo">
+                        <p:panel id="OrganismoActualizar" header="MONITOREO DE OBJETIVOS">
+                            <p:dataTable id="OrganismoPanelDataTable" value="#{organismoManagedBean.listElementsOrg}" var="item" paginator="true" paginatorPosition="bottom" rows="10" class="panel-buttons">
+                                <p:column id="nombreOrg" headerText="Organismo">
                                     <center>
                                         <h:outputText id="cellNombreOrg" value="#{item.leyenda}"/>
                                     </center>
-                                </ace:column>
-                                <ace:column id="estadoOrg" headerText="Metas">
+                                </p:column>
+                                <p:column id="estadoOrg" headerText="Metas">
                                     <center>
                                     <h:panelGrid  columns="4" cellpadding="1"  > 
                                         <!--BOTONES LATERALES DE MONITOREO DE OBJETIVOS-->
                                         
 
-                                        <h:commandButton id="botonVerde" value="#{metaPresentacionManagedBean.devolverEstadoOrg(item.id, 7)}" class="semaforoVerde" actionListener="#{metaPresentacionManagedBean.setearOrgEstado(item.id, 7,item.leyenda)}"   >
+                                        <p:commandButton id="botonVerde" value="#{metaPresentacionManagedBean.devolverEstadoOrg(item.id, 7)}" class="semaforoVerde" actionListener="#{metaPresentacionManagedBean.setearOrgEstado(item.id, 7,item.leyenda)}"   >
                                             <f:actionListener binding="#{metaPresentacionManagedBean.verPanelMeta()}"/>
 
-                                        </h:commandButton>
-                                        <h:commandButton id="botonAmarillo" value="#{metaPresentacionManagedBean.devolverEstadoOrg(item.id, 8)}" class="semaforoAmarillo"  actionListener="#{metaPresentacionManagedBean.setearOrgEstado(item.id, 8,item.leyenda)}" >
+                                        </p:commandButton>
+                                        <p:commandButton id="botonAmarillo" value="#{metaPresentacionManagedBean.devolverEstadoOrg(item.id, 8)}" class="semaforoAmarillo"  actionListener="#{metaPresentacionManagedBean.setearOrgEstado(item.id, 8,item.leyenda)}" >
                                             <f:actionListener binding="#{metaPresentacionManagedBean.verPanelMeta()}"/>
 
-                                        </h:commandButton>
-                                        <h:commandButton id="botonRojo" value="#{metaPresentacionManagedBean.devolverEstadoOrg(item.id, 10)}" class="semaforoRojo" actionListener="#{metaPresentacionManagedBean.setearOrgEstado(item.id, 10,item.leyenda)}"  >
+                                        </p:commandButton>
+                                        <p:commandButton id="botonRojo" value="#{metaPresentacionManagedBean.devolverEstadoOrg(item.id, 10)}" class="semaforoRojo" actionListener="#{metaPresentacionManagedBean.setearOrgEstado(item.id, 10,item.leyenda)}"  >
                                             <f:actionListener binding="#{metaPresentacionManagedBean.verPanelMeta()}"/>
 
-                                        </h:commandButton>
-                                        <h:commandButton id="botonAzul" value="#{metaPresentacionManagedBean.devolverEstadoOrg(item.id, 11)}" class="semaforoAzul" actionListener="#{metaPresentacionManagedBean.setearOrgEstado(item.id,11,item.leyenda)}">
+                                        </p:commandButton>
+                                        <p:commandButton id="botonAzul" value="#{metaPresentacionManagedBean.devolverEstadoOrg(item.id, 11)}" class="semaforoAzul" actionListener="#{metaPresentacionManagedBean.setearOrgEstado(item.id,11,item.leyenda)}">
                                             <f:actionListener binding="#{metaPresentacionManagedBean.verPanelMeta()}"/>
 
-                                        </h:commandButton> 
+                                        </p:commandButton> 
                                         <!--cuando pasas el puntero sobre los botones te informa la leyenda del estado-->
-                                        <ace:tooltip id="tooltipBotonBlanco" for="botonAzul" value="TERMINADO" showEffect="slide"/>
-                                        <ace:tooltip id="tooltipBotonVerde" for="botonVerde" value="EN TERMINO" showEffect="slide"/>
-                                        <ace:tooltip id="tooltipBotonAmarillo" for="botonAmarillo" value="EN ALERTA" showEffect="slide"/>
-                                        <ace:tooltip id="tooltipBotonRojo" for="botonRojo" value="RIESGO ALTO" showEffect="slide"/>
+                                        <p:tooltip id="tooltipBotonBlanco" for="botonAzul" value="TERMINADO" showEffect="slide"/>
+                                        <p:tooltip id="tooltipBotonVerde" for="botonVerde" value="EN TERMINO" showEffect="slide"/>
+                                        <p:tooltip id="tooltipBotonAmarillo" for="botonAmarillo" value="EN ALERTA" showEffect="slide"/>
+                                        <p:tooltip id="tooltipBotonRojo" for="botonRojo" value="RIESGO ALTO" showEffect="slide"/>
                                     </h:panelGrid>
                                     </center>
-                                </ace:column>
+                                </p:column>
                                 
                                 
                                 
-                            </ace:dataTable>
-                            <ace:dynamicResource resource="#{metaPresentacionManagedBean.impObj()}"
-                                                     type="link"
-                                                     label="Reporte Objetivos"
-                                                     fileName="objetivos.pdf"
-                                                     mimeType="application/pdf"
-                                                     attachment="true"/>
-                            <ace:dynamicResource resource="#{metaPresentacionManagedBean.impMet()}"
-                                                     type="link"
-                                                     label="Reporte Metas"
-                                                     fileName="objetivos.pdf"
-                                                     mimeType="application/pdf"
-                                                     attachment="true"/>
+                            </p:dataTable>
+                            <h:outputText value="" />
+                            <h:outputText value="" />
                             
-                        </ace:panel>
-                        <ace:panel id="ObrasPanel" header="MONITOREO DE OBRAS" rendered="#{obrasPresentacionManagedBean.organismoRealizaObras}">
-                            <ace:panel id="panelBusquedaObra" header="Búsqueda" collapsed="TRUE" toggleable="true" closeSpeed="50">
+                        </p:panel>
+                        <p:panel id="ObrasPanel" header="MONITOREO DE OBRAS" rendered="#{obrasPresentacionManagedBean.organismoRealizaObras}">
+                            <p:panel id="panelBusquedaObra" header="Búsqueda" collapsed="TRUE" toggleable="true" closeSpeed="50">
                                
                                 <div>
                                         <div style="width: 30%;float: left">
                                             <h:outputLabel value="Organismo" /> </div>
                                         <div style="width: 70%;float: right">
-                                            <ace:simpleSelectOneMenu id="sltOrganismoBusq" value="#{obrasPresentacionManagedBean.idOrganismo}" label="organismo"  required="true" >
+                                            <p:selectOneMenu id="sltOrganismoBusq" value="#{obrasPresentacionManagedBean.idOrganismo}" label="organismo"  required="true" >
                                                 <f:selectItem  itemValue="0" itemLabel="NINGUNO"/>
                                                 <f:selectItems value="#{obrasPresentacionManagedBean.selectItemsOrg}" /> 
-                                            </ace:simpleSelectOneMenu>
+                                            </p:selectOneMenu>
                                         </div>
                                 </div>
                                     <br/>
@@ -90,65 +80,65 @@
                                             <h:outputLabel value="Localidad" />
                                         </div>
                                         <div style="width:70%;float: right">
-                                            <ace:simpleSelectOneMenu id="slteditarLocalidad" value="#{obrasPresentacionManagedBean.idLocalidad}" label="localidad"  required="true">
+                                            <p:selectOneMenu id="slteditarLocalidad" value="#{obrasPresentacionManagedBean.idLocalidad}" label="localidad"  required="true">
 
                                                 <f:selectItem  itemValue="0" itemLabel="NINGUNO"/>
                                                 <f:selectItems value="#{obrasPresentacionManagedBean.selectItemsLocalidad}" /> 
 
-                                            </ace:simpleSelectOneMenu>
+                                            </p:selectOneMenu>
                                         </div>
                                 </div>
                                         <br/>
                                     
                                         
                                         <div>
-                                            <ace:pushButton id="find" value="${msg.find}" actionListener="#{obrasPresentacionManagedBean.aplicarFiltro}">
+                                            <p:commandButton id="find" value="${msg.find}" actionListener="#{obrasPresentacionManagedBean.aplicarFiltro}">
                                                 <f:actionListener binding="#{metaPresentacionManagedBean.verPanelObra()}"/>
-                                            </ace:pushButton>
+                                            </p:commandButton>
                                         </div>
                                 
-                            </ace:panel>
+                            </p:panel>
                             
-                            <ace:dataTable id="ObrasDataTable" value="#{obrasPresentacionManagedBean.listElementsEnte}" var="item" paginator="true" paginatorPosition="bottom" rows="10" class="panel-buttons">
+                            <p:dataTable id="ObrasDataTable" value="#{obrasPresentacionManagedBean.listElementsEnte}" var="item" paginator="true" paginatorPosition="bottom" rows="10" class="panel-buttons">
                                 
-                                    <ace:column id="nombreObr" headerText="Organismo">
+                                    <p:column id="nombreObr" headerText="Organismo">
                                         <center>
                                             <h:outputText id="cellNombreObr" value="#{item.leyenda}"/>
                                         </center>
-                                    </ace:column>
+                                    </p:column>
                                 
                                 
-                                <ace:column id="estadoObr" headerText="Obras" style="width: 50px">
+                                <p:column id="estadoObr" headerText="Obras" style="width: 50px">
                                     <center>
                                     <h:panelGrid  columns="4" cellpadding="1" > 
 
-                                        <h:commandButton id="botonVerdeObra" value="#{obrasPresentacionManagedBean.devolverEstado(item.id,7)}" class="semaforoVerde" actionListener="#{obrasPresentacionManagedBean.setearOrgYestado(item.id, 7)}"> 
+                                        <p:commandButton id="botonVerdeObra" value="#{obrasPresentacionManagedBean.devolverEstado(item.id,7)}" class="semaforoVerde" actionListener="#{obrasPresentacionManagedBean.setearOrgYestado(item.id, 7)}"> 
                                             <f:actionListener binding="#{metaPresentacionManagedBean.verPanelObra()}"/>
-                                        </h:commandButton>
-                                        <h:commandButton id="botonAmarilloObra" value="#{obrasPresentacionManagedBean.devolverEstado(item.id,8)}" class="semaforoAmarillo" actionListener="#{obrasPresentacionManagedBean.setearOrgYestado(item.id, 8)}">
+                                        </p:commandButton>
+                                        <p:commandButton id="botonAmarilloObra" value="#{obrasPresentacionManagedBean.devolverEstado(item.id,8)}" class="semaforoAmarillo" actionListener="#{obrasPresentacionManagedBean.setearOrgYestado(item.id, 8)}">
                                             <f:actionListener binding="#{metaPresentacionManagedBean.verPanelObra()}"/>
-                                        </h:commandButton>
-                                        <h:commandButton id="botonRojoObra" value="#{obrasPresentacionManagedBean.devolverEstado(item.id,10)}" class="semaforoRojo" actionListener="#{obrasPresentacionManagedBean.setearOrgYestado(item.id, 10)}">
+                                        </p:commandButton>
+                                        <p:commandButton id="botonRojoObra" value="#{obrasPresentacionManagedBean.devolverEstado(item.id,10)}" class="semaforoRojo" actionListener="#{obrasPresentacionManagedBean.setearOrgYestado(item.id, 10)}">
                                             <f:actionListener binding="#{metaPresentacionManagedBean.verPanelObra()}"/>
-                                        </h:commandButton>
-                                        <h:commandButton id="botonAzulObra" value="#{obrasPresentacionManagedBean.devolverEstado(item.id,11)}" class="semaforoAzul" actionListener="#{obrasPresentacionManagedBean.setearOrgYestado(item.id, 11)}" >
+                                        </p:commandButton>
+                                        <p:commandButton id="botonAzulObra" value="#{obrasPresentacionManagedBean.devolverEstado(item.id,11)}" class="semaforoAzul" actionListener="#{obrasPresentacionManagedBean.setearOrgYestado(item.id, 11)}" >
                                             <f:actionListener binding="#{metaPresentacionManagedBean.verPanelObra()}"/>
-                                        </h:commandButton>
+                                        </p:commandButton>
                                         <!--cuando pasas el puntero sobre los botones te informa la leyenda del estado-->
-                                        <ace:tooltip id="tooltipBotonAzulObra" for="botonAzulObra" value="TERMINADO" showEffect="slide"/>
-                                        <ace:tooltip id="tooltipBotonVerdeObra" for="botonVerdeObra" value="EN TERMINO" showEffect="slide"/>
-                                        <ace:tooltip id="tooltipBotonAmarilloObra" for="botonAmarilloObra" value="EN ALERTA" showEffect="slide"/>
-                                        <ace:tooltip id="tooltipBotonRojoObra" for="botonRojoObra" value="CANCELADA" showEffect="slide"/>
+                                        <p:tooltip id="tooltipBotonAzulObra" for="botonAzulObra" value="TERMINADO" showEffect="slide"/>
+                                        <p:tooltip id="tooltipBotonVerdeObra" for="botonVerdeObra" value="EN TERMINO" showEffect="slide"/>
+                                        <p:tooltip id="tooltipBotonAmarilloObra" for="botonAmarilloObra" value="EN ALERTA" showEffect="slide"/>
+                                        <p:tooltip id="tooltipBotonRojoObra" for="botonRojoObra" value="CANCELADA" showEffect="slide"/>
                                     </h:panelGrid>
                                     </center>
-                                </ace:column>
+                                </p:column>
                                 
-                            </ace:dataTable>
-                            <ace:pushButton value="MOSTRAR TODAS LAS OBRAS" actionListener="#{obrasPresentacionManagedBean.setearOrgYestado(0, 0)}" rendered="#{obrasPresentacionManagedBean.idOrganismo == 0 || obrasPresentacionManagedBean.idOrgAux == 0}">
+                            </p:dataTable>
+                            <p:commandButton value="MOSTRAR TODAS LAS OBRAS" actionListener="#{obrasPresentacionManagedBean.setearOrgYestado(0, 0)}" rendered="#{obrasPresentacionManagedBean.idOrganismo == 0 || obrasPresentacionManagedBean.idOrgAux == 0}">
                                 <f:actionListener binding="#{metaPresentacionManagedBean.verPanelObra()}"/>
-                            </ace:pushButton>
-                            <ace:ajax execute="@all" render="@all"/>
-                        </ace:panel>
+                            </p:commandButton>
+                            <p:ajax execute="@all" render="@all"/>
+                        </p:panel>
                     </h:form>
                 </div>
 
@@ -157,74 +147,74 @@
                 <div id="contentObj" class="contentObj" title=" " style="width: 71%;float: right;height: 100%" >
                     <h:form id="formObj">
 
-                        <ace:panel style="min-height: 1050px" > 
+                        <p:panel style="min-height: 1050px" > 
 
-                            <ace:panel id="PanelMetas" header="METAS EN SITUACIÓN #{metaPresentacionManagedBean.nombreEstado} DEL MINISTERIO DE #{metaPresentacionManagedBean.nombreOrg}" rendered="#{metaPresentacionManagedBean.mostrarPanelMeta}" >
-                                <ace:dataTable  id="MetasTable" value="#{metaPresentacionManagedBean.lista}" var="item" paginator="true" paginatorPosition="bottom" rows="10" class="panel-buttons">
+                            <p:panel id="PanelMetas" header="METAS EN SITUACIÓN #{metaPresentacionManagedBean.nombreEstado} DEL MINISTERIO DE #{metaPresentacionManagedBean.nombreOrg}" rendered="#{metaPresentacionManagedBean.mostrarPanelMeta}" >
+                                <p:dataTable  id="MetasTable" value="#{metaPresentacionManagedBean.lista}" var="item" paginator="true" paginatorPosition="bottom" rows="10" class="panel-buttons">
                                     
-                                        <ace:column id="idMet" headerText="Objetivo">
+                                        <p:column id="idMet" headerText="Objetivo">
                                             <center>
                                                 <h:outputText id="cellidMet" value="#{item.objetivos.leyenda}"/>
-                                                <ace:tooltip style="line-height: 20px " id="tooltipObj" for="cellidMet" value="Descripción: #{item.objetivos.descripcion}" showEffect="slide"/>
+                                                <p:tooltip style="line-height: 20px " id="tooltipObj" for="cellidMet" value="Descripción: #{item.objetivos.descripcion}" showEffect="slide"/>
                                             </center>
-                                        </ace:column>
+                                        </p:column>
                                     
                                     
-                                    <ace:column id="nombreMetas" headerText="Metas">
+                                    <p:column id="nombreMetas" headerText="Metas">
                                         <center>
                                             <strong>
                                         <h:outputText id="cellNombreMeta" value="#{item.leyenda}"/>
-                                        <ace:tooltip style="line-height: 20px " id="tooltipMeta" for="cellNombreMeta" value="Descripción: #{item.descripcion}" showEffect="slide"/>
+                                        <p:tooltip style="line-height: 20px " id="tooltipMeta" for="cellNombreMeta" value="Descripción: #{item.descripcion}" showEffect="slide"/>
                                             </strong>
                                         </center>
-                                    </ace:column>
+                                    </p:column>
                                     
                                     
-                                    <ace:column id="situacionMetas" headerText="#{msg.sit}">
+                                    <p:column id="situacionMetas" headerText="#{msg.sit}">
                                         <center>
                                             <h:outputText id="cellSituacion" value="#{item.situacion.leyenda}"/>
                                         </center>
-                                    </ace:column>
+                                    </p:column>
                                     
                                     
-                                    <ace:column id="fechaInicioMetass" headerText="FechaInicio">
+                                    <p:column id="fechaInicioMetass" headerText="FechaInicio">
                                         <center>
                                             <h:outputText id="cellfechaInicioMetass" value="#{item.fechaInicio}">
                                                 <f:convertDateTime pattern="dd/MM/yyyy" locale="es_AR" timeZone="America/Argentina/Buenos_Aires"/>   
                                             </h:outputText>
                                         </center>
-                                    </ace:column>
+                                    </p:column>
                                     
                                     
-                                    <ace:column id="fechaFinalMetass" headerText="FechaFinal">
+                                    <p:column id="fechaFinalMetass" headerText="FechaFinal">
                                         <center>    
                                             <h:outputText id="cellfechaFinalMetass" value="#{item.fechaFinal}">
                                                 <f:convertDateTime pattern="dd/MM/yyyy" locale="es_AR" timeZone="America/Argentina/Buenos_Aires"/>
                                             </h:outputText>
                                         </center>
-                                    </ace:column>
+                                    </p:column>
                                     
                                     
-                                    <ace:column id="cuotaMeta" headerText="Porcentaje">
+                                    <p:column id="cuotaMeta" headerText="Porcentaje">
                                         <center>
                                             <h:outputText id="cellcuotaMeta" value="#{item.cantidad}"/>
                                         </center>    
-                                    </ace:column>
+                                    </p:column>
                                     
                                     
-                                    <ace:column id="IndicadoresMet" headerText="Indicadores">
+                                    <p:column id="IndicadoresMet" headerText="Indicadores">
                                         <center>
-                                            <ace:pushButton value="Indicadores (#{metaPresentacionManagedBean.totalIndicadores(item.id)})"  p:onclick="ice.ace.instance('#{dialog.clientId}').show();"  actionListener="#{chartBean2.getSelectItems(item.id)}">
+                                            <p:commandButton value="Indicadores (#{metaPresentacionManagedBean.totalIndicadores(item.id)})"    actionListener="#{chartBean2.getSelectItems(item.id)}">
                                                 <f:actionListener binding="#{metaPresentacionManagedBean.verPanelMetaIndicador()}"/>
                                             
-                                            </ace:pushButton>
+                                            </p:commandButton>
                                         </center>
-                                    </ace:column>
+                                    </p:column>
                                     
-                                </ace:dataTable>
-                            </ace:panel>
+                                </p:dataTable>
+                            </p:panel>
                             <!--INICIO DIALOG INDICADORES-->
-                            <ace:dialog id="dialog" 
+                            <p:dialog id="dialog" 
                                          binding="#{dialog}"
                               
                                header="INDICADORES"
@@ -236,8 +226,8 @@
                                width="1024">
                             
                             
-                            <ace:panel id="grafico1" header="INDICADOR DE LA META" >
-                                <ace:panel>
+                            <p:panel id="grafico1" header="INDICADOR DE LA META" >
+                                <p:panel>
                                     <div>
                                         <strong><h:outputText value="Título: " style="font-size: medium"/></strong>
                                             <br></br>
@@ -256,9 +246,9 @@
                                             <br></br>
                                             <h:outputText value="#{chartBean2.reduccion1?'Reducir un':'Aumentar un'} #{chartBean2.porcentajeMeta} %"/>
                                     </div>
-                                </ace:panel>
+                                </p:panel>
 
-                                <ace:chart id="chartIndicador"
+                                <p:chart id="chartIndicador"
                                            animated="true"
                                            value="#{chartBean2.barData2}"
                                            stackSeries="false"
@@ -275,15 +265,15 @@
                                            highlighterBringSeriesToFront="true" />
                                 
                                  <!--
-                                <ace:panel header="INFORMACIÓN POR MUNICIPIO">
-                                    <ace:gMap rendered="#{chartBean2.existeIndicador}" id="gMapLayerIndicador0"  style="width: 1024px; height: 720px" zoomLevel="8" latitude="-27.39" longitude="-55.98">
-                                            <ace:gMapLayer id="KMLLayer0" layerType="KML" visible="TRUE" url="#{chartBean2.kml}"/>
-                                    </ace:gMap>
+                                <p:panel header="INFORMACIÓN POR MUNICIPIO">
+                                    <h:panelGroup rendered="#{chartBean2.existeIndicador}" id="gMapLayerIndicador0"  style="width: 1024px; height: 720px" zoomLevel="8" latitude="-27.39" longitude="-55.98">
+                                            <h:panelGroupLayer id="KMLLayer0" layerType="KML" visible="TRUE" url="#{chartBean2.kml}"/>
+                                    </h:panelGroup>
                                 
-                                </ace:panel>
+                                </p:panel>
                                  -->
                                 <!--
-                                <ace:panel>
+                                <p:panel>
                                     <div>
                                         <strong><h:outputText value="Título: " style="font-size: medium"/></strong>
                                             <br></br>
@@ -298,11 +288,11 @@
                                         <h:outputText value="#{chartBean2.descripcion2}"/>
                                     </div>
                                      
-                                </ace:panel>
+                                </p:panel>
                                 
-                                <ace:panel id="indicador2" rendered="#{chartBean2.existeIndicador}" >
+                                <p:panel id="indicador2" rendered="#{chartBean2.existeIndicador}" >
 
-                                    <ace:chart id="chartIndicador2"
+                                    <p:chart id="chartIndicador2"
                                                animated="true"
                                                value="#{chartBean2.barData1}"
                                                stackSeries="false"
@@ -316,116 +306,109 @@
                                                highlighterShowMarker="false"
                                                highlighterBringSeriesToFront="true"/>
 
-                                </ace:panel>
+                                </p:panel>
                                 -->
                                
                                <!--
-                               <ace:panel>
-                                        <ace:gMap rendered="#{chartBean2.existeIndicador}" id="gMapLayerIndicador1"  style="width: 1024px; height: 720px" zoomLevel="8" latitude="-27.39" longitude="-55.98">
-                                            <ace:gMapLayer id="KMLLayer" layerType="KML" visible="TRUE" url="#{chartBean2.kml1}"/>
-                                        </ace:gMap>
-                               </ace:panel>       
+                               <p:panel>
+                                        <h:panelGroup rendered="#{chartBean2.existeIndicador}" id="gMapLayerIndicador1"  style="width: 1024px; height: 720px" zoomLevel="8" latitude="-27.39" longitude="-55.98">
+                                            <h:panelGroupLayer id="KMLLayer" layerType="KML" visible="TRUE" url="#{chartBean2.kml1}"/>
+                                        </h:panelGroup>
+                               </p:panel>       
                                -->
-                            </ace:panel>
+                            </p:panel>
                                
                                 
                                 <!--FIN  DIALOG INDICADORES-->
-                              </ace:dialog>
+                              </p:dialog>
                             
                             
 
-                            <ace:panel id="panelObras" header="OBRAS" rendered="#{metaPresentacionManagedBean.mostrarPanelObra}">
+                            <p:panel id="panelObras" header="OBRAS" rendered="#{metaPresentacionManagedBean.mostrarPanelObra}">
 
                                 <div>
                                     <!--tabla de obras segun org y estado -->
-                                    <ace:dataTable id="ObrasDataTable" style="width:100%;border-width:0px" value="#{obrasPresentacionManagedBean.ListarObras()}" var="item" paginator="true" paginatorPosition="bottom" rows="10" class="panel-buttons">
+                                    <p:dataTable id="ObrasDataTable" style="width:100%;border-width:0px" value="#{obrasPresentacionManagedBean.ListarObras()}" var="item" paginator="true" paginatorPosition="bottom" rows="10" class="panel-buttons">
 
-                                        <ace:column id="descripcionOrg" headerText="Organismo">
+                                        <p:column id="descripcionOrg" headerText="Organismo">
                                             <h:outputText id="cellDescripcionOrg" value="#{item.organismo.leyenda}"/>
-                                        </ace:column>
+                                        </p:column>
                                         <!--
-                                        <ace:column id="id" headerText="#{msg.idT}" style="width: 7%">
+                                        <p:column id="id" headerText="#{msg.idT}" style="width: 7%">
                                              <h:outputText id="cellId" value="#{item.id}"/>
-                                        </ace:column>
+                                        </p:column>
                                         -->
-                                        <ace:column id="nombre" headerText="#{msg.findley}">
+                                        <p:column id="nombre" headerText="#{msg.findley}">
                                             <h:outputText id="cellNombre" value="#{item.leyenda}"/>
-                                        </ace:column>
+                                        </p:column>
                                         <!--
-                                        <ace:column id="situacion" headerText="Situacion">
+                                        <p:column id="situacion" headerText="Situacion">
                                              <h:outputText id="cellSituacion" value="#{item.situacion.leyenda}"/>
-                                        </ace:column>
+                                        </p:column>
                                         
-                                        <ace:column id="Latitud" headerText="Latitud">
+                                        <p:column id="Latitud" headerText="Latitud">
                                             <h:outputText id="cellLatitud" value="#{item.latitud}"/>
-                                        </ace:column>
+                                        </p:column>
 
-                                        <ace:column id="Longitud" headerText="Longitud">
+                                        <p:column id="Longitud" headerText="Longitud">
                                             <h:outputText id="cellLongitud" value="#{item.longitud}"/>
-                                        </ace:column>
+                                        </p:column>
                                         -->
-                                        <ace:column id="situacionObra" headerText="Situación">
+                                        <p:column id="situacionObra" headerText="Situación">
                                             <h:outputText id="cellsituacionObra" value="#{item.situacion.leyenda}"/>
-                                        </ace:column>
+                                        </p:column>
                                         
-                                        <ace:column id="fechaInicioObra1" headerText="FechaInicio">
+                                        <p:column id="fechaInicioObra1" headerText="FechaInicio">
                                             <h:outputText id="cellfechaInicioObra1" value="#{item.fechaInicio}">
                                                 <f:convertDateTime pattern="dd/MM/yyyy" locale="es_AR" timeZone="America/Argentina/Buenos_Aires"/>   
                                             </h:outputText>
-                                        </ace:column>
+                                        </p:column>
 
-                                        <ace:column id="fechaFinalObra1" headerText="FechaFinal">
+                                        <p:column id="fechaFinalObra1" headerText="FechaFinal">
                                             <h:outputText id="cellfechaFinalObra1" value="#{item.fechaFinal}">
                                                 <f:convertDateTime pattern="dd/MM/yyyy" locale="es_AR" timeZone="America/Argentina/Buenos_Aires"/>
                                             </h:outputText>
-                                        </ace:column>
-                                        <ace:column id="localidadTablero" headerText="Localidad">
+                                        </p:column>
+                                        <p:column id="localidadTablero" headerText="Localidad">
                                             <h:outputText id="celllocalidadTablero" value="#{item.localidad.leyenda}"/>
-                                        </ace:column>
-                                        <ace:column id="Columnaadjunto" headerText="Adjunto" >
-                                            <ace:pushButton  actionListener="#{obrasPresentacionManagedBean.verAdjuntoTabla(item.adjunto)}">
+                                        </p:column>
+                                        <p:column id="Columnaadjunto" headerText="Adjunto" >
+                                            <p:commandButton  actionListener="#{obrasPresentacionManagedBean.verAdjuntoTabla(item.adjunto)}">
                                                 <img src="images/adjunto32x32.png"/>
                                                 <f:actionListener binding="#{organismoManagedBean.verPanelObra()}"/>
                                                 
-                                            </ace:pushButton>
-                                            <ace:dynamicResource id="dynamicResource"
-                                                                 resource="#{obrasPresentacionManagedBean.resource}"
-                                                                 target="_blank"
-                                                                 label="Examinar" 
-                                                                 mimeType="application/pdf" 
-                                                                 type="link" 
-                                                                 rendered="#{obrasPresentacionManagedBean.botonAdjuntoObraTablero and item.adjunto == obrasPresentacionManagedBean.path}" 
-                                                                 />
+                                            </p:commandButton>
+                                            <h:outputText value="" />
 
 
-                                        </ace:column>
-                                        <ace:column id="ColumnaFotos" headerText="Fotos">
+                                        </p:column>
+                                        <p:column id="ColumnaFotos" headerText="Fotos">
                                                 
-                                                <ace:pushButton actionListener="#{obrasPresentacionManagedBean.verFotoObra(item.fotos)}" p:onclick="ice.ace.instance('#{dialog1.clientId}').show();">
+                                                <p:commandButton actionListener="#{obrasPresentacionManagedBean.verFotoObra(item.fotos)}" >
                                                         <img src="images/iconoFotoObra32x32.png"/>
                                                         <f:actionListener binding="#{organismoManagedBean.verPanelObra()}"/>
                                                         
-                                                </ace:pushButton>
+                                                </p:commandButton>
                                             
                                             
 
 
 
 
-                                        </ace:column>
+                                        </p:column>
 
-                                    </ace:dataTable>
+                                    </p:dataTable>
 
 
                                 </div>
-                                <ace:panel header="Ubicación de la Obra en el Mapa">
+                                <p:panel header="Ubicación de la Obra en el Mapa">
 
 
                                     <div>          
-                                        <ace:gMap id="gMapLayer"  style="width: 840px;height: 500px" zoomLevel="8" latitude="#{obrasPresentacionManagedBean.latitud}" longitude="#{obrasPresentacionManagedBean.longitud}" >
+                                        <h:panelGroup id="gMapLayer"  style="width: 840px;height: 500px" zoomLevel="8" latitude="#{obrasPresentacionManagedBean.latitud}" longitude="#{obrasPresentacionManagedBean.longitud}" >
                                             <!--operario ternario cambia el logo en el mapa segun el ente descentralizado-->
                                             <c:forEach items="#{obrasPresentacionManagedBean.ListarObras()}" var="item" >
-                                                <ace:gMapMarker latitude="#{item.latitud}" 
+                                                <h:panelGroupMarker latitude="#{item.latitud}" 
                                                                 longitude="#{item.longitud}"
                                                                 options="#{item.organismo.leyenda=='IPRODHA'? 
                                                                            obrasPresentacionManagedBean.iprodha : 
@@ -439,7 +422,7 @@
                                                                            obrasPresentacionManagedBean.uscepp :obrasPresentacionManagedBean.logo))))
                                                                             }"
                                                                 >
-                                                    <ace:gMapInfoWindow disabled="false" showOnClick="true" 
+                                                    <h:panelGroupInfoWindow disabled="false" showOnClick="true" 
                                                                         startOpen="false" options="maxWidth:200">
                                                         <strong><h:outputLabel value="Organismo:" /></strong>
                                                         <h:outputLabel value="#{item.organismo.leyenda}"/>
@@ -459,29 +442,22 @@
                                                         <br/>
                                                         <strong><h:outputLabel value="Estado:"/></strong>
                                                         <h:outputLabel value="#{item.situacion.leyenda}"/>
-                                                        <ace:pushButton  actionListener="#{obrasPresentacionManagedBean.verFotoObra(item.fotos)}" p:onclick="ice.ace.instance('#{dialog1.clientId}').show();">
+                                                        <p:commandButton  actionListener="#{obrasPresentacionManagedBean.verFotoObra(item.fotos)}" >
                                                             <img src="images/icono16x16.png" />
                                                             <f:actionListener binding="#{organismoManagedBean.verPanelObra()}"/>
                                                             
-                                                        </ace:pushButton>
-                                                        <ace:pushButton actionListener="#{obrasPresentacionManagedBean.verAdjuntoTabla(item.adjunto)}">
+                                                        </p:commandButton>
+                                                        <p:commandButton actionListener="#{obrasPresentacionManagedBean.verAdjuntoTabla(item.adjunto)}">
                                                             
                                                             <img src="images/adjunto16x16.png" />
                                                             <f:actionListener binding="#{organismoManagedBean.verPanelObra()}"/>
-                                                        </ace:pushButton>
+                                                        </p:commandButton>
                                                         <!--codigo q uso label="{item.adjunto.replaceAll(obrasPresentacionManagedBean.reemplazar, '')}" -->
-                                                        <ace:dynamicResource id="dynamicResource"
-                                                                 resource="#{obrasPresentacionManagedBean.resource}"
-                                                                 target="_blank"
-                                                                 label="Abrir"
-                                                                 mimeType="application/pdf" 
-                                                                 type="link" 
-                                                                 rendered="#{obrasPresentacionManagedBean.botonAdjuntoObraTablero and item.adjunto == obrasPresentacionManagedBean.path}" 
-                                                                 />
-                                                        </ace:gMapInfoWindow>
-                                                </ace:gMapMarker>
+                                                        <h:outputText value="" />
+                                                        </h:panelGroup>
+                                                </h:panelGroup>
                                             </c:forEach>
-                                        </ace:gMap>
+                                        </h:panelGroup>
                                     </div>
                                     <div>
                                         <br/>
@@ -509,10 +485,10 @@
                                             
                                         </h:panelGrid> 
                                     </div>
-                                </ace:panel>
+                                </p:panel>
                            <!-- Panel de fotos dialog obras  -->
                            
-                            <ace:dialog id="dialog1" 
+                            <p:dialog id="dialog1" 
                                          binding="#{dialog1}"
                                
                                header="GALERÍA"
@@ -536,9 +512,9 @@
                                             </h:commandLink>
 
 
-                                            <ace:panel id="panelFotos">
-                                                <ace:graphicImage class="tamañoFoto"  id="resourceGraphicImage" value="#{obrasPresentacionManagedBean.arrayResource[obrasPresentacionManagedBean.tamanioFotos]}" /> 
-                                            </ace:panel>
+                                            <p:panel id="panelFotos">
+                                                <p:graphicImage class="tamañoFoto"  id="resourceGraphicImage" value="#{obrasPresentacionManagedBean.arrayResource[obrasPresentacionManagedBean.tamanioFotos]}" /> 
+                                            </p:panel>
 
                                             <h:commandLink id="next"
                                                                actionListener="#{obrasPresentacionManagedBean.siguiente()}"
@@ -552,13 +528,13 @@
 
                                         </h:panelGrid>
                                 
-                            </ace:dialog>
+                            </p:dialog>
                                 
-                            </ace:panel>
+                            </p:panel>
                             
                             
                             
-                            </ace:panel>
+                            </p:panel>
                         <div class="footer-top">
                             <img src="images/footer.png" />
                         </div>

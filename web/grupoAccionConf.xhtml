@@ -1,28 +1,28 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:ace="http://www.icefaces.org/icefaces/components"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">      
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="jakarta.faces.core">      
     <ui:composition template="./layout.xhtml">
         <ui:define name="content">
             <h:form id="formGrupoAccion" title=" ">
-                <ace:panel id="grupoAccion" header="Editar Acciones de Grupo">
+                <p:panel id="grupoAccion" header="Editar Acciones de Grupo">
                     <table border="0" cellspacing="5" class="panel-buttons">
                         <tr>
                             <td align="right">
                                 <h:outputLabel value="(*) #{msg.grupo}" />
                             </td>
                             <td align="left">
-                                <ace:simpleSelectOneMenu id="slmGrupos" value="#{permisoManagedBean.idGrupo}" valueChangeListener="#{permisoManagedBean.updateListAcctions}" immediate="true" required="true">                                                         
+                                <p:selectOneMenu id="slmGrupos" value="#{permisoManagedBean.idGrupo}" valueChangeListener="#{permisoManagedBean.updateListAcctions}" immediate="true" required="true">                                                         
                                     <f:selectItem itemLabel="ELEGIR" itemValue=""/>
                                     <f:selectItems value="#{permisoManagedBean.selectItemsGrupo}" />
-                                    <ace:ajax execute="@this" />
-                                </ace:simpleSelectOneMenu>
+                                    <p:ajax execute="@this" />
+                                </p:selectOneMenu>
                             </td>
                             <td align="left">
-                                <ace:message id="slmGruposMsg" for="slmGrupos" initEffect="slide" changeEffect="shake"/>
+                                <p:message id="slmGruposMsg" for="slmGrupos" initEffect="slide" changeEffect="shake"/>
                             </td>                            
                         </tr>
                         <tr>
@@ -30,7 +30,7 @@
                                 <h:outputLabel value="(*) Acciones:" />
                             </td>
                             <td align="left">
-                                <ace:listControl id="dualListControl" position="MIDDLE">
+                                <h:panelGroup id="dualListControl" position="MIDDLE">
                                     <f:facet name="header">
                                         <h:outputLabel value="Acciones Disponibles" style="margin-right: 20px; margin-left: 20px;"/>
                                     </f:facet>
@@ -38,27 +38,27 @@
                                         <h:outputLabel value="Acciones Seleccionadas" style="margin-right: 20px; margin-left: 20px;"/>
                                     </f:facet>
                                     
-                                    <ace:list id="firstList" value="#{permisoManagedBean.itemsDerecha}"
+                                    <h:panelGroup id="firstList" value="#{permisoManagedBean.itemsDerecha}"
                                               styleClass="subList"
                                               dropGroup="textGroup"
                                               selectionMode="multiple"
                                               />
 
-                                    <ace:list id="secondList" value="#{permisoManagedBean.itemsIzquierda}"
+                                    <h:panelGroup id="secondList" value="#{permisoManagedBean.itemsIzquierda}"
                                               styleClass="subList"
                                               dropGroup="textGroup"
                                               selectionMode="multiple"
                                               />
-                                </ace:listControl>
+                                </h:panelGroup>
                             </td>
                         </tr>
                     </table>
                     
                     <h:panelGrid id="buttonGrid" columns="3" class="panel-buttons">
-                        <ace:pushButton id="save" value="#{msg.saveEdit}" action="#{permisoManagedBean.editarGrupoAccion()}"/>
-                        <ace:pushButton id="cancel" value="#{msg.cancel}" action="administracion" immediate="true" actionListener="#{permisoManagedBean.limpiar()}"/>
+                        <p:commandButton id="save" value="#{msg.saveEdit}" action="#{permisoManagedBean.editarGrupoAccion()}"/>
+                        <p:commandButton id="cancel" value="#{msg.cancel}" action="administracion" immediate="true" actionListener="#{permisoManagedBean.limpiar()}"/>
                     </h:panelGrid>
-                </ace:panel>                
+                </p:panel>                
             </h:form>
         </ui:define>
     </ui:composition>

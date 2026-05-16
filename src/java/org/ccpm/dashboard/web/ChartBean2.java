@@ -4,28 +4,92 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import jakarta.ejb.EJB;
+import jakarta.inject.Named;
+import jakarta.enterprise.context.RequestScoped;
 import org.ccpm.dashboard.entity.Indicador;
 import org.ccpm.dashboard.entity.Metas;
 import org.ccpm.dashboard.facade.ObjetivosFacadeLocal;
 import org.ccpm.dashboard.facade.SituacionFacadeLocal;
 import org.ccpm.dashboard.facade.IndicadorFacadeLocal;
 import org.ccpm.dashboard.facade.MetasFacadeLocal;
-import org.icefaces.ace.component.chart.Axis;
-import org.icefaces.ace.component.chart.AxisType;
-import org.icefaces.ace.model.chart.CartesianSeries;
-import org.icefaces.ace.model.chart.CartesianSeries.CartesianType;
 import org.ccpm.util.diferenciaFecha;
 
 
-@ManagedBean(name= ChartBean2.BEAN_NAME)
+@Named(ChartBean2.BEAN_NAME)
 @RequestScoped
 public class ChartBean2 implements Serializable {
     public static final String BEAN_NAME = "chartBean2";
     public String getBeanName() { return BEAN_NAME; }
    
+    public static class Axis implements Serializable {
+        private AxisType type;
+        private int tickAngle;
+
+        public AxisType getType() {
+            return type;
+        }
+
+        public void setType(AxisType type) {
+            this.type = type;
+        }
+
+        public int getTickAngle() {
+            return tickAngle;
+        }
+
+        public void setTickAngle(int tickAngle) {
+            this.tickAngle = tickAngle;
+        }
+    }
+
+    public enum AxisType {
+        CATEGORY
+    }
+
+    public static class CartesianSeries implements Serializable {
+        public enum CartesianType {
+            LINE
+        }
+
+        private CartesianType type;
+        private String label;
+        private String color;
+        private final List<Object[]> values = new ArrayList<>();
+
+        public void setType(CartesianType type) {
+            this.type = type;
+        }
+
+        public CartesianType getType() {
+            return type;
+        }
+
+        public void setLabel(String label) {
+            this.label = label;
+        }
+
+        public String getLabel() {
+            return label;
+        }
+
+        public void setColor(String color) {
+            this.color = color;
+        }
+
+        public String getColor() {
+            return color;
+        }
+
+        public void add(String category, Number value) {
+            values.add(new Object[]{category, value});
+        }
+
+        public List<Object[]> getValues() {
+            return values;
+        }
+    }
+
     @EJB
     private ObjetivosFacadeLocal objetivosFacade;
     @EJB
@@ -265,7 +329,7 @@ public class ChartBean2 implements Serializable {
         double valorMeta4=0;
         diferenciaFecha diff=new diferenciaFecha();
         double porcentaje=0;
-        barData.setType(CartesianType.LINE);
+        barData.setType(CartesianSeries.CartesianType.LINE);
         //barData.setLabel("Porcentaje de Pobreza Anual");
         List <CartesianSeries> selectItems = new ArrayList <>();
         List <Indicador> lstIndicador = this.indicadorFacade.findAll(true,id);

@@ -1,14 +1,14 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:ace="http://www.icefaces.org/icefaces/components"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">      
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="jakarta.faces.core">      
     <ui:composition template="./layout.xhtml">
         <ui:define name="content">
             <h:form id="formDetalleObra" title=" ">
-                <ace:panel id="detalleObra" header="#{msg.detailsObra}">
+                <p:panel id="detalleObra" header="#{msg.detailsObra}">
                     <table border="0" cellspacing="5" class="panel-buttons">
                         
                         <tr>
@@ -68,34 +68,28 @@
                         
                      </table>
                     
-                    <ace:panel id="panelAdjunto" header="Archivo Adjunto">
-                        <ace:dynamicResource id="dynamicResource"
-                                         resource="#{obrasManagedBean.resource}"
-                                         target="_blank"
-                                         label="#{obrasManagedBean.obras.adjunto}" 
-                                         mimeType="application/pdf" 
-                                         type="link" 
-                         />
-                    </ace:panel>
+                    <p:panel id="panelAdjunto" header="Archivo Adjunto">
+                        <h:outputText value="" />
+                    </p:panel>
                     
                     
                     
-                </ace:panel>
-                <ace:panelStack id="stack1" selectedId="stackPane1">
-                <ace:stackPane id="stackPane1" client="true" > <!-- Siempre se pone el mapa en un container con propiedad client-->
-                    <ace:panel id="panel1" header="Mapa">
-                        <ace:gMap id="gMapLayer"  style="width: 475px; height: 400px" zoomLevel="7" latitude="-26.8250059" 
+                </p:panel>
+                <h:panelGroup id="stack1" selectedId="stackPane1">
+                <h:panelGroup id="stackPane1" client="true" > <!-- Siempre se pone el mapa en un container con propiedad client-->
+                    <p:panel id="panel1" header="Mapa">
+                        <h:panelGroup id="gMapLayer"  style="width: 475px; height: 400px" zoomLevel="7" latitude="-26.8250059" 
                                   longitude="-55.970294" >
-                            <ace:gMapMarker latitude="#{obrasManagedBean.obras.latitud}" 
+                            <h:panelGroupMarker latitude="#{obrasManagedBean.obras.latitud}" 
                                             longitude="#{obrasManagedBean.obras.longitud}">
-                                        </ace:gMapMarker>
-                        </ace:gMap>
-                    </ace:panel>
-                </ace:stackPane>
-              </ace:panelStack>
+                                        </h:panelGroup>
+                        </h:panelGroup>
+                    </p:panel>
+                </h:panelGroup>
+              </h:panelGroup>
                 
               <h:panelGrid id="buttonGrid" columns="1" class="panel-buttons">                     
-                        <ace:pushButton id="VolverObra" value="Volver" action="obrasConf" immediate="true" />
+                        <p:commandButton id="VolverObra" value="Volver" action="obrasConf" immediate="true" />
               </h:panelGrid>
                  </h:form>  
           

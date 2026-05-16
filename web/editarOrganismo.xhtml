@@ -1,26 +1,26 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:ace="http://www.icefaces.org/icefaces/components"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">      
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="jakarta.faces.core">      
     <ui:composition template="./layout.xhtml">
         <ui:define name="content">
             <h:form id="formEditarOrganismo" title=" ">
-                <ace:panel id="editarOrganismo" header="#{msg.editOrganismo}">
+                <p:panel id="editarOrganismo" header="#{msg.editOrganismo}">
                     <table border="0" cellspacing="5" class="panel-buttons">                        
                         <tr>
                             <td align="right">
                                 <h:outputLabel value="(*) Cod. Organismo:" />
                             </td>
                             <td align="left">
-                                <ace:textEntry id="codigo" label="código" value="#{organismoManagedBean.codOrganigrama}" required="true" size="53">
-                                    <ace:ajax render="@this codigo codigoMsg" event="blur"/>                                
-                                </ace:textEntry>
+                                <p:inputText id="codigo" label="código" value="#{organismoManagedBean.codOrganigrama}" required="true" size="53">
+                                    <p:ajax render="@this codigo codigoMsg" event="blur"/>                                
+                                </p:inputText>
                             </td>
                             <td align="left">
-                                <ace:message id="codigoMsg" for="codigo" initEffect="slide" changeEffect="shake"/> 
+                                <p:message id="codigoMsg" for="codigo" initEffect="slide" changeEffect="shake"/> 
                             </td>
                         </tr>
                         <tr>
@@ -28,12 +28,12 @@
                                 <h:outputLabel value="(*) #{msg.name}" />
                             </td>
                             <td align="left">
-                                <ace:textEntry id="nombre" label="#{msg.name}" value="#{organismoManagedBean.leyenda}" required="true" size="53">
-                                    <ace:ajax render="@this nombre nombreMsg" event="blur"/>                                
-                                </ace:textEntry>
+                                <p:inputText id="nombre" label="#{msg.name}" value="#{organismoManagedBean.leyenda}" required="true" size="53">
+                                    <p:ajax render="@this nombre nombreMsg" event="blur"/>                                
+                                </p:inputText>
                             </td>
                             <td align="left">
-                                <ace:message id="nombreMsg" for="nombre" initEffect="slide" changeEffect="shake"/> 
+                                <p:message id="nombreMsg" for="nombre" initEffect="slide" changeEffect="shake"/> 
                             </td>
                         </tr>
                         <tr>
@@ -41,12 +41,12 @@
                                 <h:outputLabel value="(*) #{msg.descri}" />
                             </td>
                             <td align="left">
-                                <ace:textEntry id="descripcion"  label="#{msg.descri}" value="#{organismoManagedBean.descripcion}" required="true" size="53">
-                                    <ace:ajax render="@this descripcion descripcionMsg" event="blur"/>                                
-                                </ace:textEntry>
+                                <p:inputText id="descripcion"  label="#{msg.descri}" value="#{organismoManagedBean.descripcion}" required="true" size="53">
+                                    <p:ajax render="@this descripcion descripcionMsg" event="blur"/>                                
+                                </p:inputText>
                             </td>
                             <td align="left">
-                                <ace:message id="descripcionMsg" for="descripcion" initEffect="slide" changeEffect="shake"/>
+                                <p:message id="descripcionMsg" for="descripcion" initEffect="slide" changeEffect="shake"/>
                             </td>
                         </tr>
                         <tr>
@@ -54,10 +54,10 @@
                                 <h:outputLabel value="(*) ¿Realiza Obras?" />
                             </td>
                             <td align="left">
-                                <ace:checkboxButton id="descentralizado"  value="#{organismoManagedBean.descentralizado}"/>
+                                <p:selectBooleanButton id="descentralizado"  value="#{organismoManagedBean.descentralizado}"/>
                             </td>
                             <td align="left">
-                                <ace:message id="descentralizadoMsg" for="descentralizado" initEffect="slide" changeEffect="shake"/>
+                                <p:message id="descentralizadoMsg" for="descentralizado" initEffect="slide" changeEffect="shake"/>
                             </td>
                         </tr>
                      </table>
@@ -65,10 +65,10 @@
                     <h:inputHidden value="#{organismoManagedBean.id}" />
                      
                     <h:panelGrid id="buttonGrid" columns="3" class="panel-buttons">
-                        <ace:pushButton id="save" value="#{msg.saveEdit}" action="#{organismoManagedBean.guardarEdicion}"/>                        
-                        <ace:pushButton id="cancel" value="#{msg.cancel}" action="organismoConf" immediate="true" actionListener="#{organismoManagedBean.limpiar()}"/>
+                        <p:commandButton id="save" value="#{msg.saveEdit}" action="#{organismoManagedBean.guardarEdicion}"/>                        
+                        <p:commandButton id="cancel" value="#{msg.cancel}" action="organismoConf" immediate="true" actionListener="#{organismoManagedBean.limpiar()}"/>
                     </h:panelGrid>
-                </ace:panel>                
+                </p:panel>                
             </h:form>
         </ui:define>
     </ui:composition>

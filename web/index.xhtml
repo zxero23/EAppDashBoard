@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:ace="http://www.icefaces.org/icefaces/components">
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>.: CCPM :.</title>
         <link rel="stylesheet" href="css/cssCCPM.css" type="text/css"/>
@@ -24,26 +24,38 @@
                     <table cellspacing="5">
                         <tr>
                             <td>
-                                <ace:textEntry id="user" placeholder="#{msg.ussT}" value="#{webManagedBean.nombreUsuario}" required="true">
-                                </ace:textEntry>
+                                <p:inputText id="user"
+                                             placeholder="#{msg.ussT}"
+                                             value="#{webManagedBean.nombreUsuario}"
+                                             required="true"
+                                             requiredMessage="Usuario requerido"/>
                             </td>
                             <td>
-                                <ace:textEntry id="pass" placeholder="#{msg.passT}" value="#{webManagedBean.claveAcceso}" required="true" secret="true">
-                                </ace:textEntry>
+                                <p:password id="pass"
+                                            placeholder="#{msg.passT}"
+                                            value="#{webManagedBean.claveAcceso}"
+                                            required="true"
+                                            requiredMessage="Contraseña requerida"
+                                            feedback="false"
+                                            toggleMask="true"/>
                             </td>
                             <td>
-                                <h:commandButton id="login" value="#{msg.login}" action="#{webManagedBean.login}"/>
+                                <p:commandButton id="login"
+                                                 value="#{msg.login}"
+                                                 action="#{webManagedBean.login}"
+                                                 ajax="false"/>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <ace:message id="userMsg" for="user" initEffect="slide" changeEffect="shake"/>
+                                <p:message id="userMsg" for="user"/>
                             </td>
                             <td>
-                                <ace:message id="passMsg" for="pass" initEffect="slide" changeEffect="shake"/>
+                                <p:message id="passMsg" for="pass"/>
                             </td>
                         </tr>                        
                     </table>
+                    <p:defaultCommand target="login"/>
                 </h:form>
             </div>
 

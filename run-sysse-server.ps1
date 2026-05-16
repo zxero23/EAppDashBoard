@@ -1,5 +1,5 @@
 param(
-    [string]$PayaraJar = "payara-micro-5.2022.5.jar",
+    [string]$PayaraJar = "payara-micro-7.2026.2.jar",
     [string]$AsadminFile = "create-datasource.asadmin",
     [string]$WarFile = "target/ROOT.war",
     [string]$UberJar = "target/SysSE-server.jar",
@@ -125,19 +125,29 @@ function Resolve-MavenCommand {
     throw "[ERROR] No se encontro Maven (mvn/mvn.cmd). Agrega Maven al PATH o configura MAVEN_HOME."
 }
 
-try {
-    if (-not $SkipJavaSwitch) {
-        if (Get-Command jabba -ErrorAction SilentlyContinue) {
-            Write-Host "[1/4] Usando Java 8 (jabba use zulu@1.8.0)..."
-            & jabba use zulu@1.8.0
-            if ($LASTEXITCODE -ne 0) {
-                throw "[ERROR] Fallo 'jabba use zulu@1.8.0'."
+function Ensure-Java21 {
+    if ($SkipJavaSwitch) {
+        return
+    }
+
+    if (Get-Command jabba -ErrorAction SilentlyContinue) {
+        $candidates = @("system@21.0.10", "zulu@1.21.0", "openjdk@21")
+        foreach ($candidate in $candidates) {
+            Write-Host "[1/4] Intentando Java 21 con jabba: $candidate"
+            & jabba use $candidate
+            if ($LASTEXITCODE -eq 0) {
+                Write-Host "[1/4] Java activa: $candidate"
+                return
             }
         }
-        else {
-            Write-Warning "No se encontro jabba en PATH. Continuando con el Java actual."
-        }
+        throw "[ERROR] No se pudo activar Java 21 via jabba. Instala una JVM 21 (por ejemplo zulu@1.21.0)."
     }
+
+    Write-Warning "No se encontro jabba en PATH. Continuando con el Java actual."
+}
+
+try {
+    Ensure-Java21
 
     Assert-Path -PathValue $PayaraJar -Message "[ERROR] No se encontro '$PayaraJar' en la raiz del proyecto."
     Assert-Path -PathValue $AsadminFile -Message "[ERROR] No se encontro '$AsadminFile' en la raiz del proyecto."
@@ -170,8 +180,8 @@ try {
         Write-Warning "Puerto $Port ocupado. Se usara $selectedPort."
     }
 
-    Write-Host "[4/4] Levantando local: java -jar $UberJar --addlibs $PostgresDriver --port $selectedPort"
-    & java -jar $UberJar --addlibs $PostgresDriver --port $selectedPort
+    Write-Host "[4/4] Levantando local: java -jar $UberJar --addlibs $PostgresDriver --nocluster --port $selectedPort"
+    & java -jar $UberJar --addlibs $PostgresDriver --nocluster --port $selectedPort
     exit $LASTEXITCODE
 }
 catch {

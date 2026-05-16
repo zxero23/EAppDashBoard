@@ -9,13 +9,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.annotation.PostConstruct;
+import jakarta.ejb.EJB;
+import jakarta.inject.Named;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.model.SelectItem;
+import jakarta.servlet.http.HttpServletRequest;
 import org.ccpm.dashboard.entity.ActionItem;
 import org.ccpm.dashboard.entity.Metas;
 import org.ccpm.dashboard.entity.Grupo;
@@ -32,7 +32,7 @@ import org.ccpm.dashboard.facade.OrganismoFacadeLocal;
  *
  * @author Alvarenga Angel
  */
-@ManagedBean
+@Named
 @RequestScoped
 public class MetasManagedBean extends UtilManagedBean implements Serializable{
     @EJB

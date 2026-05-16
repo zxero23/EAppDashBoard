@@ -18,18 +18,18 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
-import javax.faces.application.Resource;
-import javax.faces.bean.ApplicationScoped;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.annotation.PostConstruct;
+import jakarta.ejb.EJB;
+import jakarta.faces.application.Resource;
+import jakarta.enterprise.context.ApplicationScoped;
+
+import jakarta.inject.Named;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.view.ViewScoped;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.model.SelectItem;
+import jakarta.servlet.http.HttpServletRequest;
 import org.ccpm.dashboard.entity.ActionItem;
 import org.ccpm.dashboard.entity.Obras;
 import org.ccpm.dashboard.entity.Grupo;
@@ -41,15 +41,14 @@ import org.ccpm.dashboard.facade.LocalidadFacadeLocal;
 import org.ccpm.dashboard.facade.ObrasFacadeLocal;
 import org.ccpm.dashboard.facade.OrganismoFacadeLocal;
 import org.ccpm.dashboard.facade.SituacionFacadeLocal;
-import org.icefaces.ace.component.fileentry.FileEntry;
-import org.icefaces.ace.component.fileentry.FileEntryEvent;
-import org.icefaces.ace.component.fileentry.FileEntryResults;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.file.UploadedFile;
 
 /**
  *
  * @author Alvarenga Angel
  */
-@ManagedBean
+@Named
 @RequestScoped
 public class ObrasManagedBean extends UtilManagedBean implements Serializable{
     @EJB
@@ -593,17 +592,10 @@ public class ObrasManagedBean extends UtilManagedBean implements Serializable{
     }
      
     //devuelve el evento de la carga de archivos, y el path del archivo subido
-     public void customValidator(FileEntryEvent entryEvent) { //aaandaaaa
-        FileEntryResults results = ((FileEntry) entryEvent.getComponent()).getResults();
-        for (FileEntryResults.FileInfo file : results.getFiles()) {
-            this.setAdjunto(file.getFile().getAbsolutePath());
-            if (file.isSaved()) {
-                System.out.println(file.getFileName());
-                System.out.println(file.getContentType());
-                System.out.println(file.getFile().getAbsolutePath());
-                this.setAdjunto(file.getFile().getAbsolutePath());
-                
-            }
+     public void customValidator(FileUploadEvent entryEvent) {
+        UploadedFile file = entryEvent.getFile();
+        if (file != null) {
+            this.setAdjunto(file.getFileName());
         }
      }
      
@@ -685,25 +677,19 @@ public class ObrasManagedBean extends UtilManagedBean implements Serializable{
     
     
     //domingo 20 de noviembre 2016 GUARDA PATHS DE TODAS LAS FOTOS SUBIDAS
-    public void customValidatorFotos(FileEntryEvent entryEvent) { //aaandaaaa
-        FileEntryResults results = ((FileEntry) entryEvent.getComponent()).getResults();
-        int indice=0;
-        String[] ruta=new String[100]; //guarda hasta 100 fotos
-        for (FileEntryResults.FileInfo file : results.getFiles()) {
-           
-            ruta[indice]=file.getFile().getAbsolutePath();
-            
-            if (file.isSaved()) {
-                
-                indice=indice+1;
-                this.setFotos(ruta);
+    public void customValidatorFotos(FileUploadEvent entryEvent) {
+        UploadedFile file = entryEvent.getFile();
+        if (file != null) {
+            String[] ruta = this.getFotos() != null ? this.getFotos() : new String[100];
+            for (int i = 0; i < ruta.length; i++) {
+                if (ruta[i] == null || ruta[i].isBlank()) {
+                    ruta[i] = file.getFileName();
+                    break;
+                }
             }
+            this.setFotos(ruta);
+            this.setVerBoton(true);
         }
-        //this.setFotos(ruta);
-        for (int i=0;i<5;i=i+1) {
-            System.out.println("Desde el array papu"+" valor "+i+""+this.getFotos()[i]);
-       }
-        this.setVerBoton(true);
      }
     
 }

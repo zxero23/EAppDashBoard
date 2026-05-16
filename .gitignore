@@ -5,4 +5,5 @@ Thumbs.db
 .idea/
 *.iml
 .vscode/
-payara-micro-5.2022.5.jar
+payara-micro-*.jar
+

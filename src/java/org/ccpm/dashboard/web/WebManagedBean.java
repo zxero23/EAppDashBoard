@@ -6,12 +6,13 @@
 package org.ccpm.dashboard.web;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
+import jakarta.ejb.EJB;
+import jakarta.inject.Named;
+import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.context.FacesContext;
 import org.ccpm.dashboard.entity.Grupo;
 import org.ccpm.dashboard.entity.Menu;
 import org.ccpm.dashboard.entity.Usuario;
@@ -21,9 +22,9 @@ import org.ccpm.dashboard.facade.UsuarioFacadeLocal;
  *
  * @author Alvarenga Angel
  */
-@ManagedBean(name = "webManagedBean")
+@Named("webManagedBean")
 @SessionScoped
-public class WebManagedBean {
+public class WebManagedBean implements Serializable {
     @EJB
     private UsuarioFacadeLocal usuarioFacade;    
     private String nombreUsuario;

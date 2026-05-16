@@ -1,27 +1,27 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:ace="http://www.icefaces.org/icefaces/components"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">      
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="jakarta.faces.core">      
     <ui:composition template="./layout.xhtml">
         <ui:define name="content">
             <h:form id="formNuevoUsuario" title=" ">
-                <ace:panel id="nuevoUsuario" header="#{msg.newUsuario}">
+                <p:panel id="nuevoUsuario" header="#{msg.newUsuario}">
                     <table border="0" cellspacing="5" class="panel-buttons">
                         <tr>
                             <td align="right">
                                 <h:outputLabel value="(*) Organismo:" />
                             </td>
                             <td align="left">
-                                <ace:simpleSelectOneMenu id="sltOrganismoUsuario" value="#{usuarioManagedBean.idOrganismo}" label="organismo"  required="true">
+                                <p:selectOneMenu id="sltOrganismoUsuario" value="#{usuarioManagedBean.idOrganismo}" label="organismo"  required="true">
                                     <f:selectItems value="#{usuarioManagedBean.selectItemsOrg}" /> 
-                                    <ace:ajax render="@this sltOrganismoUsuario sltOrganismoUsuarioMsg" event="blur"/> 
-                                </ace:simpleSelectOneMenu>
+                                    <p:ajax render="@this sltOrganismoUsuario sltOrganismoUsuarioMsg" event="blur"/> 
+                                </p:selectOneMenu>
                             </td>
                             <td align="left">
-                                <ace:message id="sltOrganismoMsgUsuario" for="sltOrganismoUsuario" initEffect="slide" changeEffect="shake"/>
+                                <p:message id="sltOrganismoMsgUsuario" for="sltOrganismoUsuario" initEffect="slide" changeEffect="shake"/>
                             </td>
                         </tr>
                         <tr>
@@ -29,12 +29,12 @@
                                 <h:outputLabel value="(*) Apellido:" />
                             </td>
                             <td align="left">
-                                <ace:textEntry id="apellido" label="apellido" value="#{usuarioManagedBean.apellido}" required="true" size="55">
-                                    <ace:ajax render="@this apellido apellidoMsg" event="blur"/>                                
-                                </ace:textEntry>
+                                <p:inputText id="apellido" label="apellido" value="#{usuarioManagedBean.apellido}" required="true" size="55">
+                                    <p:ajax render="@this apellido apellidoMsg" event="blur"/>                                
+                                </p:inputText>
                             </td>
                             <td align="left">
-                                <ace:message id="apellidoMsg" for="apellido" initEffect="slide" changeEffect="shake"/> 
+                                <p:message id="apellidoMsg" for="apellido" initEffect="slide" changeEffect="shake"/> 
                             </td>
                         </tr>
                         <tr>
@@ -42,12 +42,12 @@
                                 <h:outputLabel value="(*) #{msg.name}" />
                             </td>
                             <td align="left">
-                                <ace:textEntry id="nombre"  label="#{msg.name}" value="#{usuarioManagedBean.nombre}" required="true" size="55">
-                                    <ace:ajax render="@this nombre nombreMsg" event="blur"/>                                
-                                </ace:textEntry>
+                                <p:inputText id="nombre"  label="#{msg.name}" value="#{usuarioManagedBean.nombre}" required="true" size="55">
+                                    <p:ajax render="@this nombre nombreMsg" event="blur"/>                                
+                                </p:inputText>
                             </td>
                             <td align="left">
-                                <ace:message id="nombreMsg" for="nombre" initEffect="slide" changeEffect="shake"/>
+                                <p:message id="nombreMsg" for="nombre" initEffect="slide" changeEffect="shake"/>
                             </td>
                         </tr>
                         <tr>
@@ -55,12 +55,12 @@
                                 <h:outputLabel value="(*) Usuario:" />
                             </td>
                             <td align="left">
-                                <ace:textEntry id="uss"  label="usuario" value="#{usuarioManagedBean.uss}" required="true" size="55">
-                                    <ace:ajax render="@this uss ussMsg" event="blur"/>                                
-                                </ace:textEntry>
+                                <p:inputText id="uss"  label="usuario" value="#{usuarioManagedBean.uss}" required="true" size="55">
+                                    <p:ajax render="@this uss ussMsg" event="blur"/>                                
+                                </p:inputText>
                             </td>
                             <td align="left">
-                                <ace:message id="ussMsg" for="uss" initEffect="slide" changeEffect="shake"/>
+                                <p:message id="ussMsg" for="uss" initEffect="slide" changeEffect="shake"/>
                             </td>
                         </tr>
                         <tr>
@@ -68,12 +68,12 @@
                                 <h:outputLabel value="(*) Contraseña:" />
                             </td>
                             <td align="left">
-                                <ace:textEntry id="pass"  label="contraseña" value="#{usuarioManagedBean.pass}" required="true" size="55">
-                                    <ace:ajax render="@this pass passMsg" event="blur"/>                                
-                                </ace:textEntry>
+                                <p:inputText id="pass"  label="contraseña" value="#{usuarioManagedBean.pass}" required="true" size="55">
+                                    <p:ajax render="@this pass passMsg" event="blur"/>                                
+                                </p:inputText>
                             </td>
                             <td align="left">
-                                <ace:message id="passMsg" for="pass" initEffect="slide" changeEffect="shake"/>
+                                <p:message id="passMsg" for="pass" initEffect="slide" changeEffect="shake"/>
                             </td>
                         </tr>
                         <tr>
@@ -81,12 +81,12 @@
                                 <h:outputLabel value="(*) Correo Electrónico:" />
                             </td>
                             <td align="left">
-                                <ace:textEntry id="email" label="email" value="#{usuarioManagedBean.email}" required="true" size="55">
-                                    <ace:ajax render="@this email emailMsg" event="blur"/>                                
-                                </ace:textEntry>
+                                <p:inputText id="email" label="email" value="#{usuarioManagedBean.email}" required="true" size="55">
+                                    <p:ajax render="@this email emailMsg" event="blur"/>                                
+                                </p:inputText>
                             </td>
                             <td align="left">
-                                <ace:message id="emailMsg" for="email" initEffect="slide" changeEffect="shake"/>
+                                <p:message id="emailMsg" for="email" initEffect="slide" changeEffect="shake"/>
                             </td>
                         </tr>
                          <tr>
@@ -94,9 +94,9 @@
                                 <h:outputLabel value="(*) Grupos:" />
                             </td>
                             <td align="left">
-                                <ace:list id="list" value="#{usuarioManagedBean.idItems}" selectionMode="multiple" dragging="true">
+                                <h:panelGroup id="list" value="#{usuarioManagedBean.idItems}" selectionMode="multiple" dragging="true">
                                     <f:selectItems value="#{usuarioManagedBean.selectItems}" />
-                                </ace:list>
+                                </h:panelGroup>
                             </td>
                             <td align="left">
                                 
@@ -104,11 +104,11 @@
                         </tr>
                      </table>
                     <h:panelGrid id="buttonGrid" columns="3" class="panel-buttons">
-                        <ace:pushButton id="save" value="#{msg.save}" action="#{usuarioManagedBean.crear()}"/>
-                        <ace:pushButton id="saveCreate" value="#{msg.saveCreate}" action="#{usuarioManagedBean.crearOtro()}"/>
-                        <ace:pushButton id="cancel" value="#{msg.cancel}" action="usuarioConf" immediate="true" actionListener="#{usuarioManagedBean.limpiar()}"/>
+                        <p:commandButton id="save" value="#{msg.save}" action="#{usuarioManagedBean.crear()}"/>
+                        <p:commandButton id="saveCreate" value="#{msg.saveCreate}" action="#{usuarioManagedBean.crearOtro()}"/>
+                        <p:commandButton id="cancel" value="#{msg.cancel}" action="usuarioConf" immediate="true" actionListener="#{usuarioManagedBean.limpiar()}"/>
                     </h:panelGrid>
-                </ace:panel>                
+                </p:panel>                
             </h:form>
         </ui:define>
     </ui:composition>

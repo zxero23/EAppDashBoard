@@ -2,149 +2,149 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-                xmlns:ace="http://www.icefaces.org/icefaces/components"
-                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="jakarta.faces.facelets"
                 template="./layout.xhtml"
-                xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+                xmlns:pt="jakarta.faces.passthrough">
         <ui:define name="content">
             <h:form id="formObras" title=" ">
-                <ace:panel id="ObrasPanelActualizar" header="#{msg.confObra}">
+                <p:panel id="ObrasPanelActualizar" header="#{msg.confObra}">
                     <h:panelGrid  columns="2" class="panel-buttons">
                         <h:panelGroup>
                             <img src="images/symbolRefresh.png" align="absmiddle" border="0" alt="" title="Refrescar" style="margin-right: 5px;"/>
-                            <ace:linkButton action="obrasConf" actionListener="#{obrasManagedBean.actualizar}" value="#{msg.confObra}"/>
+                            <p:commandLink action="obrasConf" actionListener="#{obrasManagedBean.actualizar}" value="#{msg.confObra}"/>
                             |
                         </h:panelGroup>
 
                         <h:panelGroup rendered="#{obrasManagedBean.alta}">
                             <img src="images/symbolAdd.png" align="absmiddle" border="0" alt="" title="Nuevo" style="margin-right: 5px;"/>
-                            <ace:linkButton action="nuevaObra" value="Nueva Obra"/>
+                            <p:commandLink action="nuevaObra" value="Nueva Obra"/>
                         </h:panelGroup>
                     </h:panelGrid>
 
-                    <ace:panel id="obrasPanelBusqueda" header="#{msg.busqueda}" collapsed="TRUE" toggleable="true" toggleSpeed="200" class="panel-buttons">
+                    <p:panel id="obrasPanelBusqueda" header="#{msg.busqueda}" collapsed="TRUE" toggleable="true" toggleSpeed="200" class="panel-buttons">
                         <h:panelGrid  columns="2" cellspacing="5" cellpadding="5">
                             <h:outputLabel value="Organismo" /> 
-                            <ace:simpleSelectOneMenu id="sltOrganismoBusq" value="#{obrasManagedBean.idOrganismo}" label="organismo"  required="true" style="width: 100%" >
+                            <p:selectOneMenu id="sltOrganismoBusq" value="#{obrasManagedBean.idOrganismo}" label="organismo"  required="true" style="width: 100%" >
                                     <f:selectItem  itemValue="0" itemLabel="NINGUNO"/>
                                     <f:selectItems value="#{obrasManagedBean.selectItemsOrg}" /> 
-                                    <ace:ajax render="@this sltOrganismoBusq sltOrganismoMsgBusq" event="blur"/> 
-                            </ace:simpleSelectOneMenu>
+                                    <p:ajax render="@this sltOrganismoBusq sltOrganismoMsgBusq" event="blur"/> 
+                            </p:selectOneMenu>
                             <h:outputLabel value="Situación" />                          
-                            <ace:simpleSelectOneMenu id="sltSituacion" value="#{obrasManagedBean.situacionBuscar}" label="situacion"  required="true" style="width: 100%" >
+                            <p:selectOneMenu id="sltSituacion" value="#{obrasManagedBean.situacionBuscar}" label="situacion"  required="true" style="width: 100%" >
                                     <f:selectItem  itemValue="0" itemLabel="NINGUNO"/>
                                     <f:selectItems value="#{obrasManagedBean.selectItems}" /> 
-                                    <ace:ajax render="@this sltSituacion sltSituacionMsg" event="blur"/> 
-                            </ace:simpleSelectOneMenu>
+                                    <p:ajax render="@this sltSituacion sltSituacionMsg" event="blur"/> 
+                            </p:selectOneMenu>
                             
                             <h:outputLabel value="Leyenda:" />
-                            <ace:textEntry id="nombre" value="#{obrasManagedBean.leyendaBuscar}" labelPosition="left" style="width: 98%"/>
+                            <p:inputText id="nombre" value="#{obrasManagedBean.leyendaBuscar}" labelPosition="left" style="width: 98%"/>
                             
                         </h:panelGrid> 
                         <div align="right">
                             <h:panelGrid columns="2">
-                                <ace:pushButton id="find" value="${msg.find}" actionListener="#{obrasManagedBean.aplicarFiltro}"/>
-                                <ace:pushButton id="actualizar" value="#{msg.actualizar}" actionListener="#{obrasManagedBean.actualizar}"/>
+                                <p:commandButton id="find" value="${msg.find}" actionListener="#{obrasManagedBean.aplicarFiltro}"/>
+                                <p:commandButton id="actualizar" value="#{msg.actualizar}" actionListener="#{obrasManagedBean.actualizar}"/>
                             </h:panelGrid>
                         </div>
-                    </ace:panel>
+                    </p:panel>
 
-                    <ace:dataTable id="ObrasDataTable" value="#{obrasManagedBean.listElements}" var="item" paginator="true" paginatorPosition="bottom" rows="10" class="panel-buttons">
+                    <p:dataTable id="ObrasDataTable" value="#{obrasManagedBean.listElements}" var="item" paginator="true" paginatorPosition="bottom" rows="10" class="panel-buttons">
                         
-                         <ace:column id="descripcionOrg" headerText="Organismo">
+                         <p:column id="descripcionOrg" headerText="Organismo">
                             <center>
                                 <h:outputText id="cellDescripcionOrg" value="#{item.organismo.leyenda}"/>
                             </center>
-                        </ace:column>
+                        </p:column>
                        
 
-                        <ace:column id="nombre" headerText="#{msg.findley}">
+                        <p:column id="nombre" headerText="#{msg.findley}">
                             <center>
                                 <h:outputText id="cellNombre" value="#{item.leyenda}"/>
                             </center>
-                        </ace:column>
+                        </p:column>
 
                        
                         
-                        <ace:column id="situacion" headerText="Situación">
+                        <p:column id="situacion" headerText="Situación">
                             <center>
                                 <h:outputText id="cellSituacion" value="#{item.situacion.leyenda}"/>
                             </center>
-                        </ace:column>
+                        </p:column>
                         
-                        <ace:column id="Latitud" headerText="Latitud">
+                        <p:column id="Latitud" headerText="Latitud">
                             <center>
                                 <h:outputText id="cellLatitud" value="#{item.latitud}"/>
                             </center>
-                        </ace:column>
+                        </p:column>
                         
-                        <ace:column id="Longitud" headerText="Longitud">
+                        <p:column id="Longitud" headerText="Longitud">
                             <center>
                                 <h:outputText id="cellLongitud" value="#{item.longitud}"/>
                             </center>
-                        </ace:column>
+                        </p:column>
                         
-                        <ace:column id="Localidad" headerText="Localidad">
+                        <p:column id="Localidad" headerText="Localidad">
                             <center>
                                 <h:outputText id="cellLocalidad" value="#{item.localidad.leyenda}"/>
                             </center>
-                        </ace:column>
+                        </p:column>
                         
-                        <ace:column id="ubicacion" headerText="Ubicación" style="width: 530px">
-                            <ace:gMap id="gMapLayer"  zoomLevel="9" latitude="#{item.latitud}" 
+                        <p:column id="ubicacion" headerText="Ubicación" style="width: 530px">
+                            <h:panelGroup id="gMapLayer"  zoomLevel="9" latitude="#{item.latitud}" 
                                 longitude="#{item.longitud}">
-                                <ace:gMapMarker latitude="#{item.latitud}" longitude="#{item.longitud}">
-                                    <ace:gMapInfoWindow content="#{item.leyenda}">
-                                        <ace:gMapEvent eventType="closeclick" scriptToUse="alert('funcion Javascript!!!!');"/>
-                                    </ace:gMapInfoWindow>
-                                </ace:gMapMarker>
+                                <h:panelGroupMarker latitude="#{item.latitud}" longitude="#{item.longitud}">
+                                    <h:panelGroupInfoWindow content="#{item.leyenda}">
+                                        <h:panelGroupEvent eventType="closeclick" scriptToUse="alert('funcion Javascript!!!!');"/>
+                                    </h:panelGroup>
+                                </h:panelGroup>
                                 
                                 
     
-                            </ace:gMap>
-                         </ace:column>
-                        <ace:column id="fechaInicioObra1" headerText="Fecha Inicio.">
+                            </h:panelGroup>
+                         </p:column>
+                        <p:column id="fechaInicioObra1" headerText="Fecha Inicio.">
                             <center>
                                 <h:outputText id="cellfechaInicioObra1" value="#{item.fechaInicio}">
                                     <f:convertDateTime pattern="dd/MM/yyyy" locale="es_AR" timeZone="America/Argentina/Buenos_Aires"/>   
                                 </h:outputText>
                             </center>
-                        </ace:column>
+                        </p:column>
                         
-                        <ace:column id="fechaFinalObra1" headerText="Fecha Final.">
+                        <p:column id="fechaFinalObra1" headerText="Fecha Final.">
                             <center>
                                 <h:outputText id="cellfechaFinalObra1" value="#{item.fechaFinal}">
                                     <f:convertDateTime pattern="dd/MM/yyyy" locale="es_AR" timeZone="America/Argentina/Buenos_Aires"/>
                                 </h:outputText>
                             </center>
-                        </ace:column>
+                        </p:column>
                         
                         
                         
                         
                         
-                        <ace:column id="accion" headerText="#{msg.actionT}" style="width: 15%">
+                        <p:column id="accion" headerText="#{msg.actionT}" style="width: 15%">
                             <h:panelGrid  columns="4"> 
                                                        
                                 
-                                <ace:pushButton  id="detalle"  action="detalleObras" actionListener="#{obrasManagedBean.verDetalle}" rendered="#{obrasManagedBean.detalle}" >
+                                <p:commandButton  id="detalle"  action="detalleObras" actionListener="#{obrasManagedBean.verDetalle}" rendered="#{obrasManagedBean.detalle}" >
                                     <img src="images/symbolZoomInWhite.png" />
                                     <f:param name="id" value="#{item.id}"/>
-                                </ace:pushButton >
+                                </p:pushButton >
 
-                                <ace:pushButton id="editar"  action="editarObras" actionListener="#{obrasManagedBean.prepararParaEditar()}" rendered="#{obrasManagedBean.modificacion}" immediate="true"  >
+                                <p:commandButton id="editar"  action="editarObras" actionListener="#{obrasManagedBean.prepararParaEditar()}" rendered="#{obrasManagedBean.modificacion}" immediate="true"  >
                                     <img src="images/symbolEditWhite.png" />
                                     <f:param name="id" value="#{item.id}"/>
-                                </ace:pushButton>
+                                </p:commandButton>
                                 
-                                <ace:pushButton id="eliminar"  rendered="#{obrasManagedBean.baja}" p:onclick="ice.ace.instance('#{confirmDialogObras.clientId}').show();return false;" >
+                                <p:commandButton id="eliminar"  rendered="#{obrasManagedBean.baja}"  >
                                 <img src="images/symbolDeleteWhite.png" />
-                                </ace:pushButton>
+                                </p:commandButton>
                                                                
-                                <ace:confirmationDialog id="confirmDialogObras" binding="#{confirmDialogObras}"
+                                <h:panelGroup id="confirmDialogObras" binding="#{confirmDialogObras}"
                                                         message="${msg.msgDelete}"
                                                         header="${msg.confirm}"
                                                         modal="true"
@@ -152,23 +152,23 @@
                                                         height="155"
                                                         position="center">
                                     <h:panelGrid columns="2" class="panel-confirm-buttons">
-                                        <ace:pushButton id="yes" value="${msg.acep}" p:onclick="ice.ace.instance('#{confirmDialogObras.clientId}').hide();" actionListener="#{obrasManagedBean.guardarBorrado()}">
+                                        <p:commandButton id="yes" value="${msg.acep}"  actionListener="#{obrasManagedBean.guardarBorrado()}">
                                             <f:param name="id" value="#{item.id}" />
                                             <f:ajax execute="@this" render="@all"/>
-                                        </ace:pushButton>
-                                        <ace:pushButton id="no" value="${msg.cancel}" p:onclick="ice.ace.instance('#{confirmDialogObras.clientId}').hide();">
+                                        </p:commandButton>
+                                        <p:commandButton id="no" value="${msg.cancel}" >
                                             <f:ajax execute="@this" render="@all"/>
-                                        </ace:pushButton>
+                                        </p:commandButton>
                                     </h:panelGrid>
-                                </ace:confirmationDialog>
+                                </h:panelGroup>
 
                             </h:panelGrid>
-                        </ace:column>
+                        </p:column>
                         
                        
                         
-                    </ace:dataTable>
-                </ace:panel>           
+                    </p:dataTable>
+                </p:panel>           
                 
                 
              

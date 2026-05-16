@@ -1,8 +1,9 @@
 param(
-    [string]$PayaraJar = "payara-micro-5.2022.5.jar",
-    [string]$WarFile = "target/EAppDashBoard-1.0-SNAPSHOT.war",
+    [string]$PayaraJar = "payara-micro-7.2026.2.jar",
+    [string]$WarFile = "target/ROOT.war",
     [string]$OutputJar = "target/EAppDashBoard-micro.jar",
-    [switch]$SkipBuild
+    [switch]$SkipBuild,
+    [switch]$SkipJavaSwitch
 )
 
 $ErrorActionPreference = "Stop"
@@ -20,11 +21,34 @@ function Assert-Path {
     }
 }
 
+function Ensure-Java21 {
+    if ($SkipJavaSwitch) {
+        Write-Host "[INFO] Omitiendo cambio de Java (-SkipJavaSwitch)."
+        return
+    }
+
+    if (Get-Command jabba -ErrorAction SilentlyContinue) {
+        $candidates = @("system@21.0.10", "zulu@1.21.0", "openjdk@21")
+        foreach ($candidate in $candidates) {
+            Write-Host "[INFO] Intentando Java 21 con jabba: $candidate"
+            & jabba use $candidate
+            if ($LASTEXITCODE -eq 0) {
+                Write-Host "[INFO] Java activa: $candidate"
+                return
+            }
+        }
+        throw "[ERROR] No se pudo activar una JVM 21 con jabba. Instala una version Java 21 (por ejemplo zulu@1.21.0)."
+    }
+
+    Write-Warning "jabba no esta disponible. Se usara JAVA_HOME/java actual; asegurate de usar Java 21."
+}
+
 try {
+    Ensure-Java21
     Assert-Path -PathValue $PayaraJar -Message "[ERROR] No se encontro '$PayaraJar' en la raiz del proyecto."
 
     if (-not $SkipBuild) {
-        Write-Host "[INFO] Ejecutando build Maven para generar WAR..."
+        Write-Host "[INFO] Ejecutando build Maven para generar WAR (Java 21 / Jakarta)..."
         & mvn -DskipTests package
         if ($LASTEXITCODE -ne 0) {
             if (Test-Path -LiteralPath $WarFile) {

@@ -8,11 +8,11 @@ package org.ccpm.dashboard.web;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import javax.faces.event.ValueChangeEvent;
-import javax.faces.model.SelectItem;
+import jakarta.ejb.EJB;
+import jakarta.inject.Named;
+import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.event.ValueChangeEvent;
+import jakarta.faces.model.SelectItem;
 import org.ccpm.dashboard.entity.ActionItem;
 import org.ccpm.dashboard.entity.Grupo;
 import org.ccpm.dashboard.entity.Menu;
@@ -26,7 +26,7 @@ import org.ccpm.dashboard.facade.UsuarioFacadeLocal;
  *
  * @author Alvarenga Angel
  */
-@ManagedBean
+@Named
 @SessionScoped
 public class PermisoManagedBean extends UtilManagedBean implements Serializable{
     @EJB

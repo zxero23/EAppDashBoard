@@ -1,28 +1,28 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:ace="http://www.icefaces.org/icefaces/components"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">      
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="jakarta.faces.core">      
     <ui:composition template="./layout.xhtml">
         <ui:define name="content">
             <h:form id="formEditarMeta" title=" ">
-                <ace:panel id="editarMeta" header="#{msg.editMeta}">
+                <p:panel id="editarMeta" header="#{msg.editMeta}">
                     <table border="0" cellspacing="5" class="panel-buttons">
                         <tr>
                             <td align="right">
                                 <h:outputLabel value="(*) Objetivo:" />
                             </td>
                             <td align="left">
-                                <ace:simpleSelectOneMenu id="sltObjetivo" value="#{metasManagedBean.idObjetivos}" label="organismo"  required="true">
+                                <p:selectOneMenu id="sltObjetivo" value="#{metasManagedBean.idObjetivos}" label="organismo"  required="true">
                                     
                                     <f:selectItems value="#{metasManagedBean.selectItems}" /> 
-                                    <ace:ajax render="@this sltObjetivo sltObjetivoMsg" event="blur"/> 
-                                </ace:simpleSelectOneMenu>
+                                    <p:ajax render="@this sltObjetivo sltObjetivoMsg" event="blur"/> 
+                                </p:selectOneMenu>
                             </td>
                             <td align="left">
-                                <ace:message id="sltObjetivoMsg" for="sltObjetivo" initEffect="slide" changeEffect="shake"/>
+                                <p:message id="sltObjetivoMsg" for="sltObjetivo" initEffect="slide" changeEffect="shake"/>
                             </td>
                         </tr>
                         
@@ -31,14 +31,14 @@
                                 <h:outputLabel value="(*) Situacion:" />
                             </td>
                             <td align="left">
-                                <ace:simpleSelectOneMenu id="sltSituacion" value="#{metasManagedBean.idSituacion}" label="situacion"  required="true">
+                                <p:selectOneMenu id="sltSituacion" value="#{metasManagedBean.idSituacion}" label="situacion"  required="true">
                                     
                                     <f:selectItems value="#{metasManagedBean.selectItemsSituacion}" /> 
-                                    <ace:ajax render="@this sltSituacion sltSituacionMsg" event="blur"/> 
-                                </ace:simpleSelectOneMenu>
+                                    <p:ajax render="@this sltSituacion sltSituacionMsg" event="blur"/> 
+                                </p:selectOneMenu>
                             </td>
                             <td align="left">
-                                <ace:message id="sltSituacionMsg" for="sltSituacion" initEffect="slide" changeEffect="shake"/>
+                                <p:message id="sltSituacionMsg" for="sltSituacion" initEffect="slide" changeEffect="shake"/>
                             </td>
                         </tr>
                         <tr>
@@ -46,12 +46,12 @@
                                 <h:outputLabel value="(*) #{msg.name}" />
                             </td>
                             <td align="left">
-                                <ace:textEntry id="leyenda" label="#{msg.name}" value="#{metasManagedBean.leyenda}" required="true" size="55">
-                                    <ace:ajax render="@this leyenda leyendaMsg" event="blur"/>                                
-                                </ace:textEntry>
+                                <p:inputText id="leyenda" label="#{msg.name}" value="#{metasManagedBean.leyenda}" required="true" size="55">
+                                    <p:ajax render="@this leyenda leyendaMsg" event="blur"/>                                
+                                </p:inputText>
                             </td>
                             <td align="left">
-                                <ace:message id="leyendaMsg" for="leyenda" initEffect="slide" changeEffect="shake"/>  
+                                <p:message id="leyendaMsg" for="leyenda" initEffect="slide" changeEffect="shake"/>  
                             </td>
                         </tr> 
                         <tr>
@@ -59,12 +59,12 @@
                                 <h:outputLabel value="(*) Descripción" />
                             </td>
                             <td align="left">
-                                <ace:textAreaEntry id="descripcionEditarMeta" label="#{msg.name}" value="#{metasManagedBean.descripcion}" required="true">
-                                    <ace:ajax render="@this descripcionEditarMeta descripcionEditarMetaMsg" event="blur"/>                                
-                                </ace:textAreaEntry>
+                                <p:inputTextarea id="descripcionEditarMeta" label="#{msg.name}" value="#{metasManagedBean.descripcion}" required="true">
+                                    <p:ajax render="@this descripcionEditarMeta descripcionEditarMetaMsg" event="blur"/>                                
+                                </p:inputTextarea>
                             </td>
                             <td align="left">
-                                <ace:message id="descripcionEditarMetaMsg" for="descripcionEditarMeta" initEffect="slide" changeEffect="shake"/> 
+                                <p:message id="descripcionEditarMetaMsg" for="descripcionEditarMeta" initEffect="slide" changeEffect="shake"/> 
                             </td>
                         </tr>
                         <tr>
@@ -72,20 +72,20 @@
                                 <h:outputLabel value="(*) Cantidad" />
                             </td>
                             <td align="left">
-                                <ace:textEntry id="cantidad" label="cantidad" value="#{metasManagedBean.cantidad}" required="true" size="53">
-                                    <ace:ajax render="@this cantidad cantidadMsg" event="blur"/>                                
-                                </ace:textEntry>
+                                <p:inputText id="cantidad" label="cantidad" value="#{metasManagedBean.cantidad}" required="true" size="53">
+                                    <p:ajax render="@this cantidad cantidadMsg" event="blur"/>                                
+                                </p:inputText>
                                 <h:outputLabel value="%" />
-                                <ace:checkboxButton id="Reducir"  label="Reducir" value="#{metasManagedBean.reduccion}">
-                                    <ace:ajax execute="@this" render="@this"/>
-                                </ace:checkboxButton>
+                                <p:selectBooleanButton id="Reducir"  label="Reducir" value="#{metasManagedBean.reduccion}">
+                                    <p:ajax execute="@this" render="@this"/>
+                                </p:selectBooleanButton>
                                 
-                                <ace:checkboxButton id="Aumentar" label="Aumentar" value="#{metasManagedBean.aumentar}">
-                                    <ace:ajax execute="@this" render="@this"/>
-                                </ace:checkboxButton>    
+                                <p:selectBooleanButton id="Aumentar" label="Aumentar" value="#{metasManagedBean.aumentar}">
+                                    <p:ajax execute="@this" render="@this"/>
+                                </p:selectBooleanButton>    
                             </td>
                             <td align="left">
-                                <ace:message id="cantidadMsg" for="cantidad" initEffect="slide" changeEffect="shake"/> 
+                                <p:message id="cantidadMsg" for="cantidad" initEffect="slide" changeEffect="shake"/> 
                             </td>
                         </tr>
                         <tr>
@@ -93,13 +93,13 @@
                                 <h:outputLabel value="(*) FechaInicio" />
                             </td>
                             <td align="left">
-                                <ace:maskedEntry id="fechainicio" value="#{metasManagedBean.fechaInicio}" mask="99/99/9999">
-                                    <ace:ajax render="@this fechainicio fechainicioMsg" event="blur"/> 
+                                <p:inputMask id="fechainicio" value="#{metasManagedBean.fechaInicio}" mask="99/99/9999">
+                                    <p:ajax render="@this fechainicio fechainicioMsg" event="blur"/> 
                                     <f:convertDateTime pattern="dd/MM/yyyy" locale="es_AR" timeZone="America/Argentina/Buenos_Aires"/> 
-                                </ace:maskedEntry>
+                                </p:inputMask>
                             </td>
                             <td align="left">
-                                <ace:message id="fechainicioMsg" for="fechainicio" initEffect="slide" changeEffect="shake"/> 
+                                <p:message id="fechainicioMsg" for="fechainicio" initEffect="slide" changeEffect="shake"/> 
                             </td>
                         </tr>
                          <tr>
@@ -107,13 +107,13 @@
                                 <h:outputLabel value="(*) FechaFinal" />
                             </td>
                             <td align="left">
-                                <ace:maskedEntry id="fechafinal" value="#{metasManagedBean.fechaFinal}" mask="99/99/9999">
-                                    <ace:ajax render="@this fechafinal fechafinalMsg" event="blur"/>
+                                <p:inputMask id="fechafinal" value="#{metasManagedBean.fechaFinal}" mask="99/99/9999">
+                                    <p:ajax render="@this fechafinal fechafinalMsg" event="blur"/>
                                     <f:convertDateTime pattern="dd/MM/yyyy" locale="es_AR" timeZone="America/Argentina/Buenos_Aires"/> 
-                                </ace:maskedEntry>
+                                </p:inputMask>
                             </td>
                             <td align="left">
-                                <ace:message id="fechafinalMsg" for="fechafinal" initEffect="slide" changeEffect="shake"/> 
+                                <p:message id="fechafinalMsg" for="fechafinal" initEffect="slide" changeEffect="shake"/> 
                             </td>
                         </tr>
                     </table>                    
@@ -121,10 +121,10 @@
                     <h:inputHidden value="#{metasManagedBean.id}" />
                     
                     <h:panelGrid id="buttonGrid" columns="2" class="panel-buttons">
-                        <ace:pushButton id="save" value="#{msg.saveEdit}" action="#{metasManagedBean.guardarEdicion}"/>                        
-                        <ace:pushButton id="cancel" value="#{msg.cancel}" action="metasConf" immediate="true" actionListener="#{metasManagedBean.limpiar()}"/>
+                        <p:commandButton id="save" value="#{msg.saveEdit}" action="#{metasManagedBean.guardarEdicion}"/>                        
+                        <p:commandButton id="cancel" value="#{msg.cancel}" action="metasConf" immediate="true" actionListener="#{metasManagedBean.limpiar()}"/>
                     </h:panelGrid>
-                </ace:panel>                
+                </p:panel>                
             </h:form>
         </ui:define>
     </ui:composition>

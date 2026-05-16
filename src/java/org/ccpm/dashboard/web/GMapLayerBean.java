@@ -1,11 +1,12 @@
 package org.ccpm.dashboard.web;
 
 import java.io.Serializable;
-import javax.faces.bean.CustomScoped;
-import javax.faces.bean.ManagedBean;
 
-@ManagedBean(name= GMapLayerBean.BEAN_NAME)
-@CustomScoped(value = "#{window}")
+import jakarta.enterprise.context.SessionScoped;
+import jakarta.inject.Named;
+
+@Named(GMapLayerBean.BEAN_NAME)
+@SessionScoped
 public class GMapLayerBean implements Serializable{
     public static final String BEAN_NAME = "gMapLayerBean";
     public String getBeanName() { return BEAN_NAME; }

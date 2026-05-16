@@ -1,74 +1,74 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:ace="http://www.icefaces.org/icefaces/components"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="jakarta.faces.core"
+      xmlns:pt="jakarta.faces.passthrough"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">      
     <ui:composition template="./layout.xhtml">
         <ui:define name="content">
             <h:form id="formIndicador" title=" ">
-                <ace:panel id="IndicadorPanelActualizar" header="#{msg.confIndicador}">
+                <p:panel id="IndicadorPanelActualizar" header="#{msg.confIndicador}">
                       <h:panelGrid  columns="2" class="panel-buttons">
                         <h:panelGroup>
                             <img src="images/symbolRefresh.png" align="absmiddle" border="0" alt="" title="Refrescar" style="margin-right: 5px;"/>
-                            <ace:linkButton action="indicadorConf" actionListener="#{indicadorManagedBean.actualizar}" value="#{msg.confIndicador}"/>
+                            <p:commandLink action="indicadorConf" actionListener="#{indicadorManagedBean.actualizar}" value="#{msg.confIndicador}"/>
                             |
                         </h:panelGroup>
 
                           <h:panelGroup rendered="#{indicadorManagedBean.alta}" >
                             <img src="images/symbolAdd.png" align="absmiddle" border="0" alt="" title="Nuevo" style="margin-right: 5px;"/>
-                            <ace:linkButton action="nuevoIndicador" value="Nuevo Indicador"/>
+                            <p:commandLink action="nuevoIndicador" value="Nuevo Indicador"/>
                         </h:panelGroup>
                     </h:panelGrid>
 
-                    <ace:panel id="indicadorPanelBusqueda" header="#{msg.busqueda}" toggleable="true" toggleSpeed="200" collapsed="true" class="panel-buttons">
+                    <p:panel id="indicadorPanelBusqueda" header="#{msg.busqueda}" toggleable="true" toggleSpeed="200" collapsed="true" class="panel-buttons">
                         <h:panelGrid  columns="3">
-                            <ace:textEntry id="nombre" value="#{indicadorManagedBean.leyendaBuscar}" label="#{msg.findley}" labelPosition="left"/>
-                            <ace:pushButton id="find" value="${msg.find}" actionListener="#{indicadorManagedBean.aplicarFiltro()}"/>
-                            <ace:pushButton id="actualizar" value="#{msg.actualizar}" actionListener="#{indicadorManagedBean.actualizar}"/>
+                            <p:inputText id="nombre" value="#{indicadorManagedBean.leyendaBuscar}" label="#{msg.findley}" labelPosition="left"/>
+                            <p:commandButton id="find" value="${msg.find}" actionListener="#{indicadorManagedBean.aplicarFiltro()}"/>
+                            <p:commandButton id="actualizar" value="#{msg.actualizar}" actionListener="#{indicadorManagedBean.actualizar}"/>
                         </h:panelGrid>                     
-                    </ace:panel>
+                    </p:panel>
 
-                    <ace:dataTable id="IndicadorDataTable" value="#{indicadorManagedBean.listElements}" var="item" paginator="true" paginatorPosition="bottom" rows="10" class="panel-buttons">
+                    <p:dataTable id="IndicadorDataTable" value="#{indicadorManagedBean.listElements}" var="item" paginator="true" paginatorPosition="bottom" rows="10" class="panel-buttons">
                         
-                        <ace:column id="id" headerText="#{msg.idT}" style="width: 7%">
+                        <p:column id="id" headerText="#{msg.idT}" style="width: 7%">
                             <center>
                                 <h:outputText id="cellId" value="#{item.id}"/>
                             </center>
-                        </ace:column>
+                        </p:column>
 
-                        <ace:column id="leyenda" headerText="#{msg.findley}">
+                        <p:column id="leyenda" headerText="#{msg.findley}">
                             <center>
                                 <h:outputText id="cellLeyenda" value="#{item.leyenda}"/>
                             </center>
-                        </ace:column>
+                        </p:column>
                         
-                        <ace:column id="descripcion" headerText="Descripción">
+                        <p:column id="descripcion" headerText="Descripción">
                             <center>
                                 <h:outputText id="cellDescripcion" value="#{item.descripcion}"/>
                             </center>
-                        </ace:column>
+                        </p:column>
                         
-                        <ace:column id="formula" headerText="Fórmula">
+                        <p:column id="formula" headerText="Fórmula">
                             <center>
                                 <h:outputText id="cellFormula" value="#{item.formula}"/>
                             </center>
-                        </ace:column>
+                        </p:column>
                         
-                        <ace:column id="meta" headerText="Meta">
+                        <p:column id="meta" headerText="Meta">
                             <center>
                                 <h:outputText id="cellMeta" value="#{item.metas.leyenda}"/>
                             </center>
-                        </ace:column>
+                        </p:column>
                         
-                        <ace:column id="ORG" headerText="Organismo">
+                        <p:column id="ORG" headerText="Organismo">
                             <center>
                                 <h:outputText id="cellORG" value="#{item.metas.objetivos.organismo.leyenda}"/>
                             </center>
-                        </ace:column>
+                        </p:column>
                        
                         
                         
@@ -77,24 +77,24 @@
                                               
                         
 
-                        <ace:column id="accion" headerText="#{msg.actionT}" style="width: 15%">
+                        <p:column id="accion" headerText="#{msg.actionT}" style="width: 15%">
                             <center>
                                 <h:panelGrid  columns="3"> 
 
-                                    <ace:pushButton id="detalle" action="detalleIndicador" actionListener="#{indicadorManagedBean.verDetalle}" rendered="#{indicadorManagedBean.detalle}">
+                                    <p:commandButton id="detalle" action="detalleIndicador" actionListener="#{indicadorManagedBean.verDetalle}" rendered="#{indicadorManagedBean.detalle}">
                                         <img src="images/symbolZoomInWhite.png" />
                                         <f:param name="id" value="#{item.id}"/>
-                                    </ace:pushButton>
+                                    </p:commandButton>
 
-                                    <ace:pushButton id="editar" action="editarIndicador" actionListener="#{indicadorManagedBean.prepararParaEditar()}" rendered="#{indicadorManagedBean.modificacion}">
+                                    <p:commandButton id="editar" action="editarIndicador" actionListener="#{indicadorManagedBean.prepararParaEditar()}" rendered="#{indicadorManagedBean.modificacion}">
                                         <img src="images/symbolEditWhite.png" />
                                         <f:param name="id" value="#{item.id}"/>
-                                    </ace:pushButton>
+                                    </p:commandButton>
 
-                                    <ace:pushButton id="eliminar"  rendered="#{indicadorManagedBean.baja}" p:onclick="ice.ace.instance('#{confirmDialogIndicador.clientId}').show();return false;">
+                                    <p:commandButton id="eliminar"  rendered="#{indicadorManagedBean.baja}" >
                                         <img src="images/symbolDeleteWhite.png" /> 
-                                    </ace:pushButton>
-                                    <ace:confirmationDialog id="confirmDialogIndicador" binding="#{confirmDialogIndicador}"
+                                    </p:commandButton>
+                                    <h:panelGroup id="confirmDialogIndicador" binding="#{confirmDialogIndicador}"
                                                             message="${msg.msgDelete}"
                                                             header="${msg.confirm}"
                                                             modal="true"
@@ -102,26 +102,26 @@
                                                             height="155"
                                                             position="center">
                                         <h:panelGrid columns="2" class="panel-confirm-buttons">
-                                            <ace:pushButton id="yes" value="${msg.acep}" p:onclick="ice.ace.instance('#{confirmDialogIndicador.clientId}').hide();" actionListener="#{indicadorManagedBean.guardarBorrado()}">
+                                            <p:commandButton id="yes" value="${msg.acep}"  actionListener="#{indicadorManagedBean.guardarBorrado()}">
                                                 <f:param name="id" value="#{item.id}" />
                                                 <f:ajax execute="@this" render="@all"/>
-                                            </ace:pushButton>
-                                            <ace:pushButton id="no" value="${msg.cancel}" p:onclick="ice.ace.instance('#{confirmDialogIndicador.clientId}').hide();">
+                                            </p:commandButton>
+                                            <p:commandButton id="no" value="${msg.cancel}" >
                                                 <f:ajax execute="@this" render="@all"/>
-                                            </ace:pushButton>
+                                            </p:commandButton>
                                         </h:panelGrid>
-                                    </ace:confirmationDialog>
+                                    </h:panelGroup>
 
                                 </h:panelGrid>
                             </center>
-                        </ace:column> 
+                        </p:column> 
                         
                         
                             
                         
                         
-                    </ace:dataTable>
-                </ace:panel>
+                    </p:dataTable>
+                </p:panel>
                
                 
                 </h:form>
