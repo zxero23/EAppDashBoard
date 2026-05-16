@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/layout.xhtml">
+        <ui:define name="content">
+            <h:form title=" " id="formu">
+                <div id="titulo" class="principal">
+                    <h1>
+                        <h:outputLabel value="#{msg.elegirOrganismo}"/>
+                    </h1>
+                </div>
+                <div id="accionesGen">
+                    <table border="0" cellspacing="5">
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="(*) #{msg.organismo}:" />
+                            </td>
+                            <td align="left">
+                                <p:selectOneMenu
+                                    id="organismo"
+                                    value="#{expedienteManagedBean.idOrganismo}"
+                                    label="Organismo"
+                                    required="true"
+                                    style="width: 360px !important;">
+                                    <f:selectItem  noSelectionOption="true"  itemValue="0"  itemLabel="#{msg.ninguno}"/>
+                                    <f:selectItems value="#{expedienteManagedBean.selectItemsOrganismoCod}" />
+                                    <f:ajax render="@this organismoError" event="valueChange"/>
+                                </p:selectOneMenu>
+                            </td>
+                            <td align="left">
+                                <p:message id="organismoError" for="organismo" initEffect="slide" changeEffect="fade"></p:message>
+                            </td>
+                        </tr>
+                    </table>              
+                </div>
+                <div align="left">
+                    <h:panelGrid columns="2" cellspacing="5">
+                        <p:commandButton value="Generar" action="#{expedienteManagedBean.generarCaratulaReAgro()}" style="margin-left:5px;"/>
+                        <p:commandButton value="#{msg.cancel}" action="expedienteConf" actionListener="#{expedienteManagedBean.limpiar()}" immediate="true"/>
+                    </h:panelGrid>
+                </div>
+                <p:ajaxStatus id="submitMonitorPage"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

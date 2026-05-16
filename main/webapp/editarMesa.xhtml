@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="jakarta.faces.core">
+    <ui:composition template="./layoutEdicion.xhtml">
+        <ui:param name="tituloVentana" value="#{msg.editMesa}"/>
+        <ui:param name="miBean" value="#{mesaManagedBean}"/>
+        <ui:param name="actionListenerEditar" value="guardarEdicion"/>
+        <ui:param name="actionListenerRefresh" value="limpiar"/>
+        <ui:param name="actionVolver" value="mesaConf"/>
+        <ui:define name="laEdicion">
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="(*) #{msg.organismo}:" />
+                </td>
+                <td align="left">
+                    <p:selectOneMenu
+                        id="organismo"
+                        value="#{mesaManagedBean.idOrganismo}"
+                        required="true" 
+                        style="width: 560px !important;">
+                        <f:selectItem  noSelectionOption="true"  itemValue="0"  itemLabel="#{msg.ninguno}"/>
+                        <f:selectItems value="#{mesaManagedBean.selectItems}" />
+                        <f:ajax render="@this organismoError" event="valueChange"/>
+                    </p:selectOneMenu>
+                </td>
+                <td align="left">
+                    <p:message id="organismoError" for="organismo" initEffect="slide" changeEffect="fade"></p:message>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="(*) #{msg.nombre}:" />
+                </td>
+                <td align="left">
+                    <p:inputText
+                        id="nombreMesa"
+                        value="#{mesaManagedBean.nombre}"
+                        label="#{msg.nombre}"
+                        required="true" 
+                        styleClass="muyancho">
+                        <f:ajax render="@this nombreMesaError" event="valueChange"/>
+                    </p:inputText>
+                </td>
+                <td align="left">
+                    <p:message id="nombreMesaError" for="nombreMesa" initEffect="slide" changeEffect="fade"></p:message>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="(*) #{msg.descripcion}:" />
+                </td>
+                <td align="left">
+                    <p:inputText
+                        id="descripcion"
+                        value="#{mesaManagedBean.descripcion}"
+                        label="#{msg.descripcion}"
+                        required="true" 
+                        styleClass="muyancho">
+                        <f:ajax render="@this descripcionError" event="valueChange"/>
+                    </p:inputText>
+                </td>
+                <td align="left">
+                    <p:message id="descripcionError" for="descripcion" initEffect="slide" changeEffect="fade"></p:message>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="#{msg.isMesaGeneral}" />
+                </td>
+                <td align="left">
+                    <p:selectBooleanCheckbox
+                        id="isGeneral"
+                        value="#{mesaManagedBean.checked}">               
+                    </p:selectBooleanCheckbox>
+                </td>
+            </tr>
+            <h:inputHidden value="#{mesaManagedBean.id}"/>
+        </ui:define>
+    </ui:composition>
+</html>

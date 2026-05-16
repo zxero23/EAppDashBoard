@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="jakarta.faces.passthrough">
+    <ui:composition template="/layout.xhtml">
+        <ui:define name="content">
+            <h:form title=" " id="form">
+                <div id="titulo" class="principal">
+                    <h1>
+                        <i class="pi pi-users" style="margin-right: 8px; vertical-align: middle; color: #08446c;" aria-hidden="true"/>
+                        <h:outputLabel value="#{msg.confUsuarioExterno}"/>
+                    </h1>
+                </div>
+                <div id="advertencia" >                                       
+                    <h:outputLabel value="Corroborar que no esté en el sistema el usuario externo a crear." style="background: #FFEBE8; color: #DD3C10; border: 1px solid #DD3C10; font-size: 0.9em"/>                    
+                </div>
+                <div id="accionesGen">
+                    <h:panelGrid columns="6" class="panel-buttons">
+                        <span class="pi pi-refresh" aria-hidden="true"/>
+                        <p:commandLink  action="usuarioExternoConf" actionListener="#{usuarioExternoManagedBean.actualizar()}" value="#{msg.confUsuarioExterno}"/>
+                        |
+                        <h:panelGroup rendered="#{usuarioExternoManagedBean.alta}">
+                            <span class="pi pi-plus" aria-hidden="true"/>
+                            <p:commandLink value="Nuevo Usuario Externo (Persona Física)" action="#{usuarioExternoManagedBean.nuevoUsuarioExtPF()}"/>
+                            |
+                            <span class="pi pi-plus" aria-hidden="true"/>
+                            <p:commandLink value="Nuevo Usuario Externo (Persona Jurídica)" action="#{usuarioExternoManagedBean.nuevoUsuarioExtPJ()}" />                            
+                        </h:panelGroup>
+                        <ui:insert name="accionesGeneral"/>
+                    </h:panelGrid>               
+                </div>
+
+                <h:panelGroup id="panelbusqueda" layout="block" styleClass="panelbusqueda">
+                    <p:panel id="expPanelBusqueda" toggleable="true" toggleSpeed="500" collapsed="true" styleClass="panel-buttons">
+                        <f:facet name="header">
+                            <h:outputText value="#{msg.busqueda}"/>
+                        </f:facet>
+                        <h:panelGrid columns="2" cellspacing="4">
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msg.id}:"/>
+                                <p:inputText id="idBuscar" value="#{usuarioExternoManagedBean.idBuscar}" type="number"/>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msg.nombre}:"/>
+                                <p:inputText id="nombreBuscar" value="#{usuarioExternoManagedBean.nombreBuscar}"/>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="CUIT/CUIL - DNI:"/>
+                                <p:inputText id="documentoBuscar" value="#{usuarioExternoManagedBean.documentoBuscar}"/>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="MATRICULA PROVINCIAL:"/>
+                                <p:inputText id="matriculaProvincialBuscar" value="#{usuarioExternoManagedBean.matriculaProvincialBuscar}"/>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="MATRICULA NACIONAL:"/>
+                                <p:inputText id="matriculaNacionalBuscar" value="#{usuarioExternoManagedBean.matriculaNacionalBuscar}"/>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <h:outputLabel value="#{msg.tipoIniciador}:"/>
+                                <p:selectOneMenu id="tipoIniciador" value="#{usuarioExternoManagedBean.idTipoIniciadorBuscar}" style="width: 160px; height: 26px">
+                                    <f:selectItem itemLabel="#{msg.elegir}" noSelectionOption="true" itemValue="0"/>
+                                    <f:selectItems value="#{usuarioExternoManagedBean.selectTipoIniciadorBusqueda}" />
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                        <div class="panel-busqueda-botones">
+                            <p:commandButton id="btnBuscar" value="#{msg.find}" actionListener="#{usuarioExternoManagedBean.aplicarFiltro()}" update="@form" process="@form"/>
+                            <p:defaultCommand target="btnBuscar"/>
+                            <p:commandButton value="#{msg.actualizar}" actionListener="#{usuarioExternoManagedBean.actualizar()}" update="@form" process="@form"/>
+                        </div>
+                    </p:panel>
+                </h:panelGroup>
+                <div id="laTabla">
+                    <p:dataTable id="tablita"
+                                   value="#{usuarioExternoManagedBean.items}"
+                                   var="item"
+                                   rows="10"
+                                   page="#{usuarioExternoManagedBean.page}"
+                                   style="width:100%; margin-top: 10px;"
+                                   paginator="true"
+                                   lazy="true"
+                                   rowsPerPageTemplate="10,20,30,50,100,500"
+                                   paginatorTemplate="#{msg.paginatorTemplate}"
+                                   currentPageReportTemplate="#{msg.pageReportTemplate}"
+                                   paginatorPosition="bottom">
+                        <p:column id="ident" headerText="#{msg.id}">
+                            <center>
+                                <h:outputText id="identValor" value="#{item.id}"/>
+                            </center>
+                        </p:column>
+                        <p:column id="nombre" headerText="#{msg.nombre}">
+                            <h:outputText id="nombreValor" value="#{item.usuarioSistema.apellido} #{item.usuarioSistema.nombre}"/>
+                        </p:column>
+                        <p:column id="usuarioUsuarioExterno" headerText="Usuario">
+                            <div align="left">
+                                <h:outputText value="#{item.usuarioSistema.nombreUsuario}"/>
+                            </div>
+                        </p:column>
+                        <p:column id="passUsuarioExterno" headerText="Contraseña">
+                            <div align="left">
+                                <h:outputText value="#{item.usuarioSistema.claveAcceso}"/>
+                            </div>
+                        </p:column>
+                        <p:column id="emailUsuarioExterno" headerText="Tipo">
+                            <div align="left">
+                                <h:outputText value="#{item.tipoIniciador.nombre}"/>
+                            </div>
+                        </p:column>
+                        <p:column id="dniUsuarioExterno" headerText="CUIT/CUIL - DNI">
+                            <div align="left">
+                                <h:outputText value="#{item.documento}"/>
+                            </div>
+                        </p:column>
+                        <p:column id="matriculaProvincialCell" headerText="#{msg.matriculaProvincial}">
+                            <div align="left">
+                                <h:outputText value="#{item.matriculaProvincial}"/>
+                            </div>
+                        </p:column>
+                        <p:column id="matriculaNacionalCell" headerText="#{msg.matriculaNacional}">
+                            <div align="left">
+                                <h:outputText value="#{item.matriculaNacional}"/>
+                            </div>
+                        </p:column>
+                        <p:column id="acciones" headerText="#{msg.action}" style="width: 15%">
+                            <h:panelGroup layout="block" styleClass="acciones-tabla">
+                                    <p:commandButton action="#{usuarioExternoManagedBean.detallar()}" actionListener="#{usuarioExternoManagedBean.verDetalle}" rendered="#{usuarioExternoManagedBean.detalle}" ajax="false"
+                                        icon="pi pi-search" value="" title="#{msg.detalle}">
+                                        <f:param name="id" value="#{item.id}" />
+                                    </p:commandButton>
+                                    <p:commandButton action="#{usuarioExternoManagedBean.prepararParaEdicion()}" rendered="#{usuarioExternoManagedBean.modificacion}" ajax="false"
+                                        icon="pi pi-pencil" value="" title="#{msg.editar}">
+                                        <f:param name="id" value="#{item.id}" />
+                                    </p:commandButton>
+
+                                    <p:commandButton id="borrarDialogbtn"
+                                                    p:onclick="PF('borrarDialog').show();return false;"
+                                                    rendered="#{usuarioExternoManagedBean.baja}"
+                                                    icon="pi pi-trash" value="" title="#{msg.eliminar}">
+                                        <f:param name="id" value="#{item.id}" />
+                                    </p:commandButton>
+                                    <p:dialog id="borrarDialog"
+                                                            widgetVar="borrarDialog"
+                                                            binding="#{borrarDialog}"
+                                                            header="#{msg.confirm}"
+                                                            draggable="false">
+                                        <p:outputLabel value="#{msg.msgDelete}"/>
+                                        <h:panelGrid columns="2" styleClass="panel-confirm-buttons">
+                                            <p:commandButton id="yes"
+                                                            value="#{msg.acep}"
+                                                            p:onclick="PF('borrarDialog').hide();"
+                                                            actionListener="#{usuarioExternoManagedBean.guardarBorrado()}">
+                                                <f:param id="elem"  name="id" value="#{item.id}" />
+                                                <f:ajax execute="@this" render="@all"/>
+                                            </p:commandButton>
+                                            <p:commandButton id="no"
+                                                            value="#{msg.cancel}"
+                                                            p:onclick="PF('borrarDialog').hide();">
+                                                <f:ajax execute="@this" render="@all"/>
+                                            </p:commandButton>
+                                        </h:panelGrid>
+                                    </p:dialog>
+                            </h:panelGroup>
+                        </p:column>
+                    </p:dataTable>                    
+                </div>
+                <p:ajaxStatus id="submitMonitorPage"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

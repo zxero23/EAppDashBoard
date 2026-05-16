@@ -51,7 +51,7 @@
                                 <p:commandButton  value=" " id="detalle"  action="detalleDependencia" actionListener="#{objetivosManagedBean.verDetalle}" rendered="#{objetivosManagedBean.detalle}" >
                                     <img src="images/symbolZoomInWhite.png" />
                                     <f:param name="id" value="#{item.id}"/>
-                                </p:pushButton >
+                                </p:commandButton>
 
                                 <p:commandButton id="editar"  action="editarDependencia" actionListener="#{objetivosManagedBean.prepararParaEditar()}" rendered="#{objetivosManagedBean.modificacion}" immediate="true"  >
                                     <img src="images/symbolEditWhite.png" />

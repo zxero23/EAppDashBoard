@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:f="jakarta.faces.core"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/layout.xhtml">
+        <ui:define name="content">
+            <h:form title=" " id="formu">
+                <div>
+                    <div id="titulo" class="principal" style="float:left">
+                        <h1>
+                            <h:outputLabel value="#{msg.generacionCaratula}"/>
+                        </h1>
+                    </div>
+                    <div style="float:right">
+                        <div style="text-align: right">                                                        
+                            <p:commandLink action="expedienteConf" actionListener="#{expedienteManagedBean.limpiar()}" value="#{msg.volver}" style="margin-left: 10px;" immediate="true"/>
+                        </div>                       
+                    </div>
+                </div>                
+                <div id="contenido" style="clear: both">                
+                    <table border="0" cellspacing="5">
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="(*) #{msg.cuerpoExpte}:" />
+                            </td>
+                            <td align="left">
+                                <p:inputText
+                                    id="cuerpo"
+                                    value="#{expedienteManagedBean.cuerpo}"
+                                    type="number"
+                                    required="true" >
+                                    <f:ajax render="@this cuerpoError" event="valueChange"/>
+                                </p:inputText>
+                            </td>
+                            <td align="left">
+                                <p:message id="cuerpoError" for="cuerpo" initEffect="slide" changeEffect="fade"></p:message>
+                            </td>
+                        </tr>
+                    </table>               
+                </div>
+                <div align="left">
+                    <h:panelGrid columns="2">
+                        <p:commandButton value="#{msg.generar}" action="#{expedienteManagedBean.generarCaratulaRe()}" style="margin-left:5px;" ajax="false"/>
+                        <p:commandButton value="#{msg.cancel}" action="expedienteConf" actionListener="#{expedienteManagedBean.limpiar()}" immediate="true" ajax="false"/>
+                    </h:panelGrid>                    
+                </div>
+                <p:ajaxStatus id="submitMonitorPage"/> 
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

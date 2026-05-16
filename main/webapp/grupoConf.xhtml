@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition id="grupito" template="./layoutConf.xhtml">
+        <ui:param name="tituloVentana" value="#{msg.confGrupo}"/>
+        <ui:param name="miBean" value="#{grupoManagedBean}"/>
+        <ui:param name="actionRefresh" value="grupoConf"/>
+        <ui:param name="actionListenerRefresh" value="actualizar"/>
+        <ui:param name="valueRefresh" value="#{msg.confAction}"/>
+        <ui:param name="renderedAlta" value="#{grupoManagedBean.alta}"/>
+        <ui:param name="actionAlta" value="nuevoGrupo"/>
+        <ui:param name="valueAlta" value="#{msg.newGrupo}"/>
+        <ui:param name="actionListenerBuscar" value="aplicarFiltro"/>
+        <ui:param name="actionListenerActualizar" value="actualizar"/>
+        <ui:param name="tablaValue" value="listElements"/>
+        <ui:param name="actionDetalle" value="detalleGrupo"/>
+        <ui:param name="actionListenerDetalle" value="verDetalle"/>
+        <ui:param name="renderedDetalle" value="#{grupoManagedBean.detalle}"/>
+        <ui:param name="actionEditar" value="editarGrupo"/>
+        <ui:param name="actionListenerEditar" value="prepararParaEditar"/>
+        <ui:param name="renderedEditar" value="#{grupoManagedBean.modificacion}"/>
+        <ui:param name="renderedBorrar" value="#{grupoManagedBean.baja}"/>
+        <ui:param name="actionListenerBorrar" value="guardarBorrado"/>
+        <ui:param name="eldialog" value="grupoBorrarDialog"/>
+
+        <ui:define name="busqueda">
+            <h:panelGroup>
+                <h:outputLabel value="#{msg.nombre}:"/>
+                <p:inputText id="nombreBuscar" value="#{grupoManagedBean.nombreBuscar}"/>
+            </h:panelGroup>
+        </ui:define>                       
+    </ui:composition> 
+</html>
+

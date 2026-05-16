@@ -7,11 +7,11 @@
     <ui:composition>
         <div style="width:99.5%;padding:6px 8px;background:#f4f6f8;border:1px solid #d7dde5;">
             <c:forEach items="#{webManagedBean.menu}" var="item">
-                <h:outputLink value="#{request.contextPath}/faces/#{item.link}.xhtml" style="margin-right:14px;font-weight:bold;text-decoration:none;color:#2c3e50;">
+                <h:outputLink value="#{request.contextPath}/#{item.link}.xhtml" style="margin-right:14px;font-weight:bold;text-decoration:none;color:#2c3e50;">
                     #{item.nombre}
                 </h:outputLink>
                 <c:forEach items="#{item.menus}" var="subItem">
-                    <h:outputLink value="#{request.contextPath}/faces/#{subItem.link}.xhtml" style="margin-right:12px;text-decoration:none;color:#2c3e50;">
+                    <h:outputLink value="#{request.contextPath}/#{subItem.link}.xhtml" style="margin-right:12px;text-decoration:none;color:#2c3e50;">
                         #{subItem.nombre}
                     </h:outputLink>
                 </c:forEach>

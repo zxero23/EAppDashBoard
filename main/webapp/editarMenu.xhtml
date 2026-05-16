@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="jakarta.faces.core">
+    <ui:composition template="./layoutEdicion.xhtml">
+        <ui:param name="tituloVentana" value="#{msg.editMenu}"/>
+        <ui:param name="miBean" value="#{menuManagedBean}"/>
+        <ui:param name="actionListenerEditar" value="guardarEdicion"/>
+        <ui:param name="actionListenerRefresh" value="limpiar"/>
+        <ui:param name="actionVolver" value="menuConf"/>
+        <ui:define name="laEdicion">
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="#{msg.nameMenuPadre}:" />
+                </td>
+                <td align="left">
+                    <p:selectOneMenu
+                        id="menuPadre"
+                        value="#{menuManagedBean.idMenuPadre}"
+                        style="width: 360px;">
+                        <f:selectItem  noSelectionOption="true"  itemValue="0"  itemLabel="#{msg.ninguno}"/>
+                        <f:selectItems value="#{menuManagedBean.selectItems}" />
+                        <f:ajax render="@this menuPadreError" event="valueChange"/>
+                    </p:selectOneMenu>
+                </td>
+                <td align="left">
+                    <p:message id="menuPadreError" for="menuPadre" initEffect="slide" changeEffect="fade"></p:message>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="(*) #{msg.nombre}:" />
+                </td>
+                <td align="left">
+                    <p:inputText
+                        id="nombreMenu"
+                        value="#{menuManagedBean.nombre}"
+                        label="#{msg.nombre}"
+                        required="true" 
+                        styleClass="ancho">
+                        <f:ajax render="@this nombreMenuError" event="valueChange"/>
+                    </p:inputText>
+                </td>
+                <td align="left">
+                    <p:message id="nombreMenuError" for="nombreMenu" initEffect="slide" changeEffect="fade"></p:message>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="(*) #{msg.link}:" />
+                </td>
+                <td align="left">
+                    <p:inputText
+                        id="link"
+                        value="#{menuManagedBean.link}"
+                        label="#{msg.link}"
+                        required="true" 
+                        styleClass="ancho">
+                        <f:ajax render="@this linkError" event="valueChange"/>
+                    </p:inputText>
+                </td>
+                <td align="left">
+                    <p:message id="linkError" for="link" initEffect="slide" changeEffect="fade"></p:message>
+                </td>
+            </tr>
+            <h:inputHidden value="#{menuManagedBean.id}"/>
+        </ui:define>
+    </ui:composition>
+</html>

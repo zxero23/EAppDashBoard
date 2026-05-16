@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="jakarta.faces.html">
+    <ui:composition template="./layoutConf.xhtml">
+        <ui:param name="tituloVentana" value="Leyendas"/>
+        <ui:param name="miBean" value="#{leyendaManagedBean}"/>
+        <ui:param name="actionRefresh" value="leyendaConf"/>
+        <ui:param name="actionListenerRefresh" value="actualizar"/>
+        <ui:param name="valueRefresh" value="#{msg.confAction}"/>
+        <ui:param name="renderedAlta" value="#{leyendaManagedBean.alta}"/>
+        <ui:param name="actionAlta" value="nuevaLeyenda"/>
+        <ui:param name="valueAlta" value="Nueva Leyenda"/>
+        <ui:param name="actionListenerBuscar" value="aplicarFiltro"/>
+        <ui:param name="actionListenerActualizar" value="actualizar"/>
+        <ui:param name="tablaValue" value="leyendas"/>
+        <ui:param name="actionDetalle" value="detalleLeyenda"/>
+        <ui:param name="actionListenerDetalle" value="verDetalle"/>
+        <ui:param name="renderedDetalle" value="#{leyendaManagedBean.detalle}"/>
+        <ui:param name="actionEditar" value="editarLeyenda"/>
+        <ui:param name="actionListenerEditar" value="prepararParaEditar"/>
+        <ui:param name="renderedEditar" value="#{leyendaManagedBean.modificacion}"/>
+        <ui:param name="renderedBorrar" value="#{leyendaManagedBean.baja}"/>
+        <ui:param name="actionListenerBorrar" value="guardarBorrado"/>
+
+        <ui:define name="busqueda">
+            <h:panelGrid columns="1" cellspacing="2">
+                <h:panelGroup>
+                    <h:outputLabel value="#{msg.anio}:"/>
+                    <p:inputText id="anioBsq" value="#{leyendaManagedBean.anioBsq}"/>
+                </h:panelGroup>
+                <h:panelGroup>
+                    <h:outputLabel value="#{msg.leyenda}:"/>
+                    <p:inputText id="leyendaBsq" value="#{leyendaManagedBean.leyendaBsq}"/>
+                </h:panelGroup>
+            </h:panelGrid>
+        </ui:define>
+
+        <ui:define name="otrasColumnas">
+            <p:column id="anio" headerText="#{msg.anio}">
+                <center>
+                    <h:outputText value="#{item.anio}"/>
+                </center>
+            </p:column>            
+        </ui:define>
+    </ui:composition> 
+</html>

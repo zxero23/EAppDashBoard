@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="./layoutConf.xhtml">
+        <ui:param name="tituloVentana" value="#{msg.confMenu}"/>
+        <ui:param name="miBean" value="#{menuManagedBean}"/>
+        <ui:param name="actionRefresh" value="menuConf"/>
+        <ui:param name="actionListenerRefresh" value="actualizar"/>
+        <ui:param name="valueRefresh" value="#{msg.confAction}"/>
+        <ui:param name="renderedAlta" value="#{menuManagedBean.alta}"/>
+        <ui:param name="actionAlta" value="nuevoMenu"/>
+        <ui:param name="valueAlta" value="#{msg.newMenu}"/>
+        <ui:param name="actionListenerBuscar" value="aplicarFiltro"/>
+        <ui:param name="actionListenerActualizar" value="actualizar"/>
+        <ui:param name="tablaValue" value="listElements"/>
+        <ui:param name="actionDetalle" value="detalleMenu"/>
+        <ui:param name="actionListenerDetalle" value="verDetalle"/>
+        <ui:param name="renderedDetalle" value="#{menuManagedBean.detalle}"/>
+        <ui:param name="actionEditar" value="editarMenu"/>
+        <ui:param name="actionListenerEditar" value="prepararParaEditar"/>
+        <ui:param name="renderedEditar" value="#{menuManagedBean.modificacion}"/>
+        <ui:param name="renderedBorrar" value="#{menuManagedBean.baja}"/>
+        <ui:param name="actionListenerBorrar" value="guardarBorrado"/>
+
+        <ui:define name="busqueda">
+            <h:panelGroup>
+                <h:outputLabel value="#{msg.nombre}:"/>
+                <p:inputText id="nombreBuscar" value="#{menuManagedBean.nombreBuscar}"/>
+            </h:panelGroup>
+        </ui:define>                       
+    </ui:composition> 
+</html>

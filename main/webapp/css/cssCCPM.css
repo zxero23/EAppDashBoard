@@ -1,0 +1,1372 @@
+/*
+ * SysSE - Clean & Organized UI
+ * Focused on Grid alignment and spacing
+ */
+
+/* Fuentes Noto Sans */
+@font-face {
+    font-family: 'Noto Sans';
+    src: url(../fonts/NotoSans/regular/NotoSans-Regular-webfont.eot);
+    src: url(../fonts/NotoSans/regular/NotoSans-Regular-webfont.eot?#iefix) format('embedded-opentype'),
+         url(../fonts/NotoSans/regular/NotoSans-Regular-webfont.woff) format('woff'),
+         url(../fonts/NotoSans/regular/NotoSans-Regular-webfont.ttf) format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Noto Sans';
+    src: url(../fonts/NotoSans/italic/NotoSans-Italic-webfont.eot);
+    src: url(../fonts/NotoSans/italic/NotoSans-Italic-webfont.eot?#iefix) format('embedded-opentype'),
+         url(../fonts/NotoSans/italic/NotoSans-Italic-webfont.woff) format('woff'),
+         url(../fonts/NotoSans/italic/NotoSans-Italic-webfont.ttf) format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Noto Sans';
+    src: url(../fonts/NotoSans/bold/NotoSans-Bold-webfont.eot);
+    src: url(../fonts/NotoSans/bold/NotoSans-Bold-webfont.eot?#iefix) format('embedded-opentype'),
+         url(../fonts/NotoSans/bold/NotoSans-Bold-webfont.woff) format('woff'),
+         url(../fonts/NotoSans/bold/NotoSans-Bold-webfont.ttf) format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Noto Sans';
+    src: url(../fonts/NotoSans/bolditalic/NotoSans-BoldItalic-webfont.eot);
+    src: url(../fonts/NotoSans/bolditalic/NotoSans-BoldItalic-webfont.eot?#iefix) format('embedded-opentype'),
+         url(../fonts/NotoSans/bolditalic/NotoSans-BoldItalic-webfont.woff) format('woff'),
+         url(../fonts/NotoSans/bolditalic/NotoSans-BoldItalic-webfont.ttf) format('truetype');
+    font-weight: bold;
+    font-style: italic;
+}
+
+:root {
+    --primary-color: #08446c;
+    --border-color: #d1d5db;
+    --bg-app: #f3f4f6;
+    --text-main: #374151;
+    --sidebar-width: 170px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Noto Sans', Arial, sans-serif;
+    background-color: var(--bg-app);
+    color: var(--text-main);
+    line-height: 1.5;
+}
+
+/* 1. Header & Banner */
+.banner-top {
+    background: #ffffff;
+    border-bottom: 1px solid var(--border-color);
+    padding: 10px 25px;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Datos de usuario a la derecha */
+    background-image: url("../images/logo.svg");
+    background-repeat: no-repeat;
+    background-position: 25px center;
+    background-size: 260px;
+}
+
+/* 2. Navigation */
+.globalNav {
+    background: #ffffff;
+    border-bottom: 1px solid var(--border-color);
+    padding: 0 15px;
+}
+
+.ui-menubar { border: none !important; background: transparent !important; }
+
+/* 3. Main Layout Structure */
+.content {
+    padding: 18px;
+    overflow: hidden;
+}
+
+.contentLateral {
+    width: var(--sidebar-width);
+    float: left;
+    background: #ffffff;
+    padding: 16px 14px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    box-sizing: border-box;
+}
+
+.bandeja-lateral {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.bandeja-title {
+    margin-bottom: 10px;
+    font-size: 1em;
+    font-weight: 700;
+}
+
+.bandeja-title-link {
+    color: #111827 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 7px;
+    text-decoration: underline !important;
+    text-underline-offset: 2px;
+    cursor: pointer;
+    transition: color 0.16s ease, transform 0.16s ease;
+}
+
+.bandeja-title-link .pi {
+    color: inherit !important;
+    font-size: 1rem;
+    margin: 0 !important;
+}
+
+.bandeja-title-link:hover,
+.bandeja-title-link:focus {
+    color: #2563eb !important;
+    transform: translateX(1px);
+}
+
+.bandeja-row {
+    display: grid !important;
+    grid-template-columns: 18px minmax(0, 1fr);
+    align-items: center;
+    column-gap: 7px;
+}
+
+.bandeja-row > i.pi {
+    margin: 0 !important;
+    text-align: center;
+}
+
+.bandeja-link {
+    color: #08446c !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 34px;
+    align-items: center;
+    column-gap: 8px;
+    width: 100%;
+    text-decoration: none !important;
+}
+
+.bandeja-label {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.bandeja-count {
+    color: #08446c;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.bandeja-count::before {
+    content: "(";
+}
+
+.bandeja-count::after {
+    content: ")";
+}
+
+.contentPrincipal {
+    margin-left: calc(var(--sidebar-width) + 18px);
+    background: #ffffff;
+    padding: 24px 28px 28px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.08);
+    min-height: 650px;
+    box-sizing: border-box;
+}
+
+.page-title h1 {
+    margin: 0 0 18px !important;
+    color: #1f2937;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.page-title h1 .pi {
+    font-size: 26px;
+}
+
+.principal h1 {
+    margin: 0 0 18px !important;
+    color: #1f2937;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.principal h1 .pi {
+    font-size: 26px;
+}
+
+.page-top-actions {
+    margin: 0 0 20px !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+}
+
+form > table.panel-buttons {
+    margin: 0 0 20px !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+}
+
+.page-top-actions td,
+.page-row-actions td,
+form > table.panel-buttons > tbody > tr > td {
+    padding: 0 12px 0 0 !important;
+    vertical-align: middle !important;
+    white-space: nowrap;
+}
+
+.page-top-actions a,
+.page-row-actions a,
+form > table.panel-buttons > tbody > tr > td a {
+    color: #111827 !important;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: underline !important;
+    text-underline-offset: 2px;
+    cursor: pointer;
+    transition: color 0.16s ease, transform 0.16s ease;
+}
+
+.page-top-actions a .pi,
+.page-row-actions a .pi,
+form > table.panel-buttons > tbody > tr > td a .pi {
+    color: inherit !important;
+    transition: color 0.16s ease;
+}
+
+.page-top-actions a:hover,
+.page-top-actions a:focus,
+.page-row-actions a:hover,
+.page-row-actions a:focus,
+form > table.panel-buttons > tbody > tr > td a:hover,
+form > table.panel-buttons > tbody > tr > td a:focus {
+    color: #2563eb !important;
+    text-decoration: underline !important;
+    transform: translateX(1px);
+}
+
+.page-row-actions {
+    margin: 14px 0 10px !important;
+}
+
+.export-actions {
+    width: 100%;
+    text-align: right;
+    clear: both;
+    margin: 8px 0 16px;
+}
+
+.export-actions .ui-button {
+    height: 36px !important;
+    border-radius: 7px !important;
+    background: #2b85d3 !important;
+    border-color: #2b85d3 !important;
+    color: #ffffff !important;
+    box-shadow: none !important;
+}
+
+/* 4. Search Panel & Forms */
+.panelbusqueda {
+    margin-bottom: 25px;
+}
+
+.ui-panel {
+    border: 1px solid var(--border-color) !important;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
+}
+
+.ui-panel .ui-panel-titlebar {
+    background: #2f76d2 !important;
+    padding: 6px 15px !important;
+    border-bottom: 1px solid #2563eb !important;
+    border-radius: 7px 7px 0 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important; /* Push icon to the right */
+}
+
+.panel-busqueda.ui-panel {
+    border-radius: 7px !important;
+    overflow: hidden !important;
+}
+
+.panel-busqueda.ui-panel .ui-panel-titlebar {
+    min-height: 44px !important;
+    padding: 0 18px !important;
+    background: #256fd1 !important;
+    border: 0 !important;
+    border-radius: 7px !important;
+}
+
+.ui-panel .ui-panel-titlebar > * {
+    display: block !important;
+    text-align: left !important;
+}
+
+.ui-panel .ui-panel-titlebar > *:first-child {
+    margin-right: auto !important; /* Forces subsequent items to the right */
+}
+
+.ui-panel .ui-panel-title {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    color: #ffffff !important;
+    flex: 1 !important;
+    order: 1 !important;
+}
+
+.panel-busqueda.ui-panel .ui-panel-title {
+    font-size: 15px !important;
+    line-height: 44px !important;
+}
+
+.ui-panel .ui-panel-titlebar-icon {
+    margin: 0 !important;
+    padding: 2px !important;
+    float: none !important;
+    order: 2 !important;
+    flex: 0 0 auto !important;
+}
+
+.ui-panel .ui-panel-content {
+    padding: 12px 15px !important;
+}
+
+.panelbusqueda * {
+    box-sizing: border-box !important;
+}
+
+/* Fix h:panelGrid inside search panel */
+.panelbusqueda .ui-panelgrid td {
+    padding: 8px 15px 8px 0 !important;
+    vertical-align: middle;
+}
+
+.panelbusqueda .ui-panelgrid td > span {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px;
+}
+
+.panelbusqueda label {
+    font-weight: 600;
+    width: 140px; /* Reduced to fit better in multi-column grids */
+    flex-shrink: 0;
+    color: #374151;
+    margin: 0 !important;
+}
+
+/* For multi-column grids, labels can be shorter or the grid can wrap */
+.panelbusqueda .ui-panelgrid[columns="3"] label {
+    width: auto !important;
+    min-width: 100px;
+}
+
+/* Specific fix for inputs */
+.ui-inputfield {
+    padding: 7px 12px !important;
+    border-radius: 6px !important;
+    border: 1px solid #d1d5db !important;
+    font-size: 14px !important;
+    height: 34px !important;
+    box-sizing: border-box !important;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.ui-inputfield:focus {
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+}
+
+/* SelectOneMenu structure fix */
+.ui-selectonemenu {
+    border: 1px solid #d1d5db !important;
+    border-radius: 6px !important;
+    background: #ffffff !important;
+    height: 34px !important; /* Standard height closer to default */
+    display: inline-block !important; /* back to block to avoid flex bugs in some browsers/PF versions */
+    padding: 0 !important;
+    vertical-align: middle;
+    overflow: hidden;
+}
+
+.ui-selectonemenu .ui-selectonemenu-label {
+    padding: 7px 12px !important;
+    font-size: 14px !important;
+    text-align: left;
+    background: transparent !important;
+    border: none !important;
+    height: 100% !important;
+    line-height: 1.2 !important;
+    box-shadow: none !important;
+    width: calc(100% - 25px) !important;
+}
+
+.ui-selectonemenu .ui-selectonemenu-trigger {
+    width: 25px !important;
+    background: #f8fafc !important;
+    border: none !important;
+    border-left: 1px solid #d1d5db !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100% !important;
+    padding: 0 !important;
+    top: 0 !important;
+    right: 0 !important;
+    border-radius: 0 6px 6px 0;
+}
+
+.ui-selectonemenu-panel .ui-selectonemenu-list-item {
+    padding: 8px 12px !important;
+}
+
+.panel-busqueda-botones {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    gap: 10px;
+}
+
+/* 5. Tables - líneas de separación entre filas y columnas */
+.ui-datatable {
+    border-collapse: collapse !important;
+    border: 1px solid #d8e2ef !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+}
+
+.ui-datatable thead th {
+    background: #3f83dc !important;
+    color: #ffffff !important;
+    padding: 14px 10px !important;
+    font-family: 'Noto Sans', Arial, sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+    border: 1px solid #357abd !important;
+}
+
+.ui-datatable thead th .ui-column-title {
+    color: #ffffff !important;
+    font-family: 'Noto Sans', Arial, sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+}
+
+.ui-datatable .ui-datatable-data tr td,
+.ui-datatable tbody tr td,
+.ui-datatable .ui-datatable-data tr.ui-widget-content td,
+.ui-datatable table tbody td {
+    padding: 12px 10px !important;
+    border: 1px solid #e5e7eb !important;
+}
+
+.tabla-expedientes-wrapper {
+    width: 100% !important;
+    clear: both !important;
+    overflow-x: auto;
+    padding-bottom: 8px;
+}
+
+.tabla-expedientes-wrapper .ui-datatable-tablewrapper {
+    overflow-x: auto !important;
+}
+
+.tabla-expedientes-full table {
+    min-width: 1120px;
+}
+
+.ui-datatable .ui-paginator {
+    background: #ffffff !important;
+    border: 0 !important;
+    padding: 16px 4px 8px !important;
+}
+
+.ui-datatable .ui-paginator .ui-paginator-page.ui-state-active {
+    background: #2563eb !important;
+    border-color: #2563eb !important;
+    color: #ffffff !important;
+    border-radius: 5px !important;
+}
+
+.ui-datatable .ui-paginator .ui-paginator-current {
+    color: #6b7280 !important;
+    float: left;
+    margin-left: 0;
+}
+
+.ui-datatable tr.ui-widget-content:hover {
+    background-color: #f8fafc !important;
+}
+
+.ui-datatable .ui-chkbox {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 22px !important;
+    height: 22px !important;
+    margin: 0 auto !important;
+}
+
+.ui-datatable .ui-chkbox .ui-chkbox-box {
+    width: 20px !important;
+    height: 20px !important;
+    border-radius: 6px !important;
+    border: 1px solid #93c5fd !important;
+    background: #ffffff !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: none !important;
+    transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ui-datatable .ui-chkbox .ui-chkbox-box:hover {
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12) !important;
+}
+
+.ui-datatable .ui-chkbox .ui-chkbox-box.ui-state-active,
+.ui-datatable .ui-chkbox .ui-chkbox-box.ui-state-highlight {
+    background: #2563eb !important;
+    border-color: #2563eb !important;
+    color: #ffffff !important;
+}
+
+.ui-datatable .ui-chkbox .ui-chkbox-icon,
+.ui-datatable .ui-chkbox .ui-icon {
+    margin: 0 !important;
+    position: static !important;
+    color: #ffffff !important;
+    font-size: 0.85rem !important;
+    line-height: 1 !important;
+}
+
+.ui-dialog {
+    border: 1px solid #e5e7eb !important;
+    border-radius: 18px !important;
+    box-shadow: 0 22px 55px rgba(15, 23, 42, 0.28) !important;
+    overflow: hidden !important;
+    min-width: 420px !important;
+    background: #ffffff !important;
+}
+
+.confirm-dialog.ui-dialog {
+    width: 640px !important;
+    max-width: calc(100vw - 32px) !important;
+}
+
+.ui-dialog .ui-dialog-titlebar {
+    background: #ffffff !important;
+    border: 0 !important;
+    border-bottom: 1px solid #eef2f7 !important;
+    padding: 22px 28px !important;
+}
+
+.ui-dialog .ui-dialog-title {
+    color: #0f172a !important;
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    display: inline-block !important;
+    margin: 0 !important;
+    line-height: 1.2 !important;
+}
+
+.ui-dialog .ui-dialog-titlebar-close {
+    width: 42px !important;
+    height: 42px !important;
+    border-radius: 999px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #475569 !important;
+    background: #f1f5f9 !important;
+    border: 0 !important;
+    top: 14px !important;
+    right: 22px !important;
+}
+
+.ui-dialog .ui-dialog-titlebar-close:hover {
+    color: #0f172a !important;
+    background: #e2e8f0 !important;
+}
+
+.ui-dialog .ui-dialog-content {
+    padding: 0 !important;
+    color: #334155 !important;
+    font-size: 18px !important;
+    line-height: 1.45 !important;
+    text-align: left !important;
+}
+
+.confirm-message {
+    display: flex !important;
+    align-items: center !important;
+    gap: 22px !important;
+    min-height: 108px !important;
+    padding: 32px 48px 34px !important;
+}
+
+.confirm-icon {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: #fff3df;
+    color: #f59e0b;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+}
+
+.confirm-icon .pi {
+    font-size: 30px !important;
+}
+
+.confirm-actions {
+    display: flex !important;
+    justify-content: flex-end !important;
+    gap: 14px !important;
+    padding: 24px 32px 28px !important;
+    border-top: 1px solid #eef2f7 !important;
+    box-sizing: border-box !important;
+}
+
+.confirm-actions .ui-button {
+    min-width: 128px !important;
+    height: 48px !important;
+    border-radius: 10px !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    box-shadow: none !important;
+}
+
+.confirm-actions .confirm-secondary.ui-button {
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    color: #334155 !important;
+}
+
+.confirm-actions .confirm-primary.ui-button {
+    background: #1d74d8 !important;
+    border: 1px solid #1d74d8 !important;
+    color: #ffffff !important;
+}
+
+.confirm-actions .ui-button:hover {
+    filter: brightness(0.97);
+}
+
+.ui-dialog .panel-confirm-buttons {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 20px 28px 24px !important;
+    border-top: 1px solid #eef2f7 !important;
+    background: #ffffff !important;
+    display: flex !important;
+    justify-content: flex-end !important;
+    gap: 14px !important;
+    box-sizing: border-box !important;
+}
+
+.panel-confirm-buttons td {
+    padding: 0 !important;
+    display: inline-block !important;
+}
+
+.panel-confirm-buttons .ui-button {
+    min-width: 122px !important;
+    height: 48px !important;
+    border-radius: 10px !important;
+    font-weight: 600 !important;
+    font-size: 16px !important;
+    box-shadow: none !important;
+}
+
+.panel-confirm-buttons .ui-button:first-child {
+    background: #ffffff !important;
+    border-color: #cbd5e1 !important;
+    color: #334155 !important;
+}
+
+.panel-confirm-buttons .ui-button:last-child {
+    background: #1d74d8 !important;
+    border-color: #1d74d8 !important;
+    color: #ffffff !important;
+}
+
+.panel-confirm-buttons .ui-button:hover {
+    filter: brightness(0.97);
+}
+
+/* Oculta el indicador global de Ajax que algunas pantallas declaran como submitMonitorPage. */
+[id$="submitMonitorPage"],
+[id$="submitMonitorPage_start"],
+[id$="submitMonitorPage_complete"],
+.ajax-status-overlay,
+.ui-ajaxstatus {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+.acciones-tabla {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    min-width: 96px;
+}
+
+.acciones-tabla > .ui-button,
+.acciones-tabla > a.ui-commandlink {
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: none !important;
+}
+
+.acciones-tabla > .ui-button {
+    background: #e8f1ff !important;
+    border: 1px solid #bfdbfe !important;
+    color: #1d4ed8 !important;
+}
+
+.acciones-tabla > .ui-button:hover,
+.acciones-tabla > a.ui-commandlink:hover {
+    background: #dbeafe !important;
+    border-color: #93c5fd !important;
+    color: #1e40af !important;
+}
+
+.acciones-tabla > .ui-button.ui-state-focus,
+.acciones-tabla > .ui-button:focus {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.18) !important;
+}
+
+.acciones-tabla > .ui-button .ui-button-text {
+    display: none !important;
+    padding: 0 !important;
+}
+
+.acciones-tabla > .ui-button .ui-button-icon-left,
+.acciones-tabla > .ui-button .ui-icon {
+    margin: 0 !important;
+    position: static !important;
+    font-size: 1rem !important;
+}
+
+/* 6. Toggler */
+.ui-panel-titlebar-icon {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 28px !important;
+    height: 28px !important;
+    padding: 0 !important;
+    line-height: 28px !important;
+    color: #ffffff !important;
+}
+
+.ui-panel-titlebar-icon .ui-icon {
+    margin: 0 !important;
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
+}
+
+.panel-busqueda.ui-panel .ui-panel-titlebar-icon {
+    width: 34px !important;
+    height: 34px !important;
+    border-radius: 999px !important;
+    background: transparent !important;
+}
+
+.panel-busqueda.ui-panel .ui-panel-titlebar-icon:hover {
+    background: rgba(255, 255, 255, 0.14) !important;
+}
+
+.panel-busqueda.ui-panel .ui-panel-titlebar-icon .ui-icon {
+    width: 11px !important;
+    height: 11px !important;
+    background: none !important;
+    text-indent: 0 !important;
+    overflow: visible !important;
+    font-size: 0 !important;
+}
+
+.panel-busqueda.ui-panel .ui-panel-titlebar-icon .ui-icon::before {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border: solid #ffffff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.panel-busqueda.ui-panel .ui-panel-titlebar-icon .ui-icon-minusthick::before {
+    transform: rotate(225deg);
+}
+
+/* 7. PrimeIcons (PrimeFaces) - icon font, no local images */
+i.pi,
+span.pi {
+    display: inline-block;
+    vertical-align: middle;
+    font-style: normal;
+    font-family: 'primeicons' !important;
+}
+
+/* Iconos en p:commandLink y p:commandButton (detalle, editar, etc.) */
+.ui-commandlink-link .ui-icon.pi,
+.ui-commandlink-link .ui-icon .pi,
+.ui-commandlink-link .ui-button-icon-left.pi,
+.ui-commandlink .ui-icon.pi,
+.ui-commandlink .ui-icon .pi,
+.ui-button .ui-icon.pi,
+.ui-button .ui-icon .pi,
+.ui-button .ui-button-icon-left.pi,
+.ui-button .ui-button-icon-right.pi,
+.ui-widget .ui-icon.pi {
+    font-family: 'primeicons' !important;
+    font-style: normal !important;
+    font-weight: normal !important;
+    font-variant: normal !important;
+    text-transform: none !important;
+    line-height: 1 !important;
+    -webkit-font-smoothing: antialiased;
+    display: inline-block !important;
+    color: inherit !important;
+    background: none !important;
+    background-image: none !important;
+    min-width: 1em !important;
+    min-height: 1em !important;
+    font-size: 1em !important;
+}
+
+/* Icon spacing in links and toolbar */
+a > i.pi,
+a > span.pi {
+    margin-right: 5px;
+}
+
+/* Footer */
+.footer-top {
+    clear: both;
+    padding: 25px;
+    text-align: right;
+    font-size: 12px;
+    color: #9ca3af;
+}
+
+/* Utilities */
+.ancho { width: 300px !important; }
+.muyancho { width: 100% !important; max-width: 500px; }
+.black { color: #111827; font-weight: bold; }
+.espacioInferior { margin-bottom: 20px; }
+
+/* Login & Home Page */
+.login-body {
+    background-color: #f3f4f6;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.banner-top-login {
+    height: 80px;
+    background: #ffffff url("../images/logo.svg") no-repeat 40px center;
+    background-size: 280px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.jumbotron.bg-img {
+    background: url("../images/fondo.svg") center center / cover no-repeat;
+    min-height: calc(100vh - 160px);
+    display: flex;
+    align-items: center;
+    padding: 40px 20px !important;
+    position: relative;
+}
+
+.jumbotron.bg-overlay::before {
+    display: none; /* Removed the blue overlay to show original colors */
+}
+
+.login-wrapper {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 60px;
+    max-width: 1100px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.login-info {
+    flex: 1;
+    min-width: 320px;
+    text-align: left;
+    color: #ffffff;
+}
+
+.login-info h2 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.8); /* Better readability without overlay */
+}
+
+.login-info p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    opacity: 1;
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.8); /* Better readability without overlay */
+}
+
+.login-card {
+    width: 380px;
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+}
+
+.login-card h3 {
+    color: #111827;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.login-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.login-fields .field {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-fields .ui-inputfield {
+    width: 100% !important;
+    box-sizing: border-box;
+    height: 45px !important;
+    font-size: 15px !important;
+}
+
+.btn-login-full.ui-button {
+    width: 100% !important;
+    height: 48px !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    background: #1a56db !important;
+    border: none !important;
+    margin-top: 10px;
+}
+
+.btn-login-full.ui-button:hover {
+    background: #1e429f !important;
+}
+
+/* 8. Expediente search panel - classic compact look */
+.panelbusqueda .ui-panel,
+.panel-busqueda.ui-panel {
+    border: 1px solid #5f8fbf !important;
+    box-shadow: none !important;
+}
+
+.panelbusqueda .ui-panel .ui-panel-titlebar,
+.panel-busqueda .ui-panel-titlebar {
+    background: #4186dc !important;
+    color: #ffffff !important;
+    padding: 6px 10px !important;
+    border-bottom: 1px solid #2f6ea6 !important;
+    min-height: 26px;
+}
+
+.panelbusqueda .ui-panel .ui-panel-title,
+.panel-busqueda .ui-panel-title {
+    color: #ffffff !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+}
+
+.panelbusqueda .ui-panel-titlebar-icon,
+.panel-busqueda .ui-panel-titlebar-icon {
+    width: 16px !important;
+    height: 16px !important;
+    min-width: 16px !important;
+    min-height: 16px !important;
+    border: 1px solid #a9c3de !important;
+    background: #eaf1f9 !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    line-height: 16px !important;
+}
+
+.panelbusqueda .ui-panel-titlebar-icon .ui-icon,
+.panel-busqueda .ui-panel-titlebar-icon .ui-icon {
+    transform: scale(0.9);
+}
+
+.panelbusqueda .ui-panel .ui-panel-content,
+.panel-busqueda .ui-panel-content {
+    padding: 10px !important;
+}
+
+/* Panel de búsqueda - estructura vertical tipo ICEfaces */
+/* Contenedor principal */
+.panel-busqueda .busq-grid {
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: separate;
+}
+
+/* Filas internas */
+.panel-busqueda .busq-row {
+    margin-bottom: 6px;
+}
+
+/* Filas de 3 columnas */
+.panel-busqueda .busq-row-3 td {
+    width: 33%;
+    padding: 2px 6px;
+}
+
+/* Filas de 2 columnas */
+.panel-busqueda .busq-row-2 td {
+    width: 50%;
+    padding: 2px 6px;
+}
+
+/* cada item = label arriba + control abajo */
+.panel-busqueda .busq-item {
+    display: block;
+}
+
+/* label arriba */
+.panel-busqueda .busq-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: #374151;
+    margin: 0 0 2px 0;
+}
+
+/* control abajo */
+.panel-busqueda .busq-control {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 12px;
+    height: 28px;
+}
+
+/* select ocupa más ancho */
+.panel-busqueda .busq-select {
+    min-width: 150px;
+    max-width: 220px;
+}
+
+/* Inputs con slash */
+.panel-busqueda .busq-slash {
+    border-collapse: separate;
+    border-spacing: 4px 0;
+    width: auto;
+}
+
+.panel-busqueda .busq-slash td {
+    padding: 0 3px;
+    vertical-align: middle;
+}
+
+.panel-busqueda .busq-slash .busq-control {
+    width: 70px;
+    height: 26px;
+    font-size: 12px;
+}
+
+.panel-busqueda .busq-slash-sep {
+    font-weight: bold;
+    color: #6b7280;
+    padding: 0 2px;
+    font-size: 12px;
+}
+
+/* Columna única debajo (legacy - mantener compatibilidad) */
+.panel-busqueda .busq-col1 {
+    margin-top: 6px;
+}
+.panel-busqueda .busq-col1 .busq-control {
+    width: 200px;
+}
+
+/* Botones abajo a la derecha */
+.panel-busqueda-botones {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+/* Ajustes PrimeFaces para que no te "achique" el select */
+.panel-busqueda .busq-col1 .ui-selectonemenu,
+.panel-busqueda .busq-col1 .ui-selectonemenu-label {
+    width: 200px !important;
+    box-sizing: border-box;
+}
+
+.busq-fieldsets {
+    width: min(780px, 100%);
+    padding: 8px 12px 0;
+}
+
+.busq-fieldset {
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    margin: 0 0 8px;
+    padding: 10px 12px 12px;
+    background: #ffffff;
+}
+
+.busq-fieldset legend {
+    color: #0f609d;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 0 6px;
+}
+
+.busq-section-grid {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 14px 0;
+    margin-left: -14px;
+}
+
+.busq-section-grid td {
+    padding: 0 !important;
+    vertical-align: top;
+}
+
+.busq-section-grid-2 td {
+    width: 50%;
+}
+
+.busq-section-grid-3 td {
+    width: 33.333%;
+}
+
+.busq-section-grid-4 td {
+    width: 25%;
+}
+
+.busq-fieldset .busq-item {
+    display: block;
+}
+
+.busq-fieldset .busq-label {
+    width: auto !important;
+    display: block;
+    margin: 0 0 5px !important;
+    color: #111827;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.busq-fieldset .busq-control,
+.busq-fieldset .ui-inputfield,
+.busq-fieldset .ui-selectonemenu {
+    width: 100% !important;
+    height: 32px !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    box-sizing: border-box !important;
+}
+
+.busq-fieldset .busq-item-wide {
+    margin-top: 10px;
+    width: calc(200% + 14px);
+}
+
+.busq-fieldset .busq-slash {
+    border-spacing: 5px 0;
+}
+
+.busq-fieldset .busq-slash .busq-control {
+    width: 72px !important;
+}
+
+.panel-busqueda .panel-busqueda-botones {
+    min-height: 48px;
+    margin: 12px -15px 0;
+    padding: 14px 18px 16px;
+    justify-content: flex-end;
+    border-top: 1px solid #e5e7eb;
+    background: #ffffff;
+}
+
+/* Botón Imprimir en pantalla de éxito del reporte */
+.btn-imprimir-reporte .ui-button-icon-left,
+.btn-imprimir-reporte .ui-button-icon {
+    font-size: 1.1em !important;
+}
+
+/* Override final: header del panel de búsqueda estilo tarjeta moderna. */
+.panelbusqueda .panel-busqueda.ui-panel > .ui-panel-titlebar,
+.panel-busqueda.ui-panel > .ui-panel-titlebar,
+.ui-panel.panel-busqueda > .ui-panel-titlebar,
+.panelbusqueda .ui-panel > .ui-panel-titlebar {
+    min-height: 44px !important;
+    height: 44px !important;
+    padding: 0 18px !important;
+    background: #256fd1 !important;
+    border: 0 !important;
+    border-radius: 7px !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.panelbusqueda .panel-busqueda.ui-panel > .ui-panel-titlebar .ui-panel-title,
+.panel-busqueda.ui-panel > .ui-panel-titlebar .ui-panel-title,
+.ui-panel.panel-busqueda > .ui-panel-titlebar .ui-panel-title,
+.panelbusqueda .ui-panel > .ui-panel-titlebar .ui-panel-title {
+    color: #ffffff !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    line-height: 44px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.panelbusqueda .panel-busqueda.ui-panel > .ui-panel-titlebar .ui-panel-titlebar-icon,
+.panel-busqueda.ui-panel > .ui-panel-titlebar .ui-panel-titlebar-icon,
+.ui-panel.panel-busqueda > .ui-panel-titlebar .ui-panel-titlebar-icon,
+.panelbusqueda .ui-panel > .ui-panel-titlebar .ui-panel-titlebar-icon {
+    width: 34px !important;
+    height: 34px !important;
+    margin-left: auto !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 999px !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.panelbusqueda .panel-busqueda.ui-panel > .ui-panel-titlebar .ui-panel-titlebar-icon .ui-icon,
+.panel-busqueda.ui-panel > .ui-panel-titlebar .ui-panel-titlebar-icon .ui-icon,
+.ui-panel.panel-busqueda > .ui-panel-titlebar .ui-panel-titlebar-icon .ui-icon,
+.panelbusqueda .ui-panel > .ui-panel-titlebar .ui-panel-titlebar-icon .ui-icon {
+    display: none !important;
+}
+
+.panelbusqueda .panel-busqueda.ui-panel > .ui-panel-titlebar .ui-panel-titlebar-icon::after,
+.panel-busqueda.ui-panel > .ui-panel-titlebar .ui-panel-titlebar-icon::after,
+.ui-panel.panel-busqueda > .ui-panel-titlebar .ui-panel-titlebar-icon::after,
+.panelbusqueda .ui-panel > .ui-panel-titlebar .ui-panel-titlebar-icon::after {
+    content: "";
+    width: 9px;
+    height: 9px;
+    border: solid #ffffff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    margin-top: -4px;
+}
+
+.panelbusqueda .panel-busqueda.ui-panel > .ui-panel-titlebar,
+.panel-busqueda.ui-panel > .ui-panel-titlebar,
+.panelbusqueda .ui-panel > .ui-panel-titlebar {
+    transition: background-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease !important;
+}
+
+.panelbusqueda .panel-busqueda.ui-panel > .ui-panel-titlebar:hover,
+.panel-busqueda.ui-panel > .ui-panel-titlebar:hover,
+.panelbusqueda .ui-panel > .ui-panel-titlebar:hover {
+    background: #1f65c7 !important;
+    box-shadow: 0 5px 14px rgba(37, 111, 209, 0.22) !important;
+}
+
+.panelbusqueda .panel-busqueda.ui-panel > .ui-panel-titlebar .ui-panel-titlebar-icon,
+.panel-busqueda.ui-panel > .ui-panel-titlebar .ui-panel-titlebar-icon,
+.panelbusqueda .ui-panel > .ui-panel-titlebar .ui-panel-titlebar-icon {
+    transition: background-color 0.18s ease, transform 0.18s ease !important;
+}
+
+.panelbusqueda .panel-busqueda.ui-panel > .ui-panel-titlebar .ui-panel-titlebar-icon:hover,
+.panel-busqueda.ui-panel > .ui-panel-titlebar .ui-panel-titlebar-icon:hover,
+.panelbusqueda .ui-panel > .ui-panel-titlebar .ui-panel-titlebar-icon:hover {
+    background: rgba(255, 255, 255, 0.16) !important;
+    transform: scale(1.06);
+}
+
+.panelbusqueda .panel-busqueda.ui-panel > .ui-panel-titlebar .ui-panel-titlebar-icon::after,
+.panel-busqueda.ui-panel > .ui-panel-titlebar .ui-panel-titlebar-icon::after,
+.panelbusqueda .ui-panel > .ui-panel-titlebar .ui-panel-titlebar-icon::after {
+    transition: transform 0.22s ease, margin-top 0.22s ease !important;
+}
+
+.panelbusqueda .panel-busqueda.ui-panel > .ui-panel-titlebar .ui-panel-titlebar-icon:has(.ui-icon-minusthick)::after,
+.panel-busqueda.ui-panel > .ui-panel-titlebar .ui-panel-titlebar-icon:has(.ui-icon-minusthick)::after,
+.panelbusqueda .ui-panel > .ui-panel-titlebar .ui-panel-titlebar-icon:has(.ui-icon-minusthick)::after {
+    margin-top: 4px;
+    transform: rotate(225deg);
+}
+
+.panelbusqueda .panel-busqueda.ui-panel > .ui-panel-content,
+.panel-busqueda.ui-panel > .ui-panel-content,
+.panelbusqueda .ui-panel > .ui-panel-content {
+    animation: panelBusquedaReveal 0.18s ease;
+}
+
+@keyframes panelBusquedaReveal {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

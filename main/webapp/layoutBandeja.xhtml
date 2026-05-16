@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+         <title>.: SISTEMA DE GESTION DE EXPEDIENTES :.</title>
+        <link rel="shortcut icon" href="images/favicon.png" />
+        <link rel="stylesheet" href="css/cssCCPM.css" type="text/css"/>
+        <link rel="stylesheet" href="https://unpkg.com/primeicons@6.0.1/primeicons.css" type="text/css"/>
+    </h:head>
+    <h:body title=" ">
+        <div id="container" class="container" title=" ">
+
+            <div id="top" class="banner-top" align="right">
+                <ui:include src="banner.xhtml"/>
+            </div>
+
+            <div id="globalNav" class="globalNav" title=" ">
+                <ui:include src="globalMenu.xhtml"/>
+            </div>
+
+            <div id="content" class="content" title=" " style="padding-top:0px !important">
+                <h:form id="bandeja" title=" ">
+                    <div id="lateral" class="contentLateral" title=" ">
+                        <ui:insert name="lateral"/>
+
+                    </div>
+                    <div id="principal" class="contentPrincipal" title=" ">                        
+                        <ui:insert name="principal"/>
+                    </div>
+                </h:form>
+            </div>
+
+            <div id="footer" class="footer-top" title=" ">
+                <ui:include src="footer.xhtml"/>
+            </div>
+
+        </div>
+    </h:body>
+</html>
+

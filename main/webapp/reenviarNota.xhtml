@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/layout.xhtml">
+        <ui:define name="content">
+            <h:form title=" " id="formu">                
+                <div>
+                    <div id="titulo" class="principal" style="float:left">
+                        <h1>
+                            <h:outputLabel value="#{msg.reenviarNota} #{notaManagedBean.nota.nroNota}"/>
+                        </h1>
+                    </div>
+                    <div style="float:right">
+                        <div style="text-align: right">                                                        
+                            <p:commandLink action="notaConf" actionListener="#{notaManagedBean.limpiar()}" value="#{msg.volver}" style="margin-left: 10px;" immediate="true"/>
+                        </div>                       
+                    </div>
+                </div>                
+                <div id="accionesGen" style="clear: both">
+                    <table border="0" cellspacing="5">
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="#{msg.id}:" />
+                            </td>
+                            <td align="left">
+                                <h:outputLabel value="#{notaManagedBean.nota.id}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="#{msg.num}:" />
+                            </td>
+                            <td align="left">
+                                <h:outputLabel value="#{notaManagedBean.nota.nroNota}"/>           
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="#{msg.fechaCreacion}:" />
+                            </td>
+                            <td align="left">
+                                <h:outputLabel value="#{notaManagedBean.nota.fechaCreacion}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" locale="es_AR" timeZone="America/Argentina/Buenos_Aires"/>
+                                </h:outputLabel>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="#{msg.referencia}:" />
+                            </td>
+                            <td align="left">
+                                <h:outputLabel value="#{notaManagedBean.nota.referencia}"
+                                               style="width: 200px;"/>           
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="#{msg.iniciador}:" />
+                            </td>
+                            <td align="left">
+                                <h:outputLabel value="#{expedienteManagedBean.arreglarIniciador(notaManagedBean.nota.iniciador.nombre)}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="#{msg.tipoAsunto}:" />
+                            </td>
+                            <td align="left">
+                                <h:outputLabel value="#{notaManagedBean.nota.tipoAsunto.nombre}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="#{msg.observacion}:" />
+                            </td>
+                            <td align="left">
+                                <p:inputTextarea
+                                    value="#{notaManagedBean.nota.observacion}"
+                                    styleClass="muyancho"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="(*) #{msg.destino}:" />
+                            </td>
+                            <td align="left">
+                                <p:selectOneMenu
+                                    id="mesa"
+                                    value="#{notaManagedBean.idMesa}"
+                                    required="true" 
+                                    style="width: 560px !important;">
+                                    <f:selectItem  noSelectionOption="true"  itemValue="0"  itemLabel="#{msg.ninguno}"/>
+                                    <f:selectItems value="#{notaManagedBean.selectItemsDestino}" />
+                                    <f:ajax render="@this mesaError" event="valueChange"/>
+                                </p:selectOneMenu>
+                            </td>
+                            <td align="left">
+                                <p:message id="mesaError" for="mesa" initEffect="slide" changeEffect="fade"></p:message>
+                            </td>
+                        </tr>
+                    </table>               
+                </div>
+                <div align="left">
+                    <h:panelGrid columns="2">
+                        <p:commandButton value="#{msg.reenviar}" action="#{notaManagedBean.reenviar()}" style="margin-left:5px;" ajax="false"/>
+                        <p:commandButton value="#{msg.cancel}" action="notaConf" actionListener="#{notaManagedBean.limpiar()}" immediate="true" ajax="false"/>
+                    </h:panelGrid>                    
+                </div>
+                <p:ajaxStatus id="submitMonitorPage"/> 
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

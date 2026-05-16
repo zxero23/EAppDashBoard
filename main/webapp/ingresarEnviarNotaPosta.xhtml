@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="jakarta.faces.core">
+    <ui:composition template="/layout.xhtml">
+        <ui:define name="content">
+            <h:form title=" " id="formu">
+                <div>
+                    <div id="titulo" class="principal" style="float:left">
+                        <h1>
+                            <h:outputLabel value="#{msg.ingresarEnviarNota}"/>
+                        </h1>
+                    </div>
+                    <div style="float:right">
+                        <div style="text-align: right">                                                                          
+                            <p:commandLink action="notaConf" actionListener="#{notaManagedBean.limpiar()}" value="#{msg.volver}" style="margin-left: 10px;" immediate="true"/>
+                        </div>                       
+                    </div>
+                </div>
+
+                <div style="clear: both">
+                    <h:outputLabel value="#{msg.mensageIngresarEnviarNota}" style="font-size: 1.5em" />
+                    <br/>
+                    <h:outputText value="#{msg.mensageMesaDestino}: #{notaManagedBean.mesaDestinoStr}" style="font-size: 1em;"  />
+                    <br/>
+                    <p:dataTable id="tableNotas" value="#{notaManagedBean.notasSeleccionadas}"
+                                   var="item"
+                                   rows="10"
+                                   style="width:100%; margin-top: 10px;"
+                                   paginator="true"
+                                   paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {CurrentPageReport}"
+                                   rowsPerPageTemplate="10,20,30,50,100"
+                                   paginatorPosition="bottom">
+                        <p:column style="width: 50px;"
+                                    headerText="#{msg.id}">
+                            <center>
+                                <h:outputText value="#{item.id}"/>                                        
+                            </center>                            
+                        </p:column>
+                        <p:column headerText="#{msg.num}">
+                            <center>
+                                <h:outputText value="#{item.nroNota}"/>
+                            </center>                            
+                        </p:column>
+                        <p:column style="width: 90px;"
+                                    headerText="#{msg.fechaCreacion}">
+                            <center>
+                                <h:outputText value="#{item.fechaCreacion}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" locale="es_AR" timeZone="America/Argentina/Buenos_Aires"/>
+                                </h:outputText>    
+                            </center>                            
+                        </p:column> 
+                        <p:column style="width: 180px;"
+                                    headerText="#{msg.iniciador}">                    
+                            <h:outputText value="#{expedienteManagedBean.arreglarIniciador(item.iniciador.nombre)}"/>                                                          
+                        </p:column>
+                        <p:column headerText="#{msg.referencia}">
+                            <h:outputText value="#{item.referencia}"/>                                                          
+                        </p:column>
+
+                        <p:column style="width: 90px;" 
+                                    headerText="#{msg.estado}">
+                            <center>
+                                <h:outputText value="#{item.estadoNota.nombre}" />   
+                            </center>                            
+                        </p:column> 
+                        <p:column style="width: 180px;" headerText="#{msg.origen}" rendered="#{notaManagedBean.flagBandeja == 2 || notaManagedBean.flagBandeja == 3 || notaManagedBean.flagBandeja == 5 || notaManagedBean.flagBandeja == 6}">
+                            <h:outputText value="#{expedienteManagedBean.filtrarMesa(item.mesaOrigen)}"/>                                                          
+                        </p:column>
+                        <p:column style="width: 180px;" headerText="#{msg.destino}" rendered="#{notaManagedBean.flagBandeja == 1 || notaManagedBean.flagBandeja == 4 || notaManagedBean.flagBandeja == 6}">
+                            <h:outputText value="#{expedienteManagedBean.filtrarMesa(item.mesaDestino)}"/>                                                          
+                        </p:column>
+                    </p:dataTable>
+                </div>
+                <div align="left">
+                    <h:panelGrid columns="2" cellpadding="2">
+                        <p:commandButton id="ingresarEnviarNota" 
+                                        value="#{msg.ingresarEnviarNota}"
+                                        action="#{notaManagedBean.ingresarEnviarNotaPosta()}">                            
+                        </p:commandButton>
+                        <p:commandButton value="#{msg.cancel}" action="notaConf" actionListener="#{notaManagedBean.limpiar()}" immediate="true"/>
+                    </h:panelGrid>
+                </div>
+                <p:ajaxStatus id="submitMonitorPage"/> 
+            </h:form>           
+        </ui:define>
+    </ui:composition>
+</html>

@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="notaRecienEnviadasFirma" pageWidth="595" pageHeight="842" columnWidth="537" leftMargin="29" rightMargin="29" topMargin="29" bottomMargin="29" uuid="873b4734-7a55-4a8e-b676-24487e15dcb9">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Expedientes"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="orgPadre" class="java.lang.String">
+		<defaultValueExpression><![CDATA["ORGANISMO PADRE"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="organismo" class="java.lang.String">
+		<defaultValueExpression><![CDATA["ORGANISMO"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="desde" class="java.sql.Timestamp">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="imagenHeader" class="java.lang.String"/>
+	<parameter name="leyendaProvincia" class="java.lang.String"/>
+	<parameter name="hasta" class="java.sql.Timestamp">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="mesa" class="java.lang.String"/>
+	<parameter name="mesaExt" class="java.lang.String"/>
+	<parameter name="listado" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT notas.id AS id,
+notas.nronota AS nro,
+referencia,
+fojas,
+iniciador.nombre iniciador,
+dest.nombre destino,
+orig.nombre origen
+FROM notas
+  INNER JOIN iniciador ON notas.iniciador_id = iniciador.id
+  INNER JOIN iniciador dest ON notas.mesadestino_id = dest.id
+  INNER JOIN iniciador orig ON notas.mesaorigen_id = orig.id 
+WHERE notas.id :: character varying  
+IN $P!{listado}
+ORDER BY destino asc, notas.id ASC]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+	</field>
+	<field name="nro" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nro"/>
+	</field>
+	<field name="referencia" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="referencia"/>
+	</field>
+	<field name="fojas" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="fojas"/>
+	</field>
+	<field name="iniciador" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="iniciador"/>
+	</field>
+	<field name="destino" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="destino"/>
+	</field>
+	<field name="origen" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="origen"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="172" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="390" height="43" uuid="d584025d-c7ec-489b-ba07-ed74be9a5647">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Justified">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{leyendaProvincia}]]></textFieldExpression>
+			</textField>
+			<image onErrorType="Blank">
+				<reportElement x="407" y="0" width="130" height="43" uuid="a8c108a5-5e7d-4a59-8a65-a52c0ae00396">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<imageExpression><![CDATA[$P{imagenHeader}]]></imageExpression>
+			</image>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="43" width="537" height="16" uuid="aba06e7f-ccb4-48cc-9a10-d22d6fa4fc4c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{orgPadre}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="59" width="537" height="26" uuid="7829b0c5-80a0-4203-8197-f9913ab5c569">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{organismo}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="85" width="537" height="16" uuid="c948e2bb-35a1-4043-8764-3ca31ed976b7">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{mesa}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="104" width="537" height="23" uuid="48e5e76c-cde7-4d54-bcb5-75f9c5ba40ec">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Notas Enviadas el "+DATEFORMAT($P{desde},"dd/MM/yyyy")+IF( EQUALS(DATEFORMAT($P{desde},"HH:mm"),DATEFORMAT($P{hasta},"HH:mm"))," a las "+DATEFORMAT($P{desde},"HH:mm") ," entre "+DATEFORMAT($P{desde},"HH:mm")+" y "+ DATEFORMAT($P{hasta},"HH:mm"))]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="129" width="537" height="16" uuid="21c478dc-0606-45b9-8096-642cea1cdf53">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Destino: "+$P{mesaExt}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" evaluationTime="Report">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="156" width="537" height="16" uuid="5acd7409-8663-46ba-9f7c-0f51730b63c2">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Total de Notas Enviadas: "+$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="51" splitType="Stretch">
+			<printWhenExpression><![CDATA[$V{PAGE_NUMBER}.intValue() > 1 ? Boolean.TRUE : Boolean.FALSE]]></printWhenExpression>
+			<textField>
+				<reportElement x="0" y="0" width="390" height="43" uuid="b0e9665a-c759-4527-b2fe-c1044232a40c">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Justified">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{leyendaProvincia}]]></textFieldExpression>
+			</textField>
+			<image onErrorType="Blank">
+				<reportElement x="407" y="0" width="130" height="43" uuid="f446dcb5-df72-4e3d-b31d-6715b98792b3">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<imageExpression><![CDATA[$P{imagenHeader}]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="460" y="0" width="77" height="20" uuid="c036bfe9-9658-4524-badb-b47141a958a6"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Firma]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="50" height="20" uuid="4bf3912c-34d9-43ea-8ee5-f7499ca57354"/>
+				<box padding="2">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="50" y="0" width="80" height="20" uuid="f7d40841-12f7-41f4-9480-443a78a8556c"/>
+				<box padding="2">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Número]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="0" width="147" height="20" uuid="100b2ffc-f0ff-4c76-bb62-8f56843dfd9f">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box padding="2">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Referencia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="277" y="0" width="147" height="20" uuid="7d59418f-f67f-4c74-993a-8c74350c75f1">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Iniciador]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="424" y="0" width="36" height="20" uuid="b49a469a-bffd-4a6f-a4ef-d21352828a37"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Fojas]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="0" width="50" height="30" isPrintWhenDetailOverflows="true" uuid="cda94312-5486-474f-9e91-313ba4c4cb7e"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="50" y="0" width="80" height="30" isPrintWhenDetailOverflows="true" uuid="29d38950-ce8b-44b2-97cf-d046b552bab8"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nro}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="130" y="0" width="147" height="30" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true" uuid="6bb5233c-284b-489c-90b8-04323519fdac"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{referencia}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="277" y="0" width="147" height="30" isPrintWhenDetailOverflows="true" uuid="6015ec32-7605-4866-84d6-a807077b6820"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{iniciador}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="424" y="0" width="36" height="30" isPrintWhenDetailOverflows="true" uuid="570b34a0-c969-4281-9887-0d78fa87a935"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{fojas}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="460" y="0" width="77" height="30" isPrintWhenDetailOverflows="true" uuid="06d08c03-a6a7-49eb-98aa-261b2f881c70"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="26" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="14" width="390" height="11" forecolor="#BFBFBF" uuid="298b0f82-86ff-47a4-a422-1050119e87f3">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Listado de Notas Enviadas fecha: "+DATEFORMAT($P{desde},"dd/MM/yyyy")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="427" y="13" width="110" height="12" forecolor="#BEBEBE" uuid="4321a124-251f-492a-a174-519652f1baad">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="747" y="14" width="37" height="12" forecolor="#BEBEBE" uuid="adc59fd2-110d-4d8b-bc2b-349eabd3e730"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

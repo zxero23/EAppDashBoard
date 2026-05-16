@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="jakarta.faces.core">
+    <ui:composition template="/layout.xhtml">
+        <ui:define name="content">
+            <h:form title=" " id="formu">
+                <div id="titulo" class="principal">
+                    <h1>
+                        <i class="pi pi-chart-bar" style="margin-right: 8px; vertical-align: middle; color: #08446c;" aria-hidden="true"/>
+                        <h:outputLabel value="#{msg.reportes}"/>
+                    </h1>
+                </div>
+                <div id="opciones">
+                    <table border="0" cellspacing="5">
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="#{msg.respectoA}:" />
+                            </td>
+                            <td align="left">
+                                <p:selectOneMenu
+                                    id="respecto"
+                                    value="#{reporteManagedBean.respecto}"
+                                    required="true"
+                                    style="width: 350px !important;">
+                                    <f:selectItem  noSelectionOption="false"  itemValue="1"  itemLabel="#{msg.confExpte}"/>
+                                    <f:selectItem  noSelectionOption="false"  itemValue="2"  itemLabel="#{msg.confNota}"/>
+                                    <!--<f:selectItem  noSelectionOption="false"  itemValue="3"  itemLabel="#{msg.todos}"/>-->
+                                    <f:ajax render="@this respectoError " event="valueChange"/>
+                                </p:selectOneMenu>                   
+                            </td>
+                            <td align="left">
+                                <p:message id="respectoError" for="respecto" initEffect="slide" changeEffect="fade"></p:message>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="#{msg.estado}:" />
+                            </td>
+                            <td align="left">
+                                <p:selectOneMenu
+                                    id="estado"
+                                    value="#{reporteManagedBean.estado}"
+                                    required="true"
+                                    style="width: 350px !important;">
+                                    <f:selectItem  noSelectionOption="false"  itemValue="1"  itemLabel="#{msg.enviados}"/>
+                                    <f:selectItem  noSelectionOption="false"  itemValue="2"  itemLabel="#{msg.recibidos}"/>
+                                    <f:selectItem  noSelectionOption="false"  itemValue="3"  itemLabel="#{msg.aceptados}"/>
+                                    <f:selectItem  noSelectionOption="false"  itemValue="4"  itemLabel="#{msg.rechazados}"/>
+                                    <f:selectItem  noSelectionOption="false"  itemValue="5"  itemLabel="#{msg.archivados}"/>
+                                    <!--<f:selectItem  noSelectionOption="false"  itemValue="6"  itemLabel="Generados"/>-->
+                                    <!--<f:selectItem  noSelectionOption="false"  itemValue="6"  itemLabel="#{msg.todos}"/>-->
+                                    <f:ajax render="@this estadoError" event="valueChange"/>
+                                </p:selectOneMenu>                   
+                            </td>
+                            <td align="left">
+                                <p:message id="estadoError" for="estado" initEffect="slide" changeEffect="fade"></p:message>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="#{msg.mesa}:" />
+                            </td>
+                            <td>
+                                <p:selectOneMenu
+                                    id="mesa"
+                                    value="#{reporteManagedBean.idMesa}"
+                                    style="width: 350px !important;">
+                                    <f:selectItem  noSelectionOption="true"  itemValue="0"  itemLabel="NINGUNA"/>                                    
+                                    <f:selectItems value="#{reporteManagedBean.selectItemsMesa}" />
+                                    <f:ajax render="@this mesaError" event="valueChange"/>
+                                </p:selectOneMenu>
+                            </td>
+                            <td>
+                                <p:message id="mesaError" for="mesa" initEffect="slide" changeEffect="fade"></p:message>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="#{msg.tiempo}:" />
+                            </td>
+                            <td align="left">
+                                <p:selectOneMenu
+                                    id="tiempo"
+                                    value="#{reporteManagedBean.tiempo}"
+                                    required="true"
+                                    style="width: 350px !important;"
+                                    valueChangeListener="#{reporteManagedBean.renderizar}">
+                                    <f:selectItem  itemValue="1"  itemLabel="#{msg.diario}"/>
+                                    <f:selectItem  itemValue="2"  itemLabel="#{msg.mensual}"/>
+                                    <f:selectItem  itemValue="3"  itemLabel="#{msg.anual}"/>
+                                    <f:ajax event="valueChange" execute="@this" render="diarioPanel mensualPanel anualPanel tiempoError"/>
+                                </p:selectOneMenu>                    
+                            </td>
+                            <td align="left">
+                                <p:message id="tiempoError" for="tiempo" initEffect="slide" changeEffect="fade"></p:message>
+                            </td>
+                        </tr>
+                        <h:panelGroup id="diarioPanel" rendered="#{reporteManagedBean.diario}" style="border:none;">
+                            <tr>
+                                <td align="right">
+                                    <h:outputLabel value="#{msg.fecha}:" />
+                                </td>
+                                <td align="left">
+                                    <p:inputText id="fecha"
+                                                   value="#{reporteManagedBean.fecha}"
+                                                   style="width: 340px !important;">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" locale="es_AR" timeZone="America/Argentina/Buenos_Aires"/>
+                                        <f:ajax render="@this fechaError" event="valueChange"/>
+                                    </p:inputText>
+                                </td>
+                                <td>
+                                    <p:message id="fechaError" for="fecha" initEffect="slide" changeEffect="fade"></p:message>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right">
+                                    <h:outputLabel value="#{msg.desdeHorario}:" rendered="#{!reporteManagedBean.perteneceSaludPublica}" />
+                                </td>
+                                <td align="left">
+                                    <p:inputText id="hora"
+                                                   value="#{reporteManagedBean.hora}"
+                                                   rendered="#{!reporteManagedBean.perteneceSaludPublica}"
+                                                   style="width: 340px !important;">
+                                        <f:convertDateTime pattern="HH:mm" locale="es_AR" timeZone="America/Argentina/Buenos_Aires"/>
+                                        <f:ajax render="@this horaError" event="valueChange"/>
+                                    </p:inputText>
+                                </td>
+                                <td>
+                                    <p:message  id="horaError" for="hora" initEffect="slide" changeEffect="fade" rendered="#{!reporteManagedBean.perteneceSaludPublica}"/>
+                                </td>
+                            </tr>
+                        </h:panelGroup>
+                        <h:panelGroup id="mensualPanel" rendered="#{reporteManagedBean.mensual}">
+                            <tr>
+                                <td align="right">
+                                    <h:outputLabel value="#{msg.anio}:" />
+                                </td>
+                                <td align="left">
+                                    <p:inputText id="anioMes"
+                                                   value="#{reporteManagedBean.anioMes}"
+                                                   type="number"
+                                                   min="1970"
+                                                   max="#{reporteManagedBean.anioActual}"
+                                                   validator="#{reporteManagedBean.rangoAnioMes}" validatorMessage="Error en el a�o"                                       
+                                                   style="width: 340px !important;">
+                                        <f:validateLength minimum="4" maximum="4"/>                        
+                                        <f:ajax render="@this mes anioMesError" event="valueChange" execute="@this"/>
+                                    </p:inputText>
+                                </td>
+                                <td>
+                                    <p:message  id="anioMesError" for="anioMes" initEffect="slide" changeEffect="fade"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right">
+                                    <h:outputLabel value="#{msg.mes}:"/>
+                                </td>
+                                <td align="left">
+                                    <p:selectOneMenu id="mes"
+                                                             value="#{reporteManagedBean.mes}"
+                                                             style="width: 350px !important;">
+                                        <f:selectItems value="#{reporteManagedBean.selectItemsMeses}" />
+                                        <f:ajax render="@this mesError" event="valueChange"/>
+                                    </p:selectOneMenu>
+                                </td>
+                                <td>
+                                    <p:message  id="mesError" for="mes" initEffect="slide" changeEffect="fade"/>                
+                                </td>
+                            </tr>                
+                        </h:panelGroup>
+                        <h:panelGroup id="anualPanel" rendered="#{reporteManagedBean.anual}">
+                            <tr>
+                                <td align="right">
+                                    <h:outputLabel value="#{msg.anio}:" />
+                                </td>
+                                <td align="left">
+                                    <p:inputText id="anio"
+                                                   value="#{reporteManagedBean.anio}"
+                                                   type="number" maxlength="4"
+                                                   max="#{reporteManagedBean.anioActual}"
+                                                   validator="#{reporteManagedBean.rangoAnio}"
+                                                   validatorMessage="Error en el a�o"
+                                                   style="width: 340px !important;">
+                                        <f:validateLength minimum="4" maximum="4"/>                        
+                                        <f:ajax render="@this anioError" event="valueChange"/>
+                                    </p:inputText>
+                                </td>
+                                <td>
+                                    <p:message id="anioError" for="anio" initEffect="slide" changeEffect="fade"></p:message> 
+                                </td>
+                            </tr>               
+                        </h:panelGroup>
+                    </table>               
+                </div>
+                <div align="left">
+                    <h:panelGrid columns="2">
+                        <p:commandButton value="#{msg.generarReporte}" action="#{reporteManagedBean.verificarReporte}" style="margin-left:5px;" ajax="false"/>
+                        <p:commandButton value="#{msg.cancel}" action="#{reporteManagedBean.cancelar}" immediate="true" ajax="false"/>
+                    </h:panelGrid>                     
+                </div>
+                <p:ajaxStatus id="submitMonitorPage"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

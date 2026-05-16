@@ -28,19 +28,19 @@
                                         <!--BOTONES LATERALES DE MONITOREO DE OBJETIVOS-->
                                         
 
-                                        <p:commandButton id="botonVerde" value="#{metaPresentacionManagedBean.devolverEstadoOrg(item.id, 7)}" class="semaforoVerde" actionListener="#{metaPresentacionManagedBean.setearOrgEstado(item.id, 7,item.leyenda)}"   >
+                                        <p:commandButton id="botonVerde" value="#{metaPresentacionManagedBean.devolverEstadoOrg(item.id, 7)}" class="semaforoVerde" actionListener="#{metaPresentacionManagedBean.setearOrgEstado(item.id, 7,item.leyenda)}" process="@this" update=":formObj" >
                                             <f:actionListener binding="#{metaPresentacionManagedBean.verPanelMeta()}"/>
 
                                         </p:commandButton>
-                                        <p:commandButton id="botonAmarillo" value="#{metaPresentacionManagedBean.devolverEstadoOrg(item.id, 8)}" class="semaforoAmarillo"  actionListener="#{metaPresentacionManagedBean.setearOrgEstado(item.id, 8,item.leyenda)}" >
+                                        <p:commandButton id="botonAmarillo" value="#{metaPresentacionManagedBean.devolverEstadoOrg(item.id, 8)}" class="semaforoAmarillo"  actionListener="#{metaPresentacionManagedBean.setearOrgEstado(item.id, 8,item.leyenda)}" process="@this" update=":formObj" >
                                             <f:actionListener binding="#{metaPresentacionManagedBean.verPanelMeta()}"/>
 
                                         </p:commandButton>
-                                        <p:commandButton id="botonRojo" value="#{metaPresentacionManagedBean.devolverEstadoOrg(item.id, 10)}" class="semaforoRojo" actionListener="#{metaPresentacionManagedBean.setearOrgEstado(item.id, 10,item.leyenda)}"  >
+                                        <p:commandButton id="botonRojo" value="#{metaPresentacionManagedBean.devolverEstadoOrg(item.id, 10)}" class="semaforoRojo" actionListener="#{metaPresentacionManagedBean.setearOrgEstado(item.id, 10,item.leyenda)}" process="@this" update=":formObj" >
                                             <f:actionListener binding="#{metaPresentacionManagedBean.verPanelMeta()}"/>
 
                                         </p:commandButton>
-                                        <p:commandButton id="botonAzul" value="#{metaPresentacionManagedBean.devolverEstadoOrg(item.id, 11)}" class="semaforoAzul" actionListener="#{metaPresentacionManagedBean.setearOrgEstado(item.id,11,item.leyenda)}">
+                                        <p:commandButton id="botonAzul" value="#{metaPresentacionManagedBean.devolverEstadoOrg(item.id, 11)}" class="semaforoAzul" actionListener="#{metaPresentacionManagedBean.setearOrgEstado(item.id,11,item.leyenda)}" process="@this" update=":formObj">
                                             <f:actionListener binding="#{metaPresentacionManagedBean.verPanelMeta()}"/>
 
                                         </p:commandButton> 
@@ -112,16 +112,16 @@
                                     <center>
                                     <h:panelGrid  columns="4" cellpadding="1" > 
 
-                                        <p:commandButton id="botonVerdeObra" value="#{obrasPresentacionManagedBean.devolverEstado(item.id,7)}" class="semaforoVerde" actionListener="#{obrasPresentacionManagedBean.setearOrgYestado(item.id, 7)}"> 
+                                        <p:commandButton id="botonVerdeObra" value="#{obrasPresentacionManagedBean.devolverEstado(item.id,7)}" class="semaforoVerde" actionListener="#{obrasPresentacionManagedBean.setearOrgYestado(item.id, 7)}" process="@this" update=":formObj"> 
                                             <f:actionListener binding="#{metaPresentacionManagedBean.verPanelObra()}"/>
                                         </p:commandButton>
-                                        <p:commandButton id="botonAmarilloObra" value="#{obrasPresentacionManagedBean.devolverEstado(item.id,8)}" class="semaforoAmarillo" actionListener="#{obrasPresentacionManagedBean.setearOrgYestado(item.id, 8)}">
+                                        <p:commandButton id="botonAmarilloObra" value="#{obrasPresentacionManagedBean.devolverEstado(item.id,8)}" class="semaforoAmarillo" actionListener="#{obrasPresentacionManagedBean.setearOrgYestado(item.id, 8)}" process="@this" update=":formObj">
                                             <f:actionListener binding="#{metaPresentacionManagedBean.verPanelObra()}"/>
                                         </p:commandButton>
-                                        <p:commandButton id="botonRojoObra" value="#{obrasPresentacionManagedBean.devolverEstado(item.id,10)}" class="semaforoRojo" actionListener="#{obrasPresentacionManagedBean.setearOrgYestado(item.id, 10)}">
+                                        <p:commandButton id="botonRojoObra" value="#{obrasPresentacionManagedBean.devolverEstado(item.id,10)}" class="semaforoRojo" actionListener="#{obrasPresentacionManagedBean.setearOrgYestado(item.id, 10)}" process="@this" update=":formObj">
                                             <f:actionListener binding="#{metaPresentacionManagedBean.verPanelObra()}"/>
                                         </p:commandButton>
-                                        <p:commandButton id="botonAzulObra" value="#{obrasPresentacionManagedBean.devolverEstado(item.id,11)}" class="semaforoAzul" actionListener="#{obrasPresentacionManagedBean.setearOrgYestado(item.id, 11)}" >
+                                        <p:commandButton id="botonAzulObra" value="#{obrasPresentacionManagedBean.devolverEstado(item.id,11)}" class="semaforoAzul" actionListener="#{obrasPresentacionManagedBean.setearOrgYestado(item.id, 11)}" process="@this" update=":formObj" >
                                             <f:actionListener binding="#{metaPresentacionManagedBean.verPanelObra()}"/>
                                         </p:commandButton>
                                         <!--cuando pasas el puntero sobre los botones te informa la leyenda del estado-->
@@ -137,7 +137,6 @@
                             <p:commandButton value="MOSTRAR TODAS LAS OBRAS" actionListener="#{obrasPresentacionManagedBean.setearOrgYestado(0, 0)}" rendered="#{obrasPresentacionManagedBean.idOrganismo == 0 || obrasPresentacionManagedBean.idOrgAux == 0}">
                                 <f:actionListener binding="#{metaPresentacionManagedBean.verPanelObra()}"/>
                             </p:commandButton>
-                            <p:ajax execute="@all" render="@all"/>
                         </p:panel>
                     </h:form>
                 </div>
@@ -401,90 +400,18 @@
 
 
                                 </div>
-                                <p:panel header="Ubicación de la Obra en el Mapa">
-
-
-                                    <div>          
-                                        <h:panelGroup id="gMapLayer"  style="width: 840px;height: 500px" zoomLevel="8" latitude="#{obrasPresentacionManagedBean.latitud}" longitude="#{obrasPresentacionManagedBean.longitud}" >
-                                            <!--operario ternario cambia el logo en el mapa segun el ente descentralizado-->
-                                            <c:forEach items="#{obrasPresentacionManagedBean.ListarObras()}" var="item" >
-                                                <h:panelGroupMarker latitude="#{item.latitud}" 
-                                                                longitude="#{item.longitud}"
-                                                                options="#{item.organismo.leyenda=='IPRODHA'? 
-                                                                           obrasPresentacionManagedBean.iprodha : 
-                                                                           (item.organismo.leyenda=='ARQUITECTURA'? 
-                                                                           obrasPresentacionManagedBean.casco  : 
-                                                                           (item.organismo.leyenda=='VIALIDAD'? 
-                                                                           obrasPresentacionManagedBean.vialidad  :
-                                                                           (item.organismo.leyenda=='I.M.A.S.'? 
-                                                                           obrasPresentacionManagedBean.imas :
-                                                                           (item.organismo.leyenda=='U.S.C.E.P.P.'? 
-                                                                           obrasPresentacionManagedBean.uscepp :obrasPresentacionManagedBean.logo))))
-                                                                            }"
-                                                                >
-                                                    <h:panelGroupInfoWindow disabled="false" showOnClick="true" 
-                                                                        startOpen="false" options="maxWidth:200">
-                                                        <strong><h:outputLabel value="Organismo:" /></strong>
-                                                        <h:outputLabel value="#{item.organismo.leyenda}"/>
-                                                        <br/>
-                                                        <strong><h:outputLabel value="Obra:"/></strong>
-                                                        <h:outputLabel value="#{item.leyenda}"/>
-                                                        <br/>
-                                                        <strong><h:outputLabel value="Fecha de Inicio:"/></strong>
-                                                        <h:outputLabel value="#{item.fechaInicio}">
-                                                            <f:convertDateTime pattern="dd/MM/yyyy" locale="es_AR" timeZone="America/Argentina/Buenos_Aires"/>    
-                                                        </h:outputLabel>
-                                                        <br/>
-                                                        <strong><h:outputLabel value="Fecha Final:"/></strong>
-                                                        <h:outputLabel value="#{item.fechaFinal}">
-                                                            <f:convertDateTime pattern="dd/MM/yyyy" locale="es_AR" timeZone="America/Argentina/Buenos_Aires"/>    
-                                                        </h:outputLabel>
-                                                        <br/>
-                                                        <strong><h:outputLabel value="Estado:"/></strong>
-                                                        <h:outputLabel value="#{item.situacion.leyenda}"/>
-                                                        <p:commandButton  actionListener="#{obrasPresentacionManagedBean.verFotoObra(item.fotos)}" >
-                                                            <img src="images/icono16x16.png" />
-                                                            <f:actionListener binding="#{organismoManagedBean.verPanelObra()}"/>
-                                                            
-                                                        </p:commandButton>
-                                                        <p:commandButton actionListener="#{obrasPresentacionManagedBean.verAdjuntoTabla(item.adjunto)}">
-                                                            
-                                                            <img src="images/adjunto16x16.png" />
-                                                            <f:actionListener binding="#{organismoManagedBean.verPanelObra()}"/>
-                                                        </p:commandButton>
-                                                        <!--codigo q uso label="{item.adjunto.replaceAll(obrasPresentacionManagedBean.reemplazar, '')}" -->
-                                                        <h:outputText value="" />
-                                                        </h:panelGroup>
-                                                </h:panelGroup>
-                                            </c:forEach>
-                                        </h:panelGroup>
-                                    </div>
-                                    <div>
-                                        <br/>
-                                        <h:panelGrid columns="7" rowClasses="derecha">
-                                            <h:graphicImage title="ARQUITECTURA" url='images/casco1.png'>
-                                                <h:outputText value="ARQUITECTURA"/>
-                                            </h:graphicImage>
-                                            <h:graphicImage title="IPRODHA" url='images/iprodha1.png' >
-                                                <h:outputText value="IPRODHA"/>
-                                            </h:graphicImage>
-                                            <h:graphicImage title="VIALIDAD" url='images/vialidad1.png'  >
-                                                <h:outputText value="VIALIDAD" />
-                                            </h:graphicImage>
-                                            <h:graphicImage title="I.M.A.S." url='images/IMAS.png'  >
-                                                <h:outputText value="I.M.A.S." />
-                                            </h:graphicImage>
-                                            <br/>
-                                            <h:graphicImage title="U.S.C.E.P.P." url='images/usscpe.png'  >
-                                                <h:outputText value="USCEPP" />
-                                            </h:graphicImage>
-                                           
-                                            <h:graphicImage title="OTROS" url='images/globo_verde.png'  >
-                                                <h:outputText value="OTROS" />
-                                            </h:graphicImage>
-                                            
-                                        </h:panelGrid> 
-                                    </div>
+                                <p:panel header="Ubicacion de la Obra">
+                                    <p:dataTable id="tablaUbicacionObras" value="#{obrasPresentacionManagedBean.ListarObras()}" var="itemUbicacion" rows="5" paginator="true">
+                                        <p:column headerText="Obra">
+                                            <h:outputText value="#{itemUbicacion.leyenda}" />
+                                        </p:column>
+                                        <p:column headerText="Latitud">
+                                            <h:outputText value="#{itemUbicacion.latitud}" />
+                                        </p:column>
+                                        <p:column headerText="Longitud">
+                                            <h:outputText value="#{itemUbicacion.longitud}" />
+                                        </p:column>
+                                    </p:dataTable>
                                 </p:panel>
                            <!-- Panel de fotos dialog obras  -->
                            

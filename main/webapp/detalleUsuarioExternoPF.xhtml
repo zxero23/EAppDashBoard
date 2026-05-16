@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+    <ui:composition template="./layoutDetalle.xhtml">
+        <ui:param name="tituloVentana" value="Detalle Usuario Externo"/>
+        <ui:param name="actionVolver" value="usuarioExternoConf"/>
+        <ui:param name="miBean" value="#{usuarioExternoManagedBean}"/>
+        <ui:param name="actionListenerRefresh" value="limpiar"/>
+        <ui:define name="elDetalle">
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="#{msg.id}:" />
+                </td>
+                <td align="left">
+                    <h:outputLabel value="#{usuarioExternoManagedBean.usuarioExterno.id}"/>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="#{msg.apellido}:" />
+                </td>
+                <td align="left">
+                    <h:outputLabel value="#{usuarioExternoManagedBean.apellido}"/>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="#{msg.nombre}:" />
+                </td>
+                <td align="left">
+                    <h:outputLabel value="#{usuarioExternoManagedBean.nombre}"/>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="#{msg.dni}:" />
+                </td>
+                <td align="left">
+                    <h:outputLabel value="#{usuarioExternoManagedBean.documento}"/>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="#{msg.correo}:" />
+                </td>
+                <td align="left">
+                    <h:outputLabel value="#{usuarioExternoManagedBean.email}"/>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="#{msg.usuario}:" />
+                </td>
+                <td align="left">
+                    <h:outputLabel value="#{usuarioExternoManagedBean.uss}"/>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="#{msg.contrasenia}:" />
+                </td>
+                <td align="left">
+                    <h:outputLabel value="#{usuarioExternoManagedBean.pass}"/>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="#{msg.ultimoLogin}:" />
+                </td>
+                <td align="left">
+                    <h:outputLabel value="#{usuarioExternoManagedBean.usuarioExterno.usuarioSistema.ultimoLogin}">
+                        <f:convertDateTime pattern="dd/mm/yyyy"/>
+                    </h:outputLabel>                        
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="#{msg.habilitado}:" />
+                </td>
+                <td align="left">
+                    <h:outputLabel value="#{usuarioExternoManagedBean.usuarioExterno.usuarioSistema.estado?'S�':'NO'}">
+                        <f:convertDateTime pattern="dd/mm/yyyy"/>
+                    </h:outputLabel>
+                </td>
+            </tr>
+        </ui:define>
+    </ui:composition>
+</html>

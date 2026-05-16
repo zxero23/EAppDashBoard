@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="4.0"
+              xmlns="https://jakarta.ee/xml/ns/jakartaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-facesconfig_4_0.xsd">
+    <application>
+        <locale-config>
+            <default-locale>es</default-locale>
+            <supported-locale>es</supported-locale>
+        </locale-config>
+        <resource-bundle>
+            <base-name>labels/labels</base-name>
+            <var>msg</var>
+        </resource-bundle>
+        <message-bundle>
+            labels/fileEntryMessages
+        </message-bundle>
+    </application>
+    <lifecycle>
+        <phase-listener>org.ccpm.sysse.web.UserActivityPhaseListener</phase-listener>
+    </lifecycle>
+</faces-config>

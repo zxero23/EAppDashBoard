@@ -75,18 +75,14 @@
                     
                     
                 </p:panel>
-                <h:panelGroup id="stack1" selectedId="stackPane1">
-                <h:panelGroup id="stackPane1" client="true" > <!-- Siempre se pone el mapa en un container con propiedad client-->
-                    <p:panel id="panel1" header="Mapa">
-                        <h:panelGroup id="gMapLayer"  style="width: 475px; height: 400px" zoomLevel="7" latitude="-26.8250059" 
-                                  longitude="-55.970294" >
-                            <h:panelGroupMarker latitude="#{obrasManagedBean.obras.latitud}" 
-                                            longitude="#{obrasManagedBean.obras.longitud}">
-                                        </h:panelGroup>
-                        </h:panelGroup>
-                    </p:panel>
-                </h:panelGroup>
-              </h:panelGroup>
+                <p:panel id="panel1" header="Ubicacion">
+                    <h:panelGrid columns="2" cellpadding="4">
+                        <h:outputText value="Latitud:" />
+                        <h:outputText value="#{obrasManagedBean.obras.latitud}" />
+                        <h:outputText value="Longitud:" />
+                        <h:outputText value="#{obrasManagedBean.obras.longitud}" />
+                    </h:panelGrid>
+                </p:panel>
                 
               <h:panelGrid id="buttonGrid" columns="1" class="panel-buttons">                     
                         <p:commandButton id="VolverObra" value="Volver" action="obrasConf" immediate="true" />

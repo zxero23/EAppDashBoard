@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html">
+    <ui:composition template="./layoutDetalle.xhtml">
+        <ui:param name="tituloVentana" value="#{msg.detailsAction}"/>
+        <ui:param name="actionVolver" value="accionConf"/>
+        <ui:param name="miBean" value="#{accionManagedBean}"/>
+        <ui:param name="actionListenerRefresh" value="limpiar"/>
+        <ui:define name="elDetalle">
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="#{msg.id}:" />
+                </td>
+                <td align="left">
+                    <h:outputLabel value="#{accionManagedBean.id}"/>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="#{msg.nombre}:" />
+                </td>
+                <td align="left">
+                    <h:outputLabel value="#{accionManagedBean.nombre}"/> 
+                </td>
+            </tr>
+        </ui:define>
+    </ui:composition>
+</html>

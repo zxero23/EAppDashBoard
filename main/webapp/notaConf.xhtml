@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="jakarta.faces.passthrough">
+    <ui:composition template="./layoutBandeja.xhtml"> 
+        <ui:define name="lateral">
+            <div style="margin-bottom: 10px; font-weight: 700; color: #CE2886; font-size: 1em;">
+                <i class="pi pi-file-edit" style="margin-right: 6px; vertical-align: middle;" aria-hidden="true"/>
+                <h:outputLabel value="#{msg.confNota}"/>
+            </div>
+            <h:panelGroup id="panelLateralNota" layout="block" styleClass="bandeja-lateral">
+                <h:panelGroup layout="block" styleClass="bandeja-row">
+                    <i class="pi pi-send" style="color: #2563eb;" aria-hidden="true"/>
+                    <p:commandLink styleClass="bandeja-link" actionListener="#{notaManagedBean.update(1)}" update="@form panelbusqueda tablitaNota" process="@this">
+                        <span class="bandeja-label">#{msg.enviadas}</span>
+                        <span class="bandeja-count">#{notaManagedBean.totalEnviado}</span>
+                    </p:commandLink>
+                </h:panelGroup>
+                <h:panelGroup layout="block" styleClass="bandeja-row">
+                    <i class="pi pi-inbox" style="color: #6b7280;" aria-hidden="true"/>
+                    <p:commandLink styleClass="bandeja-link" actionListener="#{notaManagedBean.update(2)}" update="@form panelbusqueda tablitaNota" process="@this">
+                        <span class="bandeja-label">#{msg.recibidas}</span>
+                        <span class="bandeja-count">#{notaManagedBean.totalRecibido}</span>
+                    </p:commandLink>
+                </h:panelGroup>
+                <h:panelGroup layout="block" styleClass="bandeja-row">
+                    <i class="pi pi-check-circle" style="color: #22c55e;" aria-hidden="true"/>
+                    <p:commandLink styleClass="bandeja-link" actionListener="#{notaManagedBean.update(3)}" update="@form panelbusqueda tablitaNota" process="@this">
+                        <span class="bandeja-label">#{msg.aceptadas}</span>
+                        <span class="bandeja-count">#{notaManagedBean.totalAceptado}</span>
+                    </p:commandLink>
+                </h:panelGroup>
+                <h:panelGroup layout="block" styleClass="bandeja-row">
+                    <i class="pi pi-times-circle" style="color: #ef4444;" aria-hidden="true"/>
+                    <p:commandLink styleClass="bandeja-link" actionListener="#{notaManagedBean.update(4)}" update="@form panelbusqueda tablitaNota" process="@this">
+                        <span class="bandeja-label">#{msg.rechazadas}</span>
+                        <span class="bandeja-count">#{notaManagedBean.totalRechazado}</span>
+                    </p:commandLink>
+                </h:panelGroup>
+                <h:panelGroup layout="block" styleClass="bandeja-row">
+                    <i class="pi pi-folder" style="color: #1f2937;" aria-hidden="true"/>
+                    <p:commandLink styleClass="bandeja-link" actionListener="#{notaManagedBean.update(5)}" update="@form panelbusqueda tablitaNota" process="@this">
+                        <span class="bandeja-label">#{msg.archivadas}</span>
+                        <span class="bandeja-count">#{notaManagedBean.totalArchivado}</span>
+                    </p:commandLink>
+                </h:panelGroup>
+                <h:panelGroup layout="block" styleClass="bandeja-row">
+                    <i class="pi pi-th-large" style="color: #2563eb;" aria-hidden="true"/>
+                    <p:commandLink styleClass="bandeja-link" actionListener="#{notaManagedBean.update(6)}" update="@form panelbusqueda tablitaNota" process="@this">
+                        <span class="bandeja-label">#{msg.todas}</span>
+                        <span class="bandeja-count">#{notaManagedBean.total}</span>
+                    </p:commandLink>
+                </h:panelGroup>
+            </h:panelGroup>
+        </ui:define> 
+
+        <ui:define name="principal">
+            <div id="titulo" class="principal page-title">
+                <h1>
+                    <i class="pi pi-file-edit" style="margin-right: 8px; vertical-align: middle; color: #CE2886;" aria-hidden="true"/>
+                    <h:outputLabel value="#{msg.confNota} #{notaManagedBean.titulo}"/>
+                </h1>
+            </div>
+            <h:panelGrid columns="7" styleClass="page-top-actions">
+                <h:panelGroup rendered="#{notaManagedBean.alta}">
+                    <i class="pi pi-plus" style="margin-right: 5px; color: #08446c;" aria-hidden="true"/>
+                    <p:commandLink action="nuevaNota" value="#{msg.newNota}"/>
+                    |
+                </h:panelGroup>
+
+                <h:panelGroup rendered="#{notaManagedBean.ingresar}">
+                    <i class="pi pi-download" style="margin-right: 5px; color: #08446c;" aria-hidden="true"/>
+                    <p:commandLink action="ingresarNota" value="#{msg.ingresarNota}"/>
+                    |
+                </h:panelGroup>
+                <h:panelGroup rendered="#{notaManagedBean.ingresarEnviarNota}">
+                    <i class="pi pi-download" style="margin-right: 5px; color: #08446c;" aria-hidden="true"/>
+                    <p:commandLink action="ingresarEnviarNota" value="#{msg.ingresarEnviarNota}" actionListener="#{notaManagedBean.prepararParaIngresarEnviarNota()}"/>
+                    |
+                </h:panelGroup>
+                <h:panelGroup rendered="#{notaManagedBean.alta}">
+                    <i class="pi pi-list" style="margin-right: 5px; color: #08446c;" aria-hidden="true"/>
+                    <p:commandLink action="listadoNotasEnviadas" value="#{msg.listadoEnviadas}"/>                       
+                    |    
+                </h:panelGroup>
+            </h:panelGrid>
+            <h:panelGroup id="panelbusqueda" layout="block" styleClass="panelbusqueda">
+            <p:panel id="expPanelBusqueda" toggleable="true" toggleSpeed="500" collapsed="true" styleClass="panel-buttons panel-busqueda panel-busqueda-nota">
+                <f:facet name="header">
+                    <h:outputText value="#{msg.busqueda}"/>
+                </f:facet>
+                <h:panelGroup layout="block" styleClass="busq-fieldsets">
+                    <fieldset class="busq-fieldset">
+                        <legend>Datos Generales</legend>
+                        <h:panelGrid columns="2" styleClass="busq-section-grid busq-section-grid-2">
+                            <h:panelGroup styleClass="busq-item">
+                                <h:outputLabel value="#{msg.id}:" styleClass="busq-label"/>
+                                <p:inputText id="idNotaBsq" value="#{notaManagedBean.idNotaBsq}" styleClass="busq-control"/>
+                            </h:panelGroup>
+                            <h:panelGroup styleClass="busq-item">
+                                <h:outputLabel value="#{msg.num}:" styleClass="busq-label"/>
+                                <p:inputText id="nroNotaBsq" value="#{notaManagedBean.nroNotaBsq}" styleClass="busq-control"/>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </fieldset>
+
+                    <fieldset class="busq-fieldset">
+                        <legend>Fechas</legend>
+                        <h:panelGrid columns="2" styleClass="busq-section-grid busq-section-grid-2">
+                            <h:panelGroup styleClass="busq-item">
+                                <h:outputLabel value="#{msg.fechaDesde}:" styleClass="busq-label"/>
+                                <p:inputText id="fechaDesde" value="#{notaManagedBean.fechaDesdeBsq}" styleClass="busq-control">
+                                    <f:convertDateTime dateStyle="short" pattern="dd/MM/yyyy" locale="es_AR" timeZone="America/Argentina/Buenos_Aires"/>
+                                </p:inputText>
+                            </h:panelGroup>
+                            <h:panelGroup styleClass="busq-item">
+                                <h:outputLabel value="#{msg.fechaHasta}:" styleClass="busq-label"/>
+                                <p:inputText id="fechaHasta" value="#{notaManagedBean.fechaHastaBsq}" styleClass="busq-control">
+                                    <f:convertDateTime dateStyle="short" pattern="dd/MM/yyyy" locale="es_AR" timeZone="America/Argentina/Buenos_Aires"/>
+                                </p:inputText>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </fieldset>
+
+                    <fieldset class="busq-fieldset">
+                        <legend>Asunto</legend>
+                        <h:panelGrid columns="2" styleClass="busq-section-grid busq-section-grid-2">
+                            <h:panelGroup styleClass="busq-item">
+                                <h:outputLabel value="#{msg.referencia}:" styleClass="busq-label"/>
+                                <p:inputText id="referenciaBsq" value="#{notaManagedBean.referenciaBsq}" styleClass="busq-control"/>
+                            </h:panelGroup>
+                            <h:panelGroup styleClass="busq-item">
+                                <h:outputLabel value="#{msg.tipoAsunto}:" styleClass="busq-label"/>
+                                <p:selectOneMenu id="tipoAsuntoBsq"
+                                    value="#{notaManagedBean.idTipoAsuntoBsq}"
+                                    styleClass="busq-control busq-select">
+                                    <f:selectItem  noSelectionOption="true"  itemValue="0"  itemLabel="#{msg.ninguno}"/>
+                                    <f:selectItems value="#{notaManagedBean.selectItemsTipoAsunto}" />
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </fieldset>
+
+                    <fieldset class="busq-fieldset">
+                        <legend>Iniciador</legend>
+                        <h:panelGrid columns="3" styleClass="busq-section-grid busq-section-grid-3">
+                            <h:panelGroup styleClass="busq-item">
+                                <h:outputLabel value="#{msg.tipoIniciador}:" styleClass="busq-label"/>
+                                <p:selectOneMenu id="tipoIniciadorBsq"
+                                    value="#{notaManagedBean.idTipoIniciadorBsq}"
+                                    styleClass="busq-control busq-select">
+                                    <f:selectItem noSelectionOption="true" itemValue="#{null}" itemLabel="#{msg.ninguno}"/>
+                                    <f:selectItems value="#{notaManagedBean.selectItemsTipoIniciador}" />
+                                    <p:ajax event="change" listener="#{notaManagedBean.cargarIniciadoresBusquedaSeleccionados}" process="@this" update="iniciadorBsqContainer" />
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+                            <h:panelGroup id="iniciadorBsqContainer" styleClass="busq-item">
+                                <h:outputLabel value="#{msg.iniciador}:" styleClass="busq-label"/>
+                                <p:selectOneMenu id="iniciadorBsq"
+                                    value="#{notaManagedBean.idIniciadorBsq}"
+                                    disabled="#{notaManagedBean.deshabilitarIniciador}"
+                                    styleClass="busq-control busq-select"
+                                    placeholder="Nombre o código del iniciador"
+                                    filterMatchMode="contains">
+                                    <f:selectItem noSelectionOption="true" itemValue="#{null}" itemLabel="#{msg.ninguno}"/>
+                                    <f:selectItems value="#{notaManagedBean.selectItemsIniciador}" />
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+                            <h:panelGroup styleClass="busq-item" rendered="#{notaManagedBean.flagBandeja == 2 || notaManagedBean.flagBandeja == 3 || notaManagedBean.flagBandeja == 5}">
+                                <h:outputLabel value="#{msg.origen}:" styleClass="busq-label"/>
+                                <p:selectOneMenu id="mesaOrigenBsq"
+                                    value="#{notaManagedBean.idMesaOrigenBsq}"
+                                    styleClass="busq-control busq-select">
+                                    <f:selectItem  noSelectionOption="true"  itemValue="0"  itemLabel="#{msg.ninguno}"/>
+                                    <f:selectItems value="#{busquedaManagedBean.selectItemsMesa}" />
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+                            <h:panelGroup styleClass="busq-item" rendered="#{notaManagedBean.flagBandeja == 1 || notaManagedBean.flagBandeja == 4}">
+                                <h:outputLabel value="#{msg.destino}:" styleClass="busq-label"/>
+                                <p:selectOneMenu id="mesaDestinoBsq"
+                                    value="#{notaManagedBean.idMesaDestinoBsq}"
+                                    styleClass="busq-control busq-select">
+                                    <f:selectItem  noSelectionOption="true"  itemValue="0"  itemLabel="#{msg.ninguno}"/>
+                                    <f:selectItems value="#{busquedaManagedBean.selectItemsMesa}" />
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </fieldset>
+                </h:panelGroup>
+
+                    <div class="panel-busqueda-botones">
+                        <p:commandButton id="btnBuscar" value="#{msg.find}" actionListener="#{notaManagedBean.aplicarFiltro}" update="tablitaNota panelbusqueda" process="@form"/>
+                        <p:defaultCommand target="btnBuscar"/>
+                        <p:commandButton value="#{msg.actualizar}" actionListener="#{notaManagedBean.actualizar}" update="@form" process="@form"/>
+                    </div>
+            </p:panel>
+            </h:panelGroup>
+
+
+            <h:panelGrid columns="14" styleClass="page-row-actions">
+                <h:panelGroup>
+                    <i class="pi pi-search" style="margin-right: 5px; color: #08446c;" aria-hidden="true"/>
+                    <p:commandLink action="#{notaManagedBean.prepararParaDetalle()}" value="#{msg.detalle}" title="#{msg.detalle}" style="color: #08446c;"/>
+                    |
+                </h:panelGroup>
+
+                <h:panelGroup>
+                    <i class="pi pi-refresh" style="margin-right: 5px; color: #08446c;" aria-hidden="true"/>
+                    <p:commandLink actionListener="#{notaManagedBean.actualizar}"
+                                   value="#{msg.actualizar}"
+                                   process="@this"
+                                   update="panelLateralNota panelbusqueda tablitaNota"
+                                   style="color: #08446c;"/>
+                    |
+                </h:panelGroup>
+
+                <h:panelGrid columns="3" rendered="#{notaManagedBean.visibleEditar}">
+                    <i class="pi pi-pencil" style="margin-right: 5px; color: #08446c;" aria-hidden="true"/>
+                    <p:commandLink action="#{notaManagedBean.prepararParEditar()}" value="#{msg.editar}" style="color: #08446c;"/>
+                    |
+                </h:panelGrid>
+
+                <h:panelGroup rendered="#{notaManagedBean.visibleAceptar}">
+                    <i class="pi pi-check" style="margin-right: 5px; color: #08446c;" aria-hidden="true"/>
+                    <p:commandLink value="#{msg.acep}"
+                                    p:onclick="PF('aceptarNotaConfirmPanel').show();return false;" />
+                    |
+                    <p:dialog id="aceptarNotaConfirmPanel"
+                                            widgetVar="aceptarNotaConfirmPanel"
+                                            binding="#{aceptarNotaConfirmPanel}"
+                                            header="Confirmar acción"
+                                            styleClass="confirm-dialog"
+                                            draggable="false"
+                                            modal="true">
+                        <h:panelGroup layout="block" styleClass="confirm-message">
+                            <span class="confirm-icon">
+                                <i class="pi pi-exclamation-triangle" aria-hidden="true"/>
+                            </span>
+                            <h:outputText value="¿Está seguro de que desea aceptar la nota?"/>
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" styleClass="confirm-actions">
+                            <p:commandButton id="noAcep"
+                                            value="#{msg.cancel}"
+                                            styleClass="confirm-secondary"
+                                            p:onclick="PF('aceptarNotaConfirmPanel').hide();">
+                                <f:ajax execute="@this" render="@all"/>
+                            </p:commandButton>
+                            <p:commandButton id="yesAcep"
+                                            value="#{msg.acep}"
+                                            styleClass="confirm-primary"
+                                            p:onclick="PF('aceptarNotaConfirmPanel').hide();"
+                                            actionListener="#{notaManagedBean.aceptarNota()}"
+                                            process="@form"
+                                            update="@form">
+                            </p:commandButton>
+                        </h:panelGroup>
+                    </p:dialog>
+                </h:panelGroup>
+
+                <h:panelGrid columns="3" rendered="#{notaManagedBean.visibleRechazar}">
+                    <i class="pi pi-times" style="margin-right: 5px; color: #08446c;" aria-hidden="true"/>
+                    <p:commandLink action="#{notaManagedBean.prepararParaRechazar()}" value="#{msg.rechazar}" style="color: #08446c;"/>
+                    |
+                </h:panelGrid>
+                <h:panelGroup rendered="#{notaManagedBean.visibleAceptarReenviar}">
+                    <i class="pi pi-send" style="margin-right: 5px; color: #08446c;" aria-hidden="true"/>
+                    <p:commandLink action="#{notaManagedBean.prepararParaAceptarReenviar()}" value="#{msg.aceptarReenviar}" style="color: #08446c;"/>
+                    |
+                </h:panelGroup>
+
+                <h:panelGroup rendered="#{notaManagedBean.visibleArchivar}">
+                    <i class="pi pi-inbox" style="margin-right: 5px; color: #08446c;" aria-hidden="true"/>
+                    <p:commandLink action="#{notaManagedBean.prepararParaArchivar()}" value="#{msg.archivar}" style="color: #08446c;"/>
+                    |
+                </h:panelGroup>
+
+                <h:panelGrid columns="3" rendered="#{notaManagedBean.visibleEnviar}">
+                    <i class="pi pi-send" style="margin-right: 5px; color: #08446c;" aria-hidden="true"/>
+                    <p:commandLink action="#{notaManagedBean.prepararParaEnviar()}" value="#{msg.enviar}" style="color: #08446c;"/>
+                    |
+                </h:panelGrid>
+
+                <h:panelGrid columns="3" rendered="#{notaManagedBean.visibleReenviar}">
+                    <i class="pi pi-replay" style="margin-right: 5px; color: #08446c;" aria-hidden="true"/>
+                    <p:commandLink action="#{notaManagedBean.prepararParaReenviar()}" value="#{msg.editarReenviar}" style="color: #08446c;"/>
+                    |
+                </h:panelGrid>
+
+                <h:panelGroup rendered="#{notaManagedBean.visibleDesarchivar}">
+                    <i class="pi pi-folder-open" style="margin-right: 5px; color: #08446c;" aria-hidden="true"/>
+                    <p:commandLink value="Desarchivar"
+                                    p:onclick="PF('desarchivarNotaConfirmPanel').show();return false;" />
+                    |
+                    <p:dialog id="desarchivarNotaConfirmPanel"
+                                            widgetVar="desarchivarNotaConfirmPanel"
+                                            binding="#{desarchivarNotaConfirmPanel}"
+                                            headerText="Desarchivar"
+                                            draggable="false">
+                        <p:outputLabel value="#{notaManagedBean.msgDesarchivar}"/>
+                        <h:panelGrid columns="2" styleClass="panel-confirm-buttons">
+                            <p:commandButton id="yesDes"
+                                            value="#{msg.acep}"
+                                            p:onclick="PF('desarchivarNotaConfirmPanel').hide();"
+                                            actionListener="#{notaManagedBean.desarchivarNota()}">
+                            </p:commandButton>
+                            <p:commandButton id="noDes"
+                                            value="#{msg.cancel}"
+                                            p:onclick="PF('desarchivarNotaConfirmPanel').hide();">
+                                <f:ajax execute="@this" render="@all"/>
+                            </p:commandButton>
+                        </h:panelGrid>
+                    </p:dialog>
+                </h:panelGroup>
+            </h:panelGrid>
+
+            <p:dataTable id="tablitaNota"
+                           value="#{notaManagedBean.notas}"
+                           var="item"
+                           lazy="true"
+                           rows="10"
+                           style="width:100%; margin-top: 10px;"
+                           paginator="true"
+                           paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {CurrentPageReport}"
+                           rowsPerPageTemplate="10,20,30,50,100,500,1000"
+                           paginatorPosition="bottom">
+                <p:column
+                    style="width: 32px;" >                    
+                    <center>
+                        <p:selectBooleanCheckbox value="#{item.checked}"
+                                            valueChangeListener="#{notaManagedBean.definirPanel}"/>
+                    </center>
+                </p:column>
+                <p:column style="width: 50px;"
+                            headerText="#{msg.id}">
+                    <center>
+                        <h:outputText value="#{item.id}"/>                                        
+                    </center>                            
+                </p:column>
+                <p:column headerText="#{msg.num}">
+                    <center>
+                        <h:outputText value="#{item.nroNota}"/>
+                    </center>                            
+                </p:column>
+                <p:column style="width: 90px;"
+                            headerText="#{msg.fechaCreacion}">
+                    <center>
+                        <h:outputText value="#{item.fechaCreacion}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" locale="es_AR" timeZone="America/Argentina/Buenos_Aires"/>
+                        </h:outputText>    
+                    </center>                            
+                </p:column> 
+                <p:column style="width: 90px;" 
+                            headerText="#{msg.fechaUltimoMovimiento}">
+                    <center>
+                        <h:outputText value="#{item.ultimoMovimiento}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" locale="es_AR" timeZone="America/Argentina/Buenos_Aires"/>
+                        </h:outputText>    
+                    </center>                            
+                </p:column> 
+                <p:column style="width: 180px;"
+                            headerText="#{msg.iniciador}">                    
+                    <h:outputText value="#{expedienteManagedBean.arreglarIniciador(item.iniciador.nombre)}"/>                                                          
+                </p:column>
+                <p:column headerText="#{msg.referencia}">
+                    <h:outputText value="#{item.referencia}"/>                                                          
+                </p:column>
+                <p:column style="width: 180px;" headerText="#{msg.origen}" rendered="#{notaManagedBean.flagBandeja == 2 || notaManagedBean.flagBandeja == 3 || notaManagedBean.flagBandeja == 5 || notaManagedBean.flagBandeja == 6}">
+                    <h:outputText value="#{expedienteManagedBean.filtrarMesa(item.mesaOrigen)}"/>                                                          
+                </p:column>
+                <p:column style="width: 180px;" headerText="#{msg.destino}" rendered="#{notaManagedBean.flagBandeja == 1 || notaManagedBean.flagBandeja == 4 || notaManagedBean.flagBandeja == 6}">
+                    <h:outputText value="#{expedienteManagedBean.filtrarMesa(item.mesaDestino)}"/>                                                          
+                </p:column>
+                <p:column headerText="Adjunto">
+                    <h:panelGroup rendered="#{item.archivo==null}">
+                        <center>
+                            <span class="pi pi-times" aria-hidden="true"/>
+                        </center>
+                    </h:panelGroup> 
+                    <h:panelGroup rendered="#{item.archivo!=null}">
+                        <center>
+                            <span class="pi pi-check" aria-hidden="true"/>
+                        </center>
+                    </h:panelGroup> 
+                </p:column>
+            </p:dataTable>
+        </ui:define>
+    </ui:composition>
+</html>

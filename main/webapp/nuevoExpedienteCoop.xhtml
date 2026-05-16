@@ -1,0 +1,222 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="jakarta.faces.passthrough">
+    <ui:composition template="/layout.xhtml">
+        <ui:define name="content">
+            <h:form title=" " id="formu">
+                <div>
+                    <div id="titulo" class="principal" style="float:left">
+                        <h1>
+                            <h:outputLabel value="#{msg.newExpteCoop}"/>
+                        </h1>
+                    </div>
+                    <div style="float:right">
+                        <div style="text-align: right">                                                        
+                            <p:commandLink action="expedienteConf" actionListener="#{expedienteManagedBean.limpiar()}" value="#{msg.volver}" style="margin-left: 10px;" immediate="true"/>
+                        </div>                       
+                    </div>
+                </div>
+                <div style="clear: both"/>               
+                <div>
+                    <table border="0" cellspacing="5">
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="(*) #{msg.codOrganismo}:" />
+                            </td>
+                            <td align="left">
+                                <p:inputText id="cod" 
+                                               value="#{expedienteManagedBean.codOrganismo}"
+                                               label="#{msg.codOrganismo}" 
+                                               required="true" >
+                                    <f:ajax render="@this codError" event="valueChange"/>
+                                </p:inputText>
+                            </td>
+                            <td align="left">
+                                <p:message id="codError" for="cod" initEffect="slide" changeEffect="fade"></p:message>
+                            </td>
+                        </tr>                                                
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="(*) #{msg.correlativo}:" />
+                            </td>
+                            <td align="left">
+                                <p:inputText id="correl" 
+                                               value="#{expedienteManagedBean.nroCorrel}"
+                                               label="#{msg.correlativo}"  
+                                               required="true" >
+                                    <f:ajax render="@this correlError" event="valueChange"/>
+                                </p:inputText>
+                            </td>
+                            <td align="left">
+                                <p:message id="correlError" for="correl" initEffect="slide" changeEffect="fade"></p:message>
+                            </td>
+                        </tr>                                                
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="(*) #{msg.anio}:" />
+                            </td>
+                            <td align="left">
+                                <p:inputText id="anio" 
+                                               value="#{expedienteManagedBean.annio}"
+                                               label="#{msg.anio}"
+                                               required="true" >
+                                    <f:ajax render="@this anioError" event="valueChange"/>
+                                </p:inputText>
+                            </td>
+                            <td align="left">
+                                <p:message id="anioError" for="anio" initEffect="slide" changeEffect="fade"></p:message>
+                            </td>
+                        </tr>                                                
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="(*) #{msg.fechaCreacion}:" />
+                            </td>
+                            <td align="left">
+                                <p:inputText
+                                    id="fecCreacion"
+                                    value="#{expedienteManagedBean.fechaCreacion}"
+                                    max="#{expedienteManagedBean.fechaActual}"
+                                    label="#{msg.fechaCreacion}"
+                                    required="true" 
+                                    styleClass="muyancho">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" locale="es_AR" timeZone="America/Argentina/Buenos_Aires"/>
+                                    <f:ajax render="@this fecCreacionError" event="valueChange"/>
+                                </p:inputText>
+                            </td>
+                            <td align="left">
+                                <p:message id="fecCreacionError" for="fecCreacion" initEffect="slide" changeEffect="fade"></p:message>
+                            </td>
+                        </tr>                                                
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="(*) #{msg.tipoIniciador}:" />
+                            </td>
+                            <td align="left">
+                                <p:selectOneMenu
+                                    id="tipoIniciador"
+                                    value="#{expedienteManagedBean.idTipoIniciador}"
+                                    valueChangeListener="#{expedienteManagedBean.cargarIniciadores}"
+                                    label="#{msg.tipoIniciador}"
+                                    required="true" 
+                                    style="width: 560px !important;">
+                                    <f:selectItem  noSelectionOption="true"  itemValue="0"  itemLabel="#{msg.ninguno}"/>
+                                    <f:selectItems value="#{expedienteManagedBean.selectItemsTipoIniciador}" />
+                                    <f:ajax />
+                                </p:selectOneMenu>        
+                            </td>
+                            <td align="left">
+                                <p:message id="tipoIniciadorError" for="tipoIniciador" initEffect="slide" changeEffect="fade"></p:message>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="(*) #{msg.iniciador}:" />
+                            </td>
+                            <td align="left">
+                                <p:selectOneMenu 
+                                    id="iniciador"
+                                    value="#{expedienteManagedBean.idIniciador}"
+                                    label="#{msg.iniciador}"
+                                    disabled="#{expedienteManagedBean.deshabilitarIniciador}"
+                                    width="560" 
+                                    placeholder="Nombre o c�digo del iniciador" 
+                                    showListOnInput="true"     
+                                    required="trie"
+                                    filterMatchMode="contains" >
+                                    <f:selectItem  noSelectionOption="true"  itemValue="0"  itemLabel="#{msg.ninguno}"/>
+                                    <f:selectItems value="#{expedienteManagedBean.selectItemsIniciador}" />
+                                    <f:ajax render="@this iniciadorError" event="valueChange"/>
+                                </p:selectOneMenu>
+                            </td>
+                            <td align="left">
+                                <p:message id="iniciadorError" for="iniciador" initEffect="slide" changeEffect="fade"></p:message>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="(*) #{msg.tipoAsunto}:" />
+                            </td>
+                            <td align="left">
+                                <p:selectOneMenu
+                                    id="tipoAsunto"
+                                    value="#{expedienteManagedBean.idTipoAsunto}"
+                                    label="#{msg.tipoAsunto}"
+                                    required="true" 
+                                    style="width: 560px !important;">
+                                    <f:selectItem  noSelectionOption="true"  itemValue="0"  itemLabel="#{msg.ninguno}"/>
+                                    <f:selectItems value="#{expedienteManagedBean.selectItemsTipoAsunto}" />
+                                    <f:ajax render="@this tipoAsuntoError" event="valueChange"/>
+                                </p:selectOneMenu>
+                            </td>
+                            <td align="left">
+                                <p:message id="tipoAsuntoError" for="tipoAsunto" initEffect="slide" changeEffect="fade"></p:message>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="(*) #{msg.asunto}:" />
+                            </td>
+                            <td align="left">
+                                <p:inputText
+                                    id="asunto"
+                                    value="#{expedienteManagedBean.asunto}"
+                                    label="#{msg.asunto}"
+                                    required="true" 
+                                    styleClass="muyancho">
+                                    <f:ajax render="@this asuntoError" event="valueChange"/>
+                                </p:inputText>
+                            </td>
+                            <td align="left">
+                                <p:message id="asuntoError" for="asunto" initEffect="slide" changeEffect="fade"></p:message>
+                            </td>
+                        </tr>                                                                                                
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="#{msg.observacion}:" />
+                            </td>
+                            <td align="left">
+                                <p:inputTextarea
+                                    id="observacion"
+                                    value="#{expedienteManagedBean.observacion}"
+                                    styleClass="muyancho"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="(*) #{msg.destino}:" />
+                            </td>
+                            <td align="left">
+                                <p:selectOneMenu
+                                    id="destino"
+                                    value="#{expedienteManagedBean.idMesa}"
+                                    label="#{msg.destino}"
+                                    required="true" 
+                                    style="width: 560px !important;">
+                                    <f:selectItem  noSelectionOption="true"  itemValue="0"  itemLabel="#{msg.ninguno}"/>
+                                    <f:selectItems value="#{expedienteManagedBean.selectItemsDestino}" />
+                                    <f:ajax render="@this destinoError" event="valueChange"/>
+                                </p:selectOneMenu>
+                            </td>
+                            <td align="left">
+                                <p:message id="destinoError" for="destino" initEffect="slide" changeEffect="fade"></p:message>
+                            </td>
+                        </tr>
+                    </table>               
+                </div>      
+                <div align="left">
+                    <h:panelGrid columns="3">
+                        <p:commandButton value="#{msg.save}" action="#{expedienteManagedBean.ingresarCoop(1)}" style="margin-left:5px;"/>
+                        <p:commandButton value="#{msg.saveCreate}" action="#{expedienteManagedBean.ingresarCoop(0)}" style="margin-left:5px;"/>
+                        <p:commandButton value="#{msg.cancel}" action="#{expedienteManagedBean.limpiar()}" immediate="true"/>
+                    </h:panelGrid>                     
+                </div>                
+                <p:ajaxStatus id="submitMonitorPage"/> 
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

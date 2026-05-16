@@ -1,0 +1,242 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="jakarta.faces.core">
+    <ui:composition template="./layoutDetalle.xhtml">
+        <ui:param name="tituloVentana" value="#{msg.detailsExpte} #{busquedaManagedBean.expediente.nroExp}"/>
+        <ui:param name="actionVolver" value="busquedaConf"/>
+        <ui:param name="miBean" value="#{busquedaManagedBean}"/>
+        <ui:param name="actionListenerRefresh" value="limpiar"/>
+
+        <ui:define name="elDetalle">
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="#{msg.fechaCreacion}:" />
+                </td>
+                <td align="left">
+                    <h:outputLabel value="#{busquedaManagedBean.expediente.fechaCreacion}">
+                        <f:convertDateTime pattern="dd/MM/yyyy" locale="es_AR" timeZone="America/Argentina/Buenos_Aires"/>
+                    </h:outputLabel>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="#{msg.cuerpo}:" />
+                </td>
+                <td align="left">
+                    <h:outputLabel value="#{busquedaManagedBean.expediente.cuerpo}"/>           
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="#{msg.fojas}:" />
+                </td>
+                <td align="left">
+                    <h:outputLabel value="#{busquedaManagedBean.expediente.fojas}"/>           
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="#{msg.estado}:" />
+                </td>
+                <td align="left">
+                    <h:outputLabel value="#{busquedaManagedBean.expediente.estadoExpediente.nombre}"/>           
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="#{msg.iniciador}:" />
+                </td>
+                <td align="left">
+                    <h:outputLabel value="#{busquedaManagedBean.arreglarIniciador(busquedaManagedBean.expediente.iniciador)}"/>           
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="#{msg.origen}:" />
+                </td>
+                <td align="left">
+                    <h:outputLabel value="#{expedienteManagedBean.filtrarMesa(busquedaManagedBean.expediente.mesaOrigen)}"/>           
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="#{msg.destino}:" />
+                </td>
+                <td align="left">
+                    <h:outputLabel value="#{expedienteManagedBean.filtrarMesa(busquedaManagedBean.expediente.mesaDestino)}"/>           
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="#{msg.tipoAsunto}:" />
+                </td>
+                <td align="left">
+                    <h:outputLabel value="#{busquedaManagedBean.expediente.tipoAsunto.nombre}"/>           
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="#{msg.asunto}:" />
+                </td>
+                <td align="left">
+                    <h:outputLabel value="#{busquedaManagedBean.expediente.asunto}"/>           
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="#{msg.ordenPago}:" />
+                </td>
+                <td align="left">
+                    <h:outputLabel value="#{busquedaManagedBean.expediente.ordenPago}"/>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="#{msg.pedidoFondo}:" />
+                </td>
+                <td align="left">                    
+                    <h:outputLabel value="#{busquedaManagedBean.expediente.pedidoFondo !=null ? busquedaManagedBean.expediente.pedidoFondo.toString().concat('/').concat(busquedaManagedBean.expediente.pedidoFondoAnio.toString()) : '-'}" />
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="#{msg.ordenEntrega}:" />
+                </td>
+                <td align="left">                    
+                    <h:outputLabel value="#{busquedaManagedBean.expediente.ordenEntrega !=null ? busquedaManagedBean.expediente.ordenEntrega.toString().concat('/').concat(busquedaManagedBean.expediente.ordenEntregaAnio.toString()) : '-'}" />
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="#{msg.expteSuperior}:" />
+                </td>
+                <td align="left">
+                    <h:outputLabel value="#{busquedaManagedBean.expediente.expMadre}"/>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="#{msg.observacion}:" />
+                </td>
+                <td align="left">
+                    <p:inputTextarea value="#{busquedaManagedBean.expediente.observacion}"
+                                       disabled="true"
+                                       styleClass="muyancho"/>           
+                </td>
+            </tr>                       
+        </ui:define>
+        <ui:define name="masInfo">
+            <div>
+                <h3>
+                    <h:outputLabel value="#{msg.confInstLegal}"/>
+                </h3>
+            </div>
+            <div>
+                <p:dataTable id="list"
+                               value="#{busquedaManagedBean.expediente.listInstrumentosLegales}"
+                               var="item"
+                               rows="10"
+                               style="margin-top: 10px;"
+                               paginator="true"
+                               paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {CurrentPageReport}"
+                               rowsPerPageTemplate="10,20,30,50,100"
+                               paginatorPosition="bottom">
+
+                    <p:column headerText="#{msg.num}">                    
+                        <center>
+                            <h:outputText value="#{item.numero}"/> 
+                        </center>                                                     
+                    </p:column> 
+                    <p:column headerText="#{msg.descripcion}">                                          
+                        <h:outputText value="#{item.descripcion}"/>                                                   
+                    </p:column>
+
+                    <p:column headerText="#{msg.tipo}">                                            
+                        <h:outputText value="#{item.tipoInstrumentoLegal.nombre}"/>                                                 
+                    </p:column>
+
+                    <p:column headerText="#{msg.agregadoPor}">
+                        <h:outputText value="#{item.usuarioCreacion.mesa.nombre}"/>
+                    </p:column>
+
+                    <p:column headerText="#{msg.fojas}">
+                        <center>
+                            <h:outputText value="#{item.fojas}"/>
+                        </center>                            
+                    </p:column>
+                    <p:column headerText="#{msg.archivoAdjunto}">
+                        <center>
+                            <h:panelGroup rendered="#{item.archivo!=null}">
+                                <p:graphicImage resource="#{busquedaManagedBean.prepararAdjunto(item.archivo)}" 
+                                                     type="button"
+                                                     rendered="#{item.archivo!=null}"
+                                                     label="#{msg.descargar}"
+                                                     attachment="true"
+                                                     fileName="#{busquedaManagedBean.renombrar(item.archivo)}"/>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{item.archivo==null}">
+                                <h:outputText value="NO"/>
+                            </h:panelGroup>
+                        </center>                            
+                    </p:column>
+                </p:dataTable>
+            </div>
+            <div>
+                <h3>
+                    <h:outputLabel value="#{msg.historial}"/>
+                </h3>
+            </div>
+            <div>
+                <p:dataTable id="listexp" value="#{busquedaManagedBean.expediente.listHistorialesOrdenados}" 
+                               var="item"
+                               rows="10"
+                               style="margin-top: 10px;"
+                               paginator="true"
+                               paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {CurrentPageReport}"
+                               rowsPerPageTemplate="10,20,30,50,100"
+                               paginatorPosition="bottom">               
+                    <p:column headerText="IDM" rendered="#{busquedaManagedBean.mostrarColSuper()}">                    
+                        <center>
+                            <h:outputText value="#{item.id}"/> 
+                        </center>                                                     
+                    </p:column> 
+                    <p:column headerText="Movimientos" sortAscending="true">
+                        <center>
+                            <h:outputText value="#{item.fecha}">
+                                <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" locale="es_AR" timeZone="America/Argentina/Buenos_Aires"/>
+                            </h:outputText>
+
+                        </center>
+                    </p:column> 
+                    <p:column headerText="#{msg.fojas}">
+                        <center>
+                            <h:outputText value="#{item.fojas}"/>
+                        </center>                            
+                    </p:column>
+                    <p:column headerText="#{msg.observacion}">
+                        <h:outputText value="#{item.observacion}"/>                                                   
+                    </p:column>
+                    <p:column headerText="#{msg.estado}">
+                        <center>
+                            <h:outputText value="#{item.estadoHistorial.nombre}"/>
+                        </center>                            
+                    </p:column>
+                    <p:column headerText="#{msg.origen}">
+                        <h:outputText value="#{expedienteManagedBean.filtrarMesa(item.mesaOrigen)}"/>
+                    </p:column>
+                    <p:column headerText="#{msg.destino}">
+                        <h:outputText value="#{expedienteManagedBean.filtrarMesa(item.mesaDestino)}"/>
+                    </p:column>
+
+                    <p:column headerText="Usuario" rendered="#{busquedaManagedBean.mostrarColUsuario()}">
+                        <h:outputText value="#{item.usuario.apellido} #{item.usuario.nombre}"/>
+                    </p:column>
+                </p:dataTable>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>

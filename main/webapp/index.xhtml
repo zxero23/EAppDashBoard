@@ -1,0 +1,79 @@
+﻿<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"      
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="jakarta.faces.core">
+    <h:head>
+        <title>.: SISTEMA DE GESTION DE EXPEDIENTES :.</title>
+        <link rel="stylesheet" href="css/cssCCPM.css" type="text/css"/>
+        <link rel="shortcut icon" href="images/cropped-MAPA_M_01-scaled-2-32x32.jpg" sizes="32x32"/>
+        <link rel="icon" href="images/cropped-MAPA_M_01-scaled-2-192x192.jpg" sizes="192x192"/>
+        <link rel="apple-touch-icon" href="images/cropped-MAPA_M_01-scaled-2-180x180.jpg"/>
+        <meta name="msapplication-TileImage" content="images/cropped-MAPA_M_01-scaled-2-270x270.jpg"/>
+        <link rel="stylesheet" type="text/css" href="images/engine1/style.css" />
+
+    </h:head>
+    <h:body styleClass="login-body">
+
+        <div id="top" class="banner-top-login" title=" ">
+            <!-- Only logo here if needed, or empty if background has it -->
+        </div>       
+        <div id="conten-top-index" >
+            <section class="jumbotron bg-img text-white text-center"  >
+                <div class="container" >
+                    <div class="login-wrapper">
+                        <div class="login-info">
+                            <h2>SISTEMA DE GESTIÓN DE EXPEDIENTES</h2>
+                            <p>
+                                Una solución única que permite a las reparticiones públicas la caratulización, numeración y registro de movimientos de los expedientes y notas del Poder Ejecutivo Provincial.
+                            </p>
+                            <p class="mensaje-principal">
+                                Para cualquier duda o consulta escríbanos a <a href="mailto:soporteccpm@misiones.gov.ar">soporteccpm@misiones.gov.ar</a>.
+                            </p>
+                        </div>
+
+                        <div class="login-card">
+                            <h:form title=" " id="formLogin">
+                                <h3>Iniciar Sesión</h3>
+                                <div class="login-fields">
+                                    <div class="field">
+                                        <p:inputText id="usuario"
+                                                       value="#{webManagedBean.nombreUsuario}"                               
+                                                       placeholder="#{msg.usuario}"
+                                                       requiredMessage="Debe ingresar su usuario."
+                                                       required="true">
+                                            <f:ajax render="@this usuario usuarioMsg" event="valueChange"/>
+                                        </p:inputText>
+                                        <p:message id="usuarioMsg" for="usuario" />
+                                    </div>
+                                    <div class="field">
+                                        <p:password id="pass"
+                                                       value="#{webManagedBean.claveAcceso}"
+                                                       placeholder="#{msg.contrasenia}"
+                                                       requiredMessage="Debe ingresar su contraseña."
+                                                       required="true"
+                                                       feedback="false"
+                                                       toggleMask="true"/>
+                                        <p:message id="passMsg" for="pass" />
+                                    </div>
+                                    <p:commandButton id="btnLogin" action="#{webManagedBean.login}" value="#{msg.iniciarSesion}" ajax="false" styleClass="btn-login-full"/>
+                                    <p:defaultCommand target="btnLogin"/>
+                                </div>
+                                <p:blockUI block="formLogin" />
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+        </div>               
+
+
+        <div id="footer" class="footer-top" title=" ">
+            <ui:include src="footer.xhtml"/>
+        </div>
+    </h:body>    
+</html>

@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="jakarta.faces.core"
+      xmlns:pt="jakarta.faces.passthrough">      
+    <ui:composition template="./layout.xhtml">
+        <ui:define name="content">
+            <h:form id="formMesa" title=" ">
+                <div id="titulo" class="principal">
+                    <h1>
+                        <i class="pi pi-sitemap" style="margin-right: 8px; vertical-align: middle; color: #08446c;" aria-hidden="true"/>
+                        <h:outputLabel value="Mesas"/>
+                    </h1>
+                </div>    
+                <h:panelGrid  columns="2" class="panel-buttons">
+                    <h:panelGroup>
+                        <span class="pi pi-refresh" aria-hidden="true" style="margin-right: 5px;"/>
+                        <p:commandLink action="mesaConf" actionListener="#{mesaManagedBean.actualizar}" value="Mesas"/>
+                        |
+                    </h:panelGroup>
+
+                    <h:panelGroup rendered="#{mesaManagedBean.alta}">
+                        <span class="pi pi-plus" aria-hidden="true" style="margin-right: 5px;"/>
+                        <p:commandLink action="nuevaMesa" value="#{msg.newMesa}"/>
+                    </h:panelGroup>
+                </h:panelGrid>
+
+                <h:panelGroup id="panelbusqueda" layout="block" styleClass="panelbusqueda">
+                <p:panel id="expPanelBusqueda" toggleable="true" toggleSpeed="500" collapsed="true" styleClass="panel-buttons">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.busqueda}"/>
+                    </f:facet>
+                    <h:panelGrid columns="2" cellspacing="4">
+                        <h:panelGroup>
+                            <h:outputLabel value="#{msg.id}:"/>
+                            <p:inputText value="#{mesaManagedBean.idBuscar}" type="number"/>
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <h:outputLabel value="#{msg.nombre}:"/>
+                            <p:inputText value="#{mesaManagedBean.nombreBuscar}" />
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <h:outputLabel value="#{msg.organismo}:"/>
+                            <p:selectOneMenu id="orgSelect" value="#{mesaManagedBean.idOrganismoBuscar}" style="width: 250px; height: 26px">
+                                <f:selectItem itemLabel="#{msg.elegir}" noSelectionOption="true" itemValue="0"/>
+                                <f:selectItems value="#{mesaManagedBean.selectItems}" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                    <div class="panel-busqueda-botones">
+                        <p:commandButton id="btnBuscar" value="#{msg.find}" actionListener="#{mesaManagedBean.aplicarFiltro}" update="@form" process="@form"/>
+                        <p:defaultCommand target="btnBuscar"/>
+                        <p:commandButton value="#{msg.actualizar}" actionListener="#{mesaManagedBean.actualizar}" update="@form" process="@form"/>
+                    </div>
+                </p:panel>
+                </h:panelGroup>
+
+                <p:dataTable id="mesaDataTable" value="#{mesaManagedBean.listElements}" var="item" paginator="true" paginatorPosition="bottom" rows="10" class="panel-buttons">
+
+                    <p:column id="id" headerText="ID">
+                        <center>
+                            <h:outputText id="cellId" value="#{item.id}"/>
+                        </center>
+                    </p:column>
+
+                    <p:column id="nombre" headerText="NOMBRE">
+                        <h:outputText id="cellNombre" value="#{item.nombre}"/>                         
+                    </p:column>
+                    
+                    <p:column id="cod" headerText="ORGANISMO">
+                            <h:outputText id="cellOrganismo" value="#{item.organismo.nombre}"/>
+                    </p:column>
+
+                    <p:column id="accion" headerText="ACCIONES" style="width: 15%"  >
+                        <h:panelGroup layout="block" styleClass="acciones-tabla">
+
+                            <p:commandButton id="detalle" p:title="#{msg.detalle}" action="detalleMesa" actionListener="#{mesaManagedBean.verDetalle}" rendered="#{mesaManagedBean.detalle}" ajax="false"
+                                icon="pi pi-search" value="">
+                                <f:param name="id" value="#{item.id}"/>
+                            </p:commandButton>
+
+                            <p:commandButton id="editar" p:title="Editar" action="editarMesa" actionListener="#{mesaManagedBean.prepararParaEditar()}" rendered="#{mesaManagedBean.modificacion}" ajax="false"
+                                icon="pi pi-pencil" value="">
+                                <f:param name="id" value="#{item.id}"/>
+                            </p:commandButton>
+
+                            <p:commandButton id="eliminar" p:title="Eliminar" rendered="#{mesaManagedBean.baja}" p:onclick="PF('confirmDialogMesa').show();return false;"
+                                icon="pi pi-trash" value="">
+                            </p:commandButton>
+
+                            <p:dialog id="confirmDialogMesa" widgetVar="confirmDialogMesa" binding="#{confirmDialogMesa}"
+                                                    header="${msg.confirm}"
+                                                    modal="true"
+                                                    width="300"
+                                                    height="155"
+                                                    position="center">
+                                <p:outputLabel value="${msg.msgDelete}"/>
+                                <h:panelGrid columns="2" class="panel-confirm-buttons">
+                                    <p:commandButton id="yes" value="${msg.acep}" p:onclick="PF('confirmDialogMesa').hide();" actionListener="#{mesaManagedBean.guardarBorrado()}">
+                                        <f:param name="id" value="#{item.id}" />
+                                        <f:ajax execute="@this" render="@all"/>
+                                    </p:commandButton>
+                                    <p:commandButton id="no" value="${msg.cancel}" p:onclick="PF('confirmDialogMesa').hide();">
+                                        <f:ajax execute="@this" render="@all"/>
+                                    </p:commandButton>
+                                </h:panelGrid>
+                            </p:dialog>
+
+                        </h:panelGroup>
+                    </p:column>                    
+                </p:dataTable>          
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+

@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="expAnual" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="537" leftMargin="29" rightMargin="29" topMargin="29" bottomMargin="29" uuid="41e02b49-0947-47de-8778-18a2393e76a4">
+	<property name="ireport.zoom" value="1.3310000000000004"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="237"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="752"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="568"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="418"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Expedientes"/>
+	<parameter name="desde" class="java.sql.Timestamp">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="estado" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[0L]]></defaultValueExpression>
+	</parameter>
+	<parameter name="orgPadre" class="java.lang.String">
+		<defaultValueExpression><![CDATA["ORGANISMO PADRE"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="organismo" class="java.lang.String">
+		<defaultValueExpression><![CDATA["ORGANISMO"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="origen" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[1L]]></defaultValueExpression>
+	</parameter>
+	<parameter name="imagenHeader" class="java.lang.String"/>
+	<parameter name="leyendaProvincia" class="java.lang.String"/>
+	<parameter name="hasta" class="java.sql.Timestamp">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="destino" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[1L]]></defaultValueExpression>
+	</parameter>
+	<parameter name="reporteEstado" class="java.lang.String">
+		<defaultValueExpression><![CDATA["ORGANISMO PADRE"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="orgDest" class="java.lang.String">
+		<defaultValueExpression><![CDATA["ORGANISMO"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="mesa" class="java.lang.String"/>
+	<parameter name="mesaExt" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT lista.dia as momento, count(historialnotas.id) as tot
+FROM (
+	select dia::date from generate_series($P{desde} ,  $P{hasta} , '1 month'::interval) as dia
+) as lista
+LEFT OUTER JOIN historialnotas ON date_trunc('month',historialnotas.fecha)::timestamp::date = lista.dia 
+  AND  historialnotas.estadonota_id = $P{estado}
+  AND historialnotas.fecha BETWEEN  $P{desde} AND  $P{hasta}  
+  AND  (historialnotas.mesaorigen_id = $P{origen}  OR $P{origen} Is  null)
+  AND (historialnotas.mesadestino_id = $P{destino}  OR $P{destino} Is null)
+GROUP BY  lista.dia
+ORDER BY momento]]>
+	</queryString>
+	<field name="momento" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="momento"/>
+	</field>
+	<field name="tot" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="tot"/>
+	</field>
+	<variable name="TotalRep" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{tot}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="194" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField>
+				<reportElement x="0" y="0" width="390" height="43" uuid="88a92051-4c1d-438f-9c4a-8a8730d69339">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Justified">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{leyendaProvincia}]]></textFieldExpression>
+			</textField>
+			<image onErrorType="Blank">
+				<reportElement x="407" y="0" width="130" height="43" uuid="10ae2395-3b7d-40d1-b74e-505692c3da62">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<imageExpression><![CDATA[$P{imagenHeader}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="0" y="60" width="537" height="32" uuid="d148c11a-1642-4dc7-a79a-e8d451560b56">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{organismo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="43" width="537" height="16" uuid="46ae6bff-05a0-4cdd-af94-4b70521f1928"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{orgPadre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="124" width="537" height="23" uuid="68689c14-0b54-4da6-aa58-602bb2715b1d">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Notas "+$P{reporteEstado}+" del año "+DATEFORMAT($P{desde},"YYYY")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="92" width="537" height="32" uuid="a322af84-544e-4ef4-8b45-1b17b8ea4172">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{mesa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="149" width="537" height="16" uuid="1cf1496a-989b-4205-b03c-45d40a9b4859">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<printWhenExpression><![CDATA[NOT(EQUALS($P{mesaExt},""))]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{orgDest}+": "+$P{mesaExt}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="0" y="176" width="537" height="16" uuid="681aaefc-2a6c-43e4-a2f0-48c9861841d5">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Total de Notas "+$P{reporteEstado}+": "+$V{TotalRep}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="51" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<printWhenExpression><![CDATA[$V{PAGE_NUMBER}.intValue() > 1 ? Boolean.TRUE : Boolean.FALSE]]></printWhenExpression>
+			<textField>
+				<reportElement x="0" y="0" width="390" height="43" uuid="4ff58f43-5638-462b-8186-c9f6d1e07bcd">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Justified">
+					<font size="8" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{leyendaProvincia}]]></textFieldExpression>
+			</textField>
+			<image onErrorType="Blank">
+				<reportElement x="407" y="0" width="130" height="43" uuid="969355f0-26de-47bf-bd67-d789dc690db3">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<imageExpression><![CDATA[$P{imagenHeader}]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="168" y="0" width="70" height="20" uuid="45723b0f-7a45-409e-92db-bd0dce1adcba">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7e835827-6568-4560-885f-d274bf34eb2e"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Mes]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="238" y="0" width="130" height="20" uuid="be14a36b-6e27-46c5-8a0d-8f0dd0c17d30">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Notas "+$P{reporteEstado}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="19" splitType="Stretch">
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="168" y="0" width="70" height="19" uuid="d94276ac-b9f1-48b1-8918-caf6acddcdc1">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="af93f1eb-56cc-4752-bf91-ec2586032d61"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[PROPER(DATEFORMAT($F{momento},"MMMM"))]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="238" y="0" width="130" height="19" uuid="26a0b573-ae10-4da9-9881-bac034d36eb7">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c0a3eca6-0cf0-4363-8f79-843ded95b7cf"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box padding="2">
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{tot}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="26" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="14" width="390" height="11" forecolor="#BFBFBF" uuid="eec1bf27-9979-4bd4-8cc1-bc07ab6de49f">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Listado de Notas "+$P{reporteEstado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="390" y="14" width="110" height="12" forecolor="#BEBEBE" uuid="1cf23710-b35c-4e97-a110-f8b71aec1bf3">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="500" y="14" width="37" height="12" forecolor="#BEBEBE" uuid="abc9e4bc-33b0-4a02-a7c3-c46d95f0e680"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

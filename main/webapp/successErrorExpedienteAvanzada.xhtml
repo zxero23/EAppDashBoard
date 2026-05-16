@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets">
+    <ui:composition template="./layoutSuccessError.xhtml">
+        <ui:param name="imagen" value="#{busquedaManagedBean.images}"/>
+        <ui:param name="tituloVentana" value="#{busquedaManagedBean.title}"/>
+        <ui:param name="mensaje" value="#{busquedaManagedBean.msgSuccessError}"/>
+        <ui:param name="actionVolver" value="busquedaConf"/>
+        <ui:param name="miBean" value="#{busquedaManagedBean}"/>
+        <ui:param name="actionListenerRefresh" value="limpiar"/>
+    </ui:composition>
+</html>

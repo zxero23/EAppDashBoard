@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="jakarta.faces.html">
+    <ui:composition template="./layout.xhtml">
+        <ui:define name="content">
+            <h:form id="formAgregarInstLegal" styleClass="form" title=" ">
+                <div>
+                    <div id="titulo" class="principal" style="float:left">
+                        <h1>
+                            <h:outputLabel value="#{msg.addInstLegal} - #{msg.expediente} #{expedienteManagedBean.expediente.nroExp}"/>
+                        </h1>
+                    </div>
+                    <div style="float:right">
+                        <div style="text-align: right">                                                        
+                            <p:commandLink action="expedienteConf" actionListener="#{expedienteManagedBean.limpiar()}" value="#{msg.volver}" style="margin-left: 10px;" immediate="true"/>
+                        </div>                       
+                    </div>
+                </div>
+                <div style="clear: both"/>
+
+                <h:outputLabel value="#{msg.confInstLegal}" />
+                <h:selectManyListbox id="list" value="#{expedienteManagedBean.idItems}" size="10">
+                    <f:selectItems value="#{expedienteManagedBean.selectItemsInstLegal}" />
+                </h:selectManyListbox>
+
+                <h:inputHidden rendered="false" value="#{expedienteManagedBean.codOrganismo}"/>
+                <h:inputHidden rendered="false" value="#{expedienteManagedBean.nroCorrel}"/>
+                <h:inputHidden rendered="false" value="#{expedienteManagedBean.annio}"/>
+
+                <br/>
+                <h:panelGrid columns="2">
+                    <p:commandButton value="#{msg.agregar}" action="#{expedienteManagedBean.agregarInstLegal()}"  style="margin-right:0.5%;"/>
+                    <p:commandButton value="#{msg.cancel}" action="expedienteConf" actionListener="#{expedienteManagedBean.limpiar()}" immediate="true"  style="margin-left:5px;"/>
+                </h:panelGrid>
+                <p:blockUI block="formAgregarInstLegal" />
+            </h:form>   
+        </ui:define>
+    </ui:composition>
+</html>

@@ -117,7 +117,7 @@
                                 <p:commandButton  id="detalle"  action="detalleMeta" actionListener="#{metasManagedBean.verDetalle}" rendered="#{metasManagedBean.detalle}" >
                                     <img src="images/symbolZoomInWhite.png" />
                                     <f:param name="id" value="#{item.id}"/>
-                                </p:pushButton >
+                                </p:commandButton>
 
                                 <p:commandButton id="editar"  action="editarMeta" actionListener="#{metasManagedBean.prepararParaEditar()}" rendered="#{metasManagedBean.modificacion}" immediate="true"  >
                                     <img src="images/symbolEditWhite.png" />

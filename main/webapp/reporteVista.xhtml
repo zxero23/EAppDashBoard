@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="./layoutSuccessError.xhtml">
+        <ui:param name="imagen" value="#{reporteManagedBean.images}"/>
+        <ui:param name="tituloVentana" value="#{reporteManagedBean.title}"/>
+        <ui:param name="mensaje" value="#{reporteManagedBean.msgSuccessError}"/>
+        <ui:param name="actionVolver" value="reporteConf"/>
+        <ui:param name="miBean" value="#{reporteManagedBean}"/>
+        <ui:param name="actionListenerRefresh" value="limpiar"/>
+
+        <ui:define name="imprimir">
+            <p:commandButton rendered="#{reporteManagedBean.reporteStreamedContent != null}"
+                             value="#{msg.descargar}"
+                             icon="pi pi-download"
+                             title="#{msg.descargar}"
+                             process="@this"
+                             ajax="false">
+                <p:fileDownload value="#{reporteManagedBean.reporteStreamedContent}"/>
+            </p:commandButton>
+        </ui:define>
+    </ui:composition>
+</html>

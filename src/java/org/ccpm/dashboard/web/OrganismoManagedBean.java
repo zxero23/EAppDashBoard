@@ -336,10 +336,15 @@ public class OrganismoManagedBean extends UtilManagedBean implements Serializabl
         return this.getResultado();
     }
      public List<Organismo> getListElementsOrg() {
-        if (this.getLeyendaBuscar().equals("") && this.getIdOrganismo()==0L) {
+        Long selectedOrganismoId = this.getIdOrganismo();
+        if (selectedOrganismoId == null) {
+            selectedOrganismoId = 0L;
+        }
+
+        if (this.getLeyendaBuscar().equals("") && selectedOrganismoId == 0L) {
             this.setList(this.organismoFacade.findAll(true,false));
         } else {
-            this.setList(this.organismoFacade.findAll(this.getLeyendaBuscar().toUpperCase(), this.getIdOrganismo()));
+            this.setList(this.organismoFacade.findAll(this.getLeyendaBuscar().toUpperCase(), selectedOrganismoId));
         }
         return (List<Organismo>) this.getList();
     }

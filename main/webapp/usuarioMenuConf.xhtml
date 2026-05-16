@@ -1,0 +1,72 @@
+﻿<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="jakarta.faces.core">      
+    <ui:composition template="./layout.xhtml">
+        <ui:define name="content">
+            <h:form id="formUsuarioMenu" title=" ">
+                <p:panel id="usuarioMenu" header="#{msg.editMenuUsuario}">
+                    <table border="0" cellspacing="5" class="panel-buttons">
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="(*)#{msg.usuario}:" />
+                            </td>
+                            <td align="left">
+                                <p:selectOneMenu id="slmGrupos" value="#{permisoManagedBean.idUsuario}" valueChangeListener="#{permisoManagedBean.updateListMenuUsuario}" immediate="true" required="true" >                                                         
+                                    <f:selectItem itemLabel="#{msg.ninguno}" itemValue="0"  noSelectionOption="true"/>
+                                    <f:selectItems value="#{permisoManagedBean.selectItemsUsuario}" />
+                                    <f:ajax execute="@this" render="@this slmGruposMsg dualListControl secondList" event="valueChange" />
+                                </p:selectOneMenu>
+                            </td>
+                            <td align="left">
+                                <p:message id="slmGruposMsg" for="slmGrupos" initEffect="slide" changeEffect="shake"/>
+                            </td>                            
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="(*)#{msg.confMenu}:" />
+                            </td>
+                            <td align="left">
+                                <h:panelGroup id="dualListControl">
+                                    <h:outputLabel value="#{msg.menusDisponibles}:" />
+                                    <h:selectManyListbox id="firstList" value="#{permisoManagedBean.selectedItemsIzquierda}"
+                                        styleClass="subList" style="height:300px" size="12">
+                                        <f:selectItems value="#{permisoManagedBean.itemsIzquierda}" var="item" itemValue="#{item.value}" itemLabel="#{item.label}"/>
+                                    </h:selectManyListbox>
+                                    <p:commandButton value="&gt;&gt;" actionListener="#{permisoManagedBean.agregar()}" update="dualListControl"/>
+                                    <p:commandButton value="&lt;&lt;" actionListener="#{permisoManagedBean.borrar()}" update="dualListControl"/>
+                                    <h:outputLabel value="#{msg.menusSeleccionados}" />
+                                    <h:selectManyListbox id="secondList" value="#{permisoManagedBean.selectedItemsDerecha}"
+                                        styleClass="subList" style="height:300px" size="12">
+                                        <f:selectItems value="#{permisoManagedBean.itemsDerecha}" var="item" itemValue="#{item.value}" itemLabel="#{item.label}"/>
+                                    </h:selectManyListbox>
+                                </h:panelGroup>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                            </td>
+                            <td align="left">
+                                <h:panelGrid id="buttonGrid" columns="2" class="panel-buttons">
+                                    <p:commandButton id="save" action="#{permisoManagedBean.editarUsuarioMenu()}" ajax="false">
+                                        <i class="pi pi-pencil" aria-hidden="true"></i>
+                                        #{msg.saveEdit}
+                                    </p:commandButton>                     
+                                    <p:commandButton id="cancel"  action="administracion" immediate="true" actionListener="#{permisoManagedBean.limpiar()}" ajax="false">
+                                        <i class="pi pi-ban" aria-hidden="true"></i>
+                                        #{msg.cancel}
+                                    </p:commandButton>
+                                </h:panelGrid>
+                            </td>
+                            <td align="left">
+                            </td>                            
+                        </tr>
+                    </table>
+                </p:panel>                
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

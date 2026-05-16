@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:f="jakarta.faces.core"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="./layoutEdicion.xhtml">
+        <ui:param name="tituloVentana" value="#{msg.editTipoIniciador}"/>
+        <ui:param name="miBean" value="#{tipoIniciadorManagedBean}"/>
+        <ui:param name="actionListenerEditar" value="guardarEdicion"/>
+        <ui:param name="actionListenerRefresh" value="limpiar"/>
+        <ui:param name="actionVolver" value="tipoIniciadorConf"/>
+        <ui:define name="laEdicion">
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="(*) #{msg.nombre}:" />
+                </td>
+                <td align="left">
+                    <p:inputText
+                        id="nombreTipoIniciador"
+                        value="#{tipoIniciadorManagedBean.nombre}"
+                        label="#{msg.nombre}"
+                        required="true" >
+                        <f:ajax render="@this nombreTipoIniciadorError" event="valueChange"/>
+                    </p:inputText>
+                </td>
+                <td align="left">
+                    <p:message id="nombreTipoIniciadorError" for="nombreTipoIniciador" initEffect="slide" changeEffect="fade"></p:message>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="#{msg.isExterno}" />
+                </td>
+                <td align="left">
+                    <p:selectBooleanCheckbox
+                        id="externo"
+                        value="#{tipoIniciadorManagedBean.externo}">               
+                    </p:selectBooleanCheckbox>
+                </td>
+                <td align="left">
+                    <p:message id="externoError" for="externo" initEffect="slide" changeEffect="fade"></p:message>
+                </td>
+            </tr>
+        </ui:define>
+    </ui:composition>
+</html>

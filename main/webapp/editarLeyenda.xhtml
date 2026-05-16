@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:f="jakarta.faces.core"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="./layoutEdicion.xhtml">
+        <ui:param name="tituloVentana" value="Editar Leyenda"/>
+        <ui:param name="miBean" value="#{leyendaManagedBean}"/>
+        <ui:param name="actionListenerEditar" value="guardarEdicion"/>
+        <ui:param name="actionListenerRefresh" value="limpiar"/>
+        <ui:param name="actionVolver" value="leyendaConf"/>
+        <ui:define name="laEdicion">
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="(*) #{msg.anio}:" />
+                </td>
+                <td align="left">
+                    <p:inputText
+                        id="anio"
+                        value="#{leyendaManagedBean.anio}"
+                        label="#{msg.anio}"
+                        required="true" 
+                        styleClass="muyancho"
+                        validator="#{leyendaManagedBean.verificarAnios}">
+                        <f:ajax render="@this anioError" event="valueChange"/>
+                    </p:inputText>
+                </td>
+                <td align="left">
+                    <p:message id="anioError" for="anio" initEffect="slide" changeEffect="fade"></p:message>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="(*) #{msg.leyenda}:" />
+                </td>
+                <td align="left">
+                    <p:inputText
+                        id="leyenda"
+                        value="#{leyendaManagedBean.leyenda}"
+                        label="#{msg.leyenda}"
+                        required="true" 
+                        styleClass="muyancho">
+                        <f:ajax render="@this leyendaError" event="valueChange"/>
+                    </p:inputText>
+                </td>
+                <td align="left">
+                    <p:message id="leyendaError" for="leyenda" initEffect="slide" changeEffect="fade"></p:message>
+                </td>
+            </tr>            
+            <h:inputHidden value="#{leyendaManagedBean.anio}"/>
+        </ui:define>
+    </ui:composition>
+</html>

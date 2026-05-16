@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="jakarta.faces.core">
+    <ui:composition template="./layoutDetalle.xhtml">
+        <ui:param name="tituloVentana" value="#{msg.detailsNota}"/>
+        <ui:param name="actionVolver" value="busquedaNotasUsExtConf"/>
+        <ui:param name="miBean" value="#{notaManagedBean}"/>
+        <ui:param name="actionListenerRefresh" value="limpiarExt"/>
+
+        <ui:define name="elDetalle">
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="#{msg.id}:" />
+                </td>
+                <td align="left">
+                    <h:outputLabel value="#{notaManagedBean.nota.id}"/>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="#{msg.num}:" />
+                </td>
+                <td align="left">
+                    <h:outputLabel value="#{notaManagedBean.nota.nroNota}"/>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="#{msg.fechaCreacion}:" />
+                </td>
+                <td align="left">
+                    <h:outputLabel value="#{notaManagedBean.nota.fechaCreacion}">
+                        <f:convertDateTime pattern="dd/MM/yyyy" locale="es_AR" timeZone="America/Argentina/Buenos_Aires"/>
+                    </h:outputLabel>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="#{msg.referencia}:" />
+                </td>
+                <td align="left">
+                    <h:outputLabel value="#{notaManagedBean.nota.referencia}"/>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="#{msg.fojas}:" />
+                </td>
+                <td align="left">
+                    <h:outputLabel value="#{notaManagedBean.nota.fojas}"/>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="#{msg.iniciador}:" />
+                </td>
+                <td align="left">
+                    <h:outputLabel value="#{expedienteManagedBean.arreglarIniciador(notaManagedBean.nota.iniciador.nombre)}"/>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="#{msg.origen}:" />
+                </td>
+                <td align="left">
+                    <h:outputLabel value="#{expedienteManagedBean.filtrarMesa(notaManagedBean.nota.mesaOrigen)}"/>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="#{msg.destino}:" />
+                </td>
+                <td align="left">
+                    <h:outputLabel value="#{expedienteManagedBean.filtrarMesa(notaManagedBean.nota.mesaDestino)}"/>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="#{msg.tipoAsunto}:" />
+                </td>
+                <td align="left">
+                    <h:outputLabel value="#{notaManagedBean.nota.tipoAsunto.nombre}"/>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="#{msg.observacion}:" />
+                </td>
+                <td align="left">
+                    <h:outputLabel value="#{notaManagedBean.nota.observacion}"/>
+                </td>
+            </tr>                     
+        </ui:define>
+        <ui:define name="masInfo">            
+            <div>
+                <h3>
+                    <h:outputLabel value="#{msg.historial}"/>
+                </h3>
+            </div>
+            <div>
+                <p:dataTable id="listexp" value="#{notaManagedBean.nota.listaHistorialOrdenados}" 
+                               var="item"
+                               rows="10"
+                               style="margin-top: 10px;"
+                               paginator="true"
+                               paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {CurrentPageReport}"
+                               rowsPerPageTemplate="10,20,30,50,100"
+                               paginatorPosition="bottom">               
+                    <p:column headerText="#{msg.fecha}" sortAscending="true">
+                        <center>
+                            <h:outputText value="#{item.fecha}">
+                                <f:convertDateTime pattern="dd/MM/yyyy HH:mm" locale="es_AR" timeZone="America/Argentina/Buenos_Aires"/>
+                            </h:outputText>
+
+                        </center>
+                    </p:column> 
+                    <p:column headerText="#{msg.observacion}">
+                        <h:outputText value="#{item.observacion}"/>                                                   
+                    </p:column>
+                    <p:column headerText="#{msg.estado}">
+                        <center>
+                            <h:outputText value="#{item.estadoNota.nombre}"/>
+                        </center>                            
+                    </p:column>
+                    <p:column headerText="#{msg.origen}">
+                        <h:outputText value="#{expedienteManagedBean.filtrarMesa(item.mesaOrigen)}"/>
+                    </p:column>
+                    <p:column headerText="#{msg.destino}">
+                        <h:outputText value="#{expedienteManagedBean.filtrarMesa(item.mesaDestino)}"/>
+                    </p:column>
+                </p:dataTable>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>

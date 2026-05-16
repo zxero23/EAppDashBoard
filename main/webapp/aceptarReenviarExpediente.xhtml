@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/layout.xhtml">
+        <ui:define name="content">
+            <h:form title=" " id="formu">                
+                <div>
+                    <div id="titulo" class="principal" style="float:left">
+                        <h1>
+                            <h:outputLabel value="#{msg.aceptarReenviarExpte} #{expedienteManagedBean.expediente.nroExp}"/>
+                        </h1>
+                    </div>
+                    <div style="float:right">
+                        <div style="text-align: right">                                                                          
+                            <p:commandLink action="expedienteConf" actionListener="#{expedienteManagedBean.limpiar()}" value="#{msg.volver}" style="margin-left: 10px;" immediate="true"/>
+                        </div>                       
+                    </div>
+                </div>
+
+                <div style="clear: both">
+                    <table border="0" cellspacing="5">
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="#{msg.num}:" />
+                            </td>
+                            <td align="left">
+                                <h:outputLabel value="#{expedienteManagedBean.expediente.nroExp}"/>
+                            </td>
+                        </tr>    
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="#{msg.fechaCreacion}:" />
+                            </td>
+                            <td align="left">
+                                <h:outputLabel value="#{expedienteManagedBean.expediente.fechaCreacion}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" locale="es_AR" timeZone="America/Argentina/Buenos_Aires"/>
+                                </h:outputLabel>
+                            </td>
+                        </tr>    
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="#{msg.cuerpo}:" />
+                            </td>
+                            <td align="left">
+                                <h:outputLabel value="#{expedienteManagedBean.cuerpo}"/>
+                            </td>
+                        </tr>    
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="(*) #{msg.fojas}:" />
+                            </td>
+                            <td align="left">
+                                <p:inputText id="fojasExp"
+                                               value="#{expedienteManagedBean.fojas}"
+                                               label="#{msg.fojas}"
+                                               required="true"
+                                               type="number"
+                                               styleClass="muyancho">
+                                    <f:ajax render="@this fojasError" event="valueChange"/>
+                                    <f:validateLongRange minimum="#{expedienteManagedBean.fojas}" />
+                                </p:inputText>
+                            </td>
+                            <td align="left">
+                                <p:message id="fojasError" for="fojasExp" initEffect="slide" changeEffect="fade"></p:message>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="#{msg.iniciador}:" />
+                            </td>
+                            <td align="left">
+                                <h:outputLabel value="#{expedienteManagedBean.expediente.iniciador.nombre}"/>
+                            </td>
+                        </tr>    
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="#{msg.origen}:" />
+                            </td>
+                            <td align="left">
+                                <h:outputLabel value="#{expedienteManagedBean.expediente.mesaOrigen.nombre}"/>
+                            </td>
+                        </tr>    
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="#{msg.tipoAsunto}:" />
+                            </td>
+                            <td align="left">
+                                <h:outputLabel value="#{expedienteManagedBean.expediente.tipoAsunto.nombre}"/>
+                            </td>
+                        </tr>    
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="#{msg.asunto}:" />
+                            </td>
+                            <td align="left" style="width: 200px;">
+                                <h:outputLabel value="#{expedienteManagedBean.expediente.asunto}"/>
+                            </td>
+                        </tr>    
+
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="#{msg.observacion}:" />
+                            </td>
+                            <td align="left">
+                                <p:inputTextarea value="#{expedienteManagedBean.observacion}"
+                                                   style="width: 550px;"/>                                                    
+                            </td>
+                        </tr>   
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="#{msg.ordenPago}:" />
+                            </td>
+                            <td align="left">
+                                <p:inputText
+                                    id="orden"
+                                    value="#{expedienteManagedBean.ordenPago}"
+                                    placeholder="#{expedienteManagedBean.perteneceSaludPublica ? '' : 'Ingrese al menos un espacio para que este campo se imprima en la car�tula.'}"
+                                    styleClass="muyancho">
+                                    <f:ajax render="@this ordenError" event="valueChange"/>
+                                </p:inputText>
+                            </td>
+                            <td align="left">
+                                <p:message id="ordenError" for="orden" initEffect="slide" changeEffect="fade"></p:message>
+                            </td>
+                        </tr>
+                        <h:panelGroup rendered="#{expedienteManagedBean.perteneceContaduria}">
+                            <tr>
+                                <td align="right">
+                                    <h:outputLabel value="#{msg.pedidoFondo}:" />
+                                </td>
+                                <td align="left">
+                                    <h:panelGrid columns="3">
+                                        <p:inputText
+                                            id="pedidoFondo"
+                                            value="#{expedienteManagedBean.pedidoFondo}"
+                                            type="number"
+                                            valueChangeListener="#{expedienteManagedBean.agregarAnio}">
+                                            <f:ajax render="@this pedidoFondoAnio pedidoFondoError" event="valueChange"/>
+                                        </p:inputText>
+                                        <h:outputLabel value="/" />
+                                        <p:inputText
+                                            id="pedidoFondoAnio"
+                                            value="#{expedienteManagedBean.pedidoFondoAnio}"                                                        
+                                            type="number"
+                                            validator="#{expedienteManagedBean.validadorAnio}">
+                                            <f:ajax render="@this pedidoFondoAnioError" event="valueChange"/>
+                                        </p:inputText>
+                                    </h:panelGrid>
+                                </td>
+                                <td align="left">
+                                    <p:message id="pedidoFondoError" for="pedidoFondo" initEffect="slide" changeEffect="fade"></p:message>
+                                    <p:message id="pedidoFondoAnioError" for="pedidoFondoAnio" initEffect="slide" changeEffect="fade"></p:message>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right">
+                                    <h:outputLabel value="#{msg.ordenEntrega}:" />
+                                </td>
+                                <td align="left">
+                                    <h:panelGrid columns="3">
+                                        <p:inputText
+                                            id="ordenEntrega"
+                                            value="#{expedienteManagedBean.ordenEntrega}"
+                                            type="number"
+                                            valueChangeListener="#{expedienteManagedBean.agregarAnio}">
+                                            <f:ajax render="@this ordenEntregaAnio ordenEntregaError" event="valueChange"/>
+                                        </p:inputText>
+                                        <h:outputLabel value="/" />
+                                        <p:inputText
+                                            id="ordenEntregaAnio"
+                                            value="#{expedienteManagedBean.ordenEntregaAnio}"
+                                            type="number"
+                                            validator="#{expedienteManagedBean.validadorAnio}">
+                                            <f:ajax render="@this ordenEntregaAnioError" event="valueChange"/>
+                                        </p:inputText>                        
+                                    </h:panelGrid>
+                                </td>
+                                <td align="left">
+                                    <p:message id="ordenEntregaError" for="ordenEntrega" initEffect="slide" changeEffect="fade"></p:message>
+                                    <p:message id="ordenEntregaAnioError" for="ordenEntregaAnio" initEffect="slide" changeEffect="fade"></p:message>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right">
+                                    <h:outputLabel value="#{msg.expteSuperior}:" />
+                                </td>
+                                <td align="left">
+                                    <p:inputText
+                                        id="expMadre"
+                                        value="#{expedienteManagedBean.expMadre}"
+                                        styleClass="muyancho">
+                                        <f:ajax render="@this expMadreError" event="valueChange"/>
+                                    </p:inputText>
+                                </td>
+                                <td align="left">
+                                    <p:message id="expMadreError" for="expMadre" initEffect="slide" changeEffect="fade"></p:message>
+                                </td>
+                            </tr>
+                        </h:panelGroup>
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="(*) #{msg.destino}:" />
+                            </td>
+                            <td align="left">
+                                <p:selectOneMenu
+                                    id="mesaDestino"
+                                    value="#{expedienteManagedBean.idMesa}"
+                                    label="#{msg.destino}"
+                                    required="true" 
+                                    style="width: 560px;">
+                                    <f:selectItem  noSelectionOption="true"  itemValue="0"  itemLabel="#{msg.ninguno}"/>
+                                    <f:selectItems value="#{expedienteManagedBean.selectItemsDestino}" />
+                                    <f:ajax render="@this mesaDestinoError" event="valueChange"/>
+                                </p:selectOneMenu>
+                            </td>
+                            <td align="left">
+                                <p:message id="mesaDestinoError" for="mesaDestino" initEffect="slide" changeEffect="fade"></p:message>
+                            </td>
+                        </tr>
+
+                    </table>
+                    <h:inputHidden value="#{expedienteManagedBean.codOrganismo}"/>
+                    <h:inputHidden value="#{expedienteManagedBean.nroCorrel}"/>
+                    <h:inputHidden value="#{expedienteManagedBean.annio}"/>                                                           
+                </div>
+                <div align="left">
+                    <h:panelGrid columns="2">
+                        <p:commandButton value="#{msg.enviar}" action="#{expedienteManagedBean.aceptarReenviarExpediente()}" style="margin-left:5px;"/>
+                        <p:commandButton value="#{msg.cancel}" action="expedienteConf" actionListener="#{expedienteManagedBean.limpiar()}" immediate="true"/>
+                    </h:panelGrid>                     
+                </div>
+                <p:ajaxStatus id="submitMonitorPage"/> 
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="./layoutConf.xhtml">
+        <ui:param name="tituloVentana" value="#{msg.confTipoInstLegal}"/>
+        <ui:param name="miBean" value="#{tipoInstrumentoLegalManagedBean}"/>
+        <ui:param name="actionRefresh" value="tipoInstrumentoLegalConf"/>
+        <ui:param name="actionListenerRefresh" value="actualizar"/>
+        <ui:param name="valueRefresh" value="#{msg.confAction}"/>
+        <ui:param name="renderedAlta" value="#{tipoInstrumentoLegalManagedBean.alta}"/>
+        <ui:param name="actionAlta" value="nuevoTipoInstLegal"/>
+        <ui:param name="valueAlta" value="#{msg.newTipoInstLegal}"/>
+        <ui:param name="actionListenerBuscar" value="aplicarFiltro"/>
+        <ui:param name="actionListenerActualizar" value="actualizar"/>
+        <ui:param name="tablaValue" value="listElements"/>
+        <ui:param name="actionDetalle" value="detalleTipoInstLegal"/>
+        <ui:param name="actionListenerDetalle" value="verDetalle"/>
+        <ui:param name="renderedDetalle" value="#{tipoInstrumentoLegalManagedBean.detalle}"/>
+        <ui:param name="actionEditar" value="editarTipoInstLegal"/>
+        <ui:param name="actionListenerEditar" value="prepararParaEditar"/>
+        <ui:param name="renderedEditar" value="#{tipoInstrumentoLegalManagedBean.modificacion}"/>
+        <ui:param name="renderedBorrar" value="#{tipoInstrumentoLegalManagedBean.baja}"/>
+        <ui:param name="actionListenerBorrar" value="guardarBorrado"/>
+
+        <ui:define name="busqueda">
+            <h:panelGroup>
+                <h:outputLabel value="#{msg.nombre}:"/>
+                <p:inputText id="nombreBuscar" value="#{tipoInstrumentoLegalManagedBean.nombreBuscar}"/>
+            </h:panelGroup>
+        </ui:define>                       
+    </ui:composition> 
+</html>

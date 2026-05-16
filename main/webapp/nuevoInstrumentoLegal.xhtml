@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="jakarta.faces.core"
+      xmlns:h="jakarta.faces.html">
+    <ui:composition template="./layoutNuevo.xhtml">
+        <ui:param name="tituloVentana" value="#{msg.newInstLegal}"/>
+        <ui:param name="miBean" value="#{expedienteManagedBean}"/>
+        <ui:param name="actionListenerCrear" value="crearInstrumentoLegal"/>
+        <ui:param name="actionListenerCrearOtro" value="crearOtroInstrumentoLegal"/>
+        <ui:param name="actionListenerRefresh" value="limpiarInstrumentoLegal"/>
+        <ui:param name="actionVolver" value="instrumentoLegalConf"/>
+        <ui:define name="loNuevo">
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="#{msg.expediente}:" />
+                </td>
+                <td align="left">
+                    <h:outputLabel value="#{expedienteManagedBean.expediente.nroExp}" />                    
+                </td>                
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="(*) #{msg.num}:" />
+                </td>
+                <td align="left">
+                    <p:inputText
+                        id="nro"
+                        value="#{expedienteManagedBean.numero}"
+                        label="#{msg.num}"
+                        required="true" 
+                        styleClass="muyancho">
+                        <f:ajax render="@this nroError" event="valueChange"/>
+                    </p:inputText>
+                </td>
+                <td align="left">
+                    <p:message id="nroError" for="nro" initEffect="slide" changeEffect="fade"></p:message>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="(*) #{msg.descripcion}:" />
+                </td>
+                <td align="left">
+                    <p:inputText
+                        id="descripcion"
+                        value="#{expedienteManagedBean.descripcion}"
+                        label="#{msg.descripcion}"
+                        required="true" 
+                        styleClass="muyancho">
+                        <f:ajax render="@this descripcionError" event="valueChange"/>
+                    </p:inputText>
+                </td>
+                <td align="left">
+                    <p:message id="descripcionError" for="descripcion" initEffect="slide" changeEffect="fade"></p:message>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="(*) #{msg.fojas}:" />
+                </td>
+                <td align="left">
+                    <p:inputText
+                        id="fojas"
+                        value="#{expedienteManagedBean.fojasInst}"
+                        type="number"
+                        label="#{msg.fojas}"
+                        required="true" 
+                        styleClass="muyancho">
+                        <f:ajax render="@this fojasError" event="valueChange"/>
+                        <f:validateLongRange minimum="1" />
+                    </p:inputText>
+                </td>
+                <td align="left">
+                    <p:message id="fojasError" for="fojas" initEffect="slide" changeEffect="fade"></p:message>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="(*) #{msg.tipo}:" />
+                </td>
+                <td align="left">
+                    <p:selectOneMenu
+                        id="menu"
+                        value="#{expedienteManagedBean.idTipoInstrumentoLegal}"
+                        label="#{msg.tipo}"
+                        required="true" 
+                        style="width: 560px !important;">
+                        <f:selectItem  noSelectionOption="true"  itemValue="0"  itemLabel="#{msg.ninguno}"/>
+                        <f:selectItems value="#{expedienteManagedBean.selectItemsTipoInstrumentoLegal}" />
+                        <f:ajax render="@this menuError" event="valueChange"/>
+                    </p:selectOneMenu>
+                </td>
+                <td align="left">
+                    <p:message id="menuError" for="menu" initEffect="slide" changeEffect="fade"></p:message>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="#{msg.archivoAdjunto}:"/>
+                </td>
+                <td>
+                    <h:panelGroup rendered="#{expedienteManagedBean.archivo != null}">
+                        <h:outputLabel value="#{expedienteManagedBean.renombrar(expedienteManagedBean.archivo)}"/>
+                    </h:panelGroup>                                        
+                    <p:fileUpload id="archivo"
+                                     label="#{msg.archivoAdjunto}"
+                                     fileUploadListener="#{expedienteManagedBean.cargarArchivo}"
+                                     mode="advanced"
+                                     multiple="false"
+                                     update="msgArchivo"
+                                     allowTypes="/(\.|\/)(pdf|jpg|jpeg|bmp|png)$/"/> 
+                    <h:inputHidden value="#{expedienteManagedBean.archivo}"/>
+                </td>
+                <td>
+                    <p:message  id="msgArchivo"
+                                  for="archivo" initEffect="slide" changeEffect="clip"/>
+
+
+                </td>                
+            </tr>           
+        </ui:define>
+    </ui:composition>
+</html>

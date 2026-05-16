@@ -94,17 +94,12 @@
                         </p:column>
                         
                         <p:column id="ubicacion" headerText="Ubicación" style="width: 530px">
-                            <h:panelGroup id="gMapLayer"  zoomLevel="9" latitude="#{item.latitud}" 
-                                longitude="#{item.longitud}">
-                                <h:panelGroupMarker latitude="#{item.latitud}" longitude="#{item.longitud}">
-                                    <h:panelGroupInfoWindow content="#{item.leyenda}">
-                                        <h:panelGroupEvent eventType="closeclick" scriptToUse="alert('funcion Javascript!!!!');"/>
-                                    </h:panelGroup>
-                                </h:panelGroup>
-                                
-                                
-    
-                            </h:panelGroup>
+                            <h:panelGrid columns="2" cellpadding="2">
+                                <h:outputText value="Lat:" />
+                                <h:outputText value="#{item.latitud}" />
+                                <h:outputText value="Lng:" />
+                                <h:outputText value="#{item.longitud}" />
+                            </h:panelGrid>
                          </p:column>
                         <p:column id="fechaInicioObra1" headerText="Fecha Inicio.">
                             <center>
@@ -133,34 +128,17 @@
                                 <p:commandButton  id="detalle"  action="detalleObras" actionListener="#{obrasManagedBean.verDetalle}" rendered="#{obrasManagedBean.detalle}" >
                                     <img src="images/symbolZoomInWhite.png" />
                                     <f:param name="id" value="#{item.id}"/>
-                                </p:pushButton >
+                                </p:commandButton>
 
                                 <p:commandButton id="editar"  action="editarObras" actionListener="#{obrasManagedBean.prepararParaEditar()}" rendered="#{obrasManagedBean.modificacion}" immediate="true"  >
                                     <img src="images/symbolEditWhite.png" />
                                     <f:param name="id" value="#{item.id}"/>
                                 </p:commandButton>
                                 
-                                <p:commandButton id="eliminar"  rendered="#{obrasManagedBean.baja}"  >
-                                <img src="images/symbolDeleteWhite.png" />
+                                <p:commandButton id="eliminar" rendered="#{obrasManagedBean.baja}" actionListener="#{obrasManagedBean.guardarBorrado()}">
+                                    <img src="images/symbolDeleteWhite.png" />
+                                    <f:param name="id" value="#{item.id}" />
                                 </p:commandButton>
-                                                               
-                                <h:panelGroup id="confirmDialogObras" binding="#{confirmDialogObras}"
-                                                        message="${msg.msgDelete}"
-                                                        header="${msg.confirm}"
-                                                        modal="true"
-                                                        width="300"
-                                                        height="155"
-                                                        position="center">
-                                    <h:panelGrid columns="2" class="panel-confirm-buttons">
-                                        <p:commandButton id="yes" value="${msg.acep}"  actionListener="#{obrasManagedBean.guardarBorrado()}">
-                                            <f:param name="id" value="#{item.id}" />
-                                            <f:ajax execute="@this" render="@all"/>
-                                        </p:commandButton>
-                                        <p:commandButton id="no" value="${msg.cancel}" >
-                                            <f:ajax execute="@this" render="@all"/>
-                                        </p:commandButton>
-                                    </h:panelGrid>
-                                </h:panelGroup>
 
                             </h:panelGrid>
                         </p:column>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="jakarta.faces.html">
+    <ui:composition template="./layout.xhtml">
+        <ui:param name="tituloVentana" value="Manual de Usuario"/>
+        <ui:define name="content">
+            <h:form id="formConfiguracion" styleClass="form" title=" ">
+                <div id="titulo" class="principal">
+                    <h1>
+                        <i class="pi pi-book" style="margin-right: 8px; vertical-align: middle; color: #08446c;" aria-hidden="true"/>
+                        <h:outputLabel value="Manual de Usuario"/>
+                    </h1>
+                </div>                
+                <div>
+                    <p>
+                      Aquí podrá descargar el Manual de Usuario del sistema de expedientes. Desde el mismo verá todas las funcionalidades del sistema. El mismo se irá actualizando a medida que se agreguen nuevas funcionalidades al sistema. Le pedimos por favor evitar imprimirlo a fin de preservar el medio ambiente.
+                    </p>
+                </div>                                
+                <div >
+                    <a href="images/ManualSGE.pdf" class="boton" download="ManualSGE.pdf" style="text-decoration:none">Descargar<i class="pi pi-download" aria-hidden="true"></i></a>
+                </div>                
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

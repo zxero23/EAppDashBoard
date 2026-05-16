@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:f="jakarta.faces.core"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="./layoutEdicion.xhtml">
+        <ui:param name="tituloVentana" value="#{msg.editEstado}"/>
+        <ui:param name="miBean" value="#{estadoManagedBean}"/>
+        <ui:param name="actionListenerEditar" value="guardarEdicion"/>
+        <ui:param name="actionVolver" value="estadoConf"/>
+        <ui:param name="actionListenerRefresh" value="limpiar"/>
+        <ui:define name="laEdicion">
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="(*) #{msg.nombre}:" />
+                </td>
+                <td align="left">
+                    <p:inputText
+                        id="nombreEstado"
+                        value="#{estadoManagedBean.nombre}"
+                        label="#{msg.nombre}"
+                        required="true">
+                        <f:ajax render="@this nombreEstadoError" event="valueChange"/>
+                    </p:inputText>
+                </td>
+                <td align="left">
+                    <p:message id="nombreEstadoError" for="nombreEstado" initEffect="slide" changeEffect="fade"></p:message>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="(*) #{msg.descripcion}:" />
+                </td>
+                <td align="left">
+                    <p:inputText
+                        id="descripcionEstado"
+                        label="#{msg.descripcion}"
+                        value="#{estadoManagedBean.descripcion}"
+                        required="true">
+                        <f:ajax render="@this descripcionEstadoError" event="valueChange"/>
+                    </p:inputText>
+                </td>
+                <td align="left">
+                    <p:message id="descripcionEstadoError" for="descripcionEstado" initEffect="slide" changeEffect="fade"></p:message>
+                </td>
+            </tr>
+
+            <h:inputHidden value="#{estadoManagedBean.id}"/>
+        </ui:define>
+    </ui:composition>
+</html>

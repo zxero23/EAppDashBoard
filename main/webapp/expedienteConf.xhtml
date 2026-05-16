@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="jakarta.faces.passthrough">
+    <ui:composition template="./layoutBandeja.xhtml"> 
+        <ui:define name="lateral">
+            <div style="margin-bottom: 10px; font-weight: 700; color: #08446c; font-size: 1em;">
+                <i class="pi pi-briefcase" style="margin-right: 6px; vertical-align: middle;" aria-hidden="true"/>
+                <h:outputLabel value="#{msg.confExpte}"/>
+            </div>
+            <h:panelGroup id="panelLateral" layout="block" styleClass="bandeja-lateral">
+                <h:panelGroup layout="block" styleClass="bandeja-row">
+                    <i class="pi pi-send" style="color: #2563eb;" aria-hidden="true"/>
+                    <p:commandLink styleClass="bandeja-link" actionListener="#{expedienteManagedBean.update(1)}" update="@form panelbusqueda tablita" process="@this">
+                        <span class="bandeja-label">#{msg.enviados}</span>
+                        <span class="bandeja-count">#{expedienteManagedBean.totalEnviado}</span>
+                    </p:commandLink>
+                </h:panelGroup>
+                <h:panelGroup layout="block" styleClass="bandeja-row">
+                    <i class="pi pi-inbox" style="color: #6b7280;" aria-hidden="true"/>
+                    <p:commandLink styleClass="bandeja-link" actionListener="#{expedienteManagedBean.update(2)}" update="@form panelbusqueda tablita" process="@this">
+                        <span class="bandeja-label">#{msg.recibidos}</span>
+                        <span class="bandeja-count">#{expedienteManagedBean.totalRecibido}</span>
+                    </p:commandLink>
+                </h:panelGroup>
+                <h:panelGroup layout="block" styleClass="bandeja-row">
+                    <i class="pi pi-check-circle" style="color: #22c55e;" aria-hidden="true"/>
+                    <p:commandLink styleClass="bandeja-link" actionListener="#{expedienteManagedBean.update(3)}" update="@form panelbusqueda tablita" process="@this">
+                        <span class="bandeja-label">#{msg.aceptados}</span>
+                        <span class="bandeja-count">#{expedienteManagedBean.totalAceptado}</span>
+                    </p:commandLink>
+                </h:panelGroup>
+                <h:panelGroup layout="block" styleClass="bandeja-row">
+                    <i class="pi pi-times-circle" style="color: #ef4444;" aria-hidden="true"/>
+                    <p:commandLink styleClass="bandeja-link" actionListener="#{expedienteManagedBean.update(4)}" update="@form panelbusqueda tablita" process="@this">
+                        <span class="bandeja-label">#{msg.rechazados}</span>
+                        <span class="bandeja-count">#{expedienteManagedBean.totalRechazado}</span>
+                    </p:commandLink>
+                </h:panelGroup>
+                <h:panelGroup layout="block" styleClass="bandeja-row">
+                    <i class="pi pi-folder" style="color: #1f2937;" aria-hidden="true"/>
+                    <p:commandLink styleClass="bandeja-link" actionListener="#{expedienteManagedBean.update(5)}" update="@form panelbusqueda tablita" process="@this">
+                        <span class="bandeja-label">#{msg.archivados}</span>
+                        <span class="bandeja-count">#{expedienteManagedBean.totalArchivado}</span>
+                    </p:commandLink>
+                </h:panelGroup>
+                <h:panelGroup layout="block" styleClass="bandeja-row">
+                    <i class="pi pi-th-large" style="color: #2563eb;" aria-hidden="true"/>
+                    <p:commandLink styleClass="bandeja-link" actionListener="#{expedienteManagedBean.update(6)}" update="@form panelbusqueda tablita" process="@this">
+                        <span class="bandeja-label">#{msg.todos}</span>
+                        <span class="bandeja-count">#{expedienteManagedBean.total}</span>
+                    </p:commandLink>
+                </h:panelGroup>
+            </h:panelGroup>
+        </ui:define> 
+
+        <ui:define name="principal">
+            <div id="titulo" class="principal page-title">
+                <h1>
+                    <i class="pi pi-briefcase" style="margin-right: 8px; vertical-align: middle; color: #08446c;" aria-hidden="true"/>
+                    <h:outputLabel value="#{msg.confExpte} #{expedienteManagedBean.titulo}"/>
+                </h1>
+            </div>
+
+            <h:panelGrid columns="6" styleClass="page-top-actions">
+                <h:panelGroup rendered="#{expedienteManagedBean.alta or expedienteManagedBean.ingresar}">
+                    <i class="pi pi-plus" style="margin-right: 5px; color: #08446c;" aria-hidden="true"/>
+                    <p:commandLink action="#{expedienteManagedBean.nuevoExpInt()}" value="#{msg.newExpte}" />
+                    |    
+                </h:panelGroup>
+                <h:panelGroup rendered="#{expedienteManagedBean.ingresar}">
+                    <i class="pi pi-download" style="margin-right: 5px; color: #08446c;" aria-hidden="true"/>
+                    <p:commandLink action="#{expedienteManagedBean.ingresarExt(2)}" value="#{msg.ingresarExpte}" />
+                    |    
+                </h:panelGroup>
+                <h:panelGroup rendered="#{expedienteManagedBean.perteneceCooperativa}">
+                    <i class="pi pi-download" style="margin-right: 5px; color: #08446c;" aria-hidden="true"/>
+                    <p:commandLink action="#{expedienteManagedBean.prepararIngresarCoop()}" value="#{msg.expteCoop}" />
+                    |    
+                </h:panelGroup>
+                <h:panelGroup rendered="#{expedienteManagedBean.ultimoNro}">
+                    <i class="pi pi-list" style="margin-right: 5px; color: #08446c;" aria-hidden="true"/>
+                    <p:commandLink
+                        value="#{msg.ultimoNum}"
+                        pt:onclick="PF('ultimoNroPanel').show();return false;"/>                       
+                    |    
+                </h:panelGroup>
+                <h:panelGroup rendered="#{expedienteManagedBean.listado}">
+                    <i class="pi pi-list" style="margin-right: 5px; color: #08446c;" aria-hidden="true"/>
+                    <p:commandLink action="listadoEnviado" value="#{msg.listadoEnviados}"/>                       
+                    |    
+                </h:panelGroup>
+
+                <p:dialog id="ultimoNroPanel" widgetVar="ultimoNroPanel"
+                                        binding="#{ultimoNroPanel}"
+                                        headerText="#{msg.ultimoNum}"
+                                        draggable="false">
+                    <p:outputLabel value="#{expedienteManagedBean.mensajeUltimoNro}" />
+                    <center>
+                        <p:commandButton id="btnAceptar"
+                                        value="#{msg.acep}"
+                                        onclick="PF('ultimoNroPanel').hide();">                                
+                            <f:ajax execute="@this" render="@all"/>
+                        </p:commandButton>
+                    </center>
+                </p:dialog>
+            </h:panelGrid>
+            <h:panelGroup id="panelbusqueda" layout="block" styleClass="panelbusqueda">
+            <p:panel id="expPanelBusqueda" toggleable="true" toggleSpeed="500" collapsed="true" styleClass="panel-busqueda">
+                <f:facet name="header">
+                    <h:outputText value="Opciones de Búsqueda >>"/>
+                </f:facet>
+
+                <h:panelGroup layout="block" styleClass="busq-fieldsets">
+                    <fieldset class="busq-fieldset">
+                        <legend>Datos Generales</legend>
+                        <h:panelGrid columns="3" styleClass="busq-section-grid busq-section-grid-3">
+                            <h:panelGroup styleClass="busq-item">
+                                <h:outputLabel for="codBsq" value="#{msg.codOrganismo}:" styleClass="busq-label"/>
+                                <p:inputText id="codBsq" value="#{expedienteManagedBean.codBsq}" styleClass="busq-control"/>
+                            </h:panelGroup>
+                            <h:panelGroup styleClass="busq-item">
+                                <h:outputLabel for="nroBsq" value="#{msg.correlativo}:" styleClass="busq-label"/>
+                                <p:inputText id="nroBsq" value="#{expedienteManagedBean.nroBsq}" styleClass="busq-control"/>
+                            </h:panelGroup>
+                            <h:panelGroup styleClass="busq-item">
+                                <h:outputLabel for="annioBsq" value="#{msg.anio}:" styleClass="busq-label"/>
+                                <p:inputText id="annioBsq" value="#{expedienteManagedBean.annioBsq}" styleClass="busq-control"/>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </fieldset>
+
+                    <fieldset class="busq-fieldset">
+                        <legend>Fechas</legend>
+                        <h:panelGrid columns="4" styleClass="busq-section-grid busq-section-grid-4">
+                            <h:panelGroup styleClass="busq-item">
+                                <h:outputLabel for="fechaDesde" value="Fecha Crea. Desde:" styleClass="busq-label"/>
+                                <p:inputText id="fechaDesde" value="#{expedienteManagedBean.fechaDesdeBsq}" styleClass="busq-control">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" locale="es_AR" timeZone="America/Argentina/Buenos_Aires"/>
+                                </p:inputText>
+                            </h:panelGroup>
+                            <h:panelGroup styleClass="busq-item">
+                                <h:outputLabel for="fechaHasta" value="Fecha Crea. Hasta:" styleClass="busq-label"/>
+                                <p:inputText id="fechaHasta" value="#{expedienteManagedBean.fechaHastaBsq}" styleClass="busq-control">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" locale="es_AR" timeZone="America/Argentina/Buenos_Aires"/>
+                                </p:inputText>
+                            </h:panelGroup>
+                            <h:panelGroup styleClass="busq-item">
+                                <h:outputLabel for="fechaDesdeUltimoMov" value="Fecha Últ. Mov. Desde:" styleClass="busq-label"/>
+                                <p:inputText id="fechaDesdeUltimoMov" value="#{expedienteManagedBean.fechaDesdeUltimoMovBsq}" styleClass="busq-control">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" locale="es_AR" timeZone="America/Argentina/Buenos_Aires"/>
+                                </p:inputText>
+                            </h:panelGroup>
+                            <h:panelGroup styleClass="busq-item">
+                                <h:outputLabel for="fechaHastaUltimoMov" value="Fecha Últ. Mov. Hasta:" styleClass="busq-label"/>
+                                <p:inputText id="fechaHastaUltimoMov" value="#{expedienteManagedBean.fechaHastaUltimoMovBsq}" styleClass="busq-control">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" locale="es_AR" timeZone="America/Argentina/Buenos_Aires"/>
+                                </p:inputText>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </fieldset>
+
+                    <fieldset class="busq-fieldset">
+                        <legend>Iniciador</legend>
+                        <h:panelGrid columns="3" styleClass="busq-section-grid busq-section-grid-3">
+                            <h:panelGroup styleClass="busq-item">
+                                <h:outputLabel for="tipoIniciadorBsq" value="#{msg.tipoIniciador}:" styleClass="busq-label"/>
+                                <p:selectOneMenu id="tipoIniciadorBsq"
+                                                 value="#{expedienteManagedBean.idTipoIniciadorBsq}"
+                                                 styleClass="busq-control busq-select">
+                                    <f:selectItem itemLabel="#{msg.elegir}" noSelectionOption="true" itemValue="#{null}"/>
+                                    <f:selectItems value="#{expedienteManagedBean.selectItemsTipoIniciador}" />
+                                    <p:ajax process="@this"
+                                            listener="#{expedienteManagedBean.cargarIniciadoresBusqueda}"
+                                            update="iniciadorContainer" />
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+                            <h:panelGroup styleClass="busq-item">
+                                <h:outputLabel for="iniciadorBsq" value="#{msg.iniciador}:" styleClass="busq-label"/>
+                                <h:panelGroup id="iniciadorContainer">
+                                    <p:selectOneMenu id="iniciadorBsq"
+                                                     value="#{expedienteManagedBean.idIniciadorBsq}"
+                                                     disabled="#{expedienteManagedBean.deshabilitarIniciador}"
+                                                     filter="true" filterMatchMode="contains"
+                                                     styleClass="busq-control busq-select"
+                                                     placeholder="Nombre o código del iniciador">
+                                        <f:selectItem noSelectionOption="true" itemValue="0" itemLabel="#{msg.elegir}"/>
+                                        <f:selectItems value="#{expedienteManagedBean.selectItemsIniciador}" />
+                                        <f:ajax render="@this iniciadorError" event="valueChange"/>
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                            <h:panelGroup styleClass="busq-item"
+                                          rendered="#{expedienteManagedBean.flagBandeja == 1 || expedienteManagedBean.flagBandeja == 2 || expedienteManagedBean.flagBandeja == 3 || expedienteManagedBean.flagBandeja == 4 || expedienteManagedBean.flagBandeja == 5}">
+                                <h:panelGroup rendered="#{expedienteManagedBean.flagBandeja == 2 || expedienteManagedBean.flagBandeja == 3 || expedienteManagedBean.flagBandeja == 5}">
+                                    <h:outputLabel for="origen" value="#{msg.origen}:" styleClass="busq-label"/>
+                                    <p:selectOneMenu id="origen"
+                                                     value="#{expedienteManagedBean.idMesaOrigenBsq}"
+                                                     styleClass="busq-control busq-select">
+                                        <f:selectItem noSelectionOption="true" itemValue="0" itemLabel="#{msg.ninguno}"/>
+                                        <f:selectItems value="#{expedienteManagedBean.selectItemsDestino}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                                <h:panelGroup rendered="#{expedienteManagedBean.flagBandeja == 1 || expedienteManagedBean.flagBandeja == 4}">
+                                    <h:outputLabel for="destino" value="#{msg.destino}:" styleClass="busq-label"/>
+                                    <p:selectOneMenu id="destino"
+                                                     value="#{expedienteManagedBean.idMesaDestinoBsq}"
+                                                     styleClass="busq-control busq-select">
+                                        <f:selectItem noSelectionOption="true" itemValue="0" itemLabel="#{msg.ninguno}"/>
+                                        <f:selectItems value="#{expedienteManagedBean.selectItemsDestino}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </fieldset>
+
+                    <fieldset class="busq-fieldset">
+                        <legend>Asunto</legend>
+                        <h:panelGrid columns="2" styleClass="busq-section-grid busq-section-grid-2">
+                            <h:panelGroup styleClass="busq-item">
+                                <h:outputLabel for="tipoAsuntoBsq" value="#{msg.tipoAsunto}:" styleClass="busq-label"/>
+                                <p:selectOneMenu id="tipoAsuntoBsq"
+                                                 value="#{expedienteManagedBean.idTipoAsuntoBsq}"
+                                                 styleClass="busq-control busq-select">
+                                    <f:selectItem itemLabel="#{msg.elegir}" noSelectionOption="true" itemValue="0"/>
+                                    <f:selectItems value="#{expedienteManagedBean.selectItemsTipoAsunto}" />
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+                            <h:panelGroup styleClass="busq-item">
+                                <h:outputLabel for="asunto" value="#{msg.asunto}:" styleClass="busq-label"/>
+                                <p:inputText id="asunto" value="#{expedienteManagedBean.asuntoBsq}" styleClass="busq-control"/>
+                            </h:panelGroup>
+                            <h:panelGroup styleClass="busq-item busq-item-wide">
+                                <h:outputLabel for="obser" value="#{msg.observacion}:" styleClass="busq-label"/>
+                                <p:inputText id="obser" value="#{expedienteManagedBean.observacion}" styleClass="busq-control"/>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </fieldset>
+
+                    <h:panelGroup layout="block" rendered="#{expedienteManagedBean.perteneceContaduria}">
+                        <fieldset class="busq-fieldset">
+                            <legend>Contaduría</legend>
+                            <h:panelGrid columns="3" styleClass="busq-section-grid busq-section-grid-3">
+                                <h:panelGroup styleClass="busq-item">
+                                    <h:outputLabel for="pedidoFondoBsq" value="#{msg.pedidoFondo}:" styleClass="busq-label"/>
+                                    <h:panelGrid columns="3" styleClass="busq-slash">
+                                        <p:inputText id="pedidoFondoBsq" value="#{expedienteManagedBean.pedidoFondoBsq}" styleClass="busq-control"/>
+                                        <h:outputText value="/" styleClass="busq-slash-sep"/>
+                                        <p:inputText id="pedidoFondoAnioBsq" value="#{expedienteManagedBean.pedidoFondoAnioBsq}" styleClass="busq-control"/>
+                                    </h:panelGrid>
+                                </h:panelGroup>
+                                <h:panelGroup styleClass="busq-item">
+                                    <h:outputLabel for="ordenEntregaBsq" value="#{msg.ordenEntrega}:" styleClass="busq-label"/>
+                                    <h:panelGrid columns="3" styleClass="busq-slash">
+                                        <p:inputText id="ordenEntregaBsq" value="#{expedienteManagedBean.ordenEntregaBsq}" styleClass="busq-control"/>
+                                        <h:outputText value="/" styleClass="busq-slash-sep"/>
+                                        <p:inputText id="ordenEntregaAnioBsq" value="#{expedienteManagedBean.ordenEntregaAnioBsq}" styleClass="busq-control"/>
+                                    </h:panelGrid>
+                                </h:panelGroup>
+                                <h:panelGroup styleClass="busq-item">
+                                    <h:outputLabel for="expMadreBsq" value="#{msg.expteSuperior}:" styleClass="busq-label"/>
+                                    <p:inputText id="expMadreBsq" value="#{expedienteManagedBean.expMadreBsq}" styleClass="busq-control"/>
+                                </h:panelGroup>
+                            </h:panelGrid>
+                        </fieldset>
+                    </h:panelGroup>
+                </h:panelGroup>
+
+                <div class="panel-busqueda-botones">
+                    <p:commandButton id="btnBuscar" value="#{msg.find}"
+                                     actionListener="#{expedienteManagedBean.aplicarFiltro}"
+                                     update="tablita panelbusqueda" process="@form"/>
+                    <p:defaultCommand target="btnBuscar"/>
+                    <p:commandButton value="#{msg.actualizar}"
+                                     actionListener="#{expedienteManagedBean.actualizar}"
+                                     update="tablita panelbusqueda" process="@form"/>
+                </div>
+            </p:panel>
+            </h:panelGroup>
+
+            <h:panelGrid columns="14" styleClass="page-row-actions">
+                <h:panelGroup>
+                    <p:commandLink action="#{expedienteManagedBean.prepararParaDetalle()}" title="#{msg.detalle}" style="color: #08446c;">
+                        <i class="pi pi-search" style="margin-right: 5px;" aria-hidden="true"/>
+                        <h:outputText value="#{msg.detalle}"/>
+                    </p:commandLink>
+                    |
+                </h:panelGroup>
+                <h:panelGroup rendered="#{expedienteManagedBean.visibleEditar}">
+                    <p:commandLink action="#{expedienteManagedBean.prepararParEditar()}" style="color: #08446c;">
+                        <i class="pi pi-pencil" style="margin-right: 5px;" aria-hidden="true"/>
+                        <h:outputText value="#{msg.editar}"/>
+                    </p:commandLink>
+                    |
+                </h:panelGroup>
+                <h:panelGroup>
+                    <p:commandLink actionListener="#{expedienteManagedBean.actualizar}"
+                                   process="@this"
+                                   update="panelLateral panelbusqueda tablita"
+                                   style="color: #08446c;">
+                        <i class="pi pi-refresh" style="margin-right: 5px;" aria-hidden="true"/>
+                        <h:outputText value="#{msg.actualizar}"/>
+                    </p:commandLink>
+                    |
+                </h:panelGroup>
+                <h:panelGroup rendered="#{expedienteManagedBean.visibleAceptar}">
+                    <p:commandLink value="#{msg.acep}"
+                                   action="#{expedienteManagedBean.aceptarExpediente()}"
+                                   process="@this"
+                                   update="panelLateral tablita panelbusqueda" style="color: #08446c;">
+                        <i class="pi pi-check" style="margin-right: 5px;" aria-hidden="true"/>
+                        <h:outputText value="#{msg.acep}"/>
+                    </p:commandLink>
+                    |
+                </h:panelGroup>
+                <h:panelGroup rendered="#{expedienteManagedBean.visibleRechazar}">
+                    <p:commandLink action="#{expedienteManagedBean.prepararParaRechazar()}" style="color: #08446c;">
+                        <i class="pi pi-times" style="margin-right: 5px;" aria-hidden="true"/>
+                        <h:outputText value="#{msg.rechazar}"/>
+                    </p:commandLink>
+                    |
+                </h:panelGroup>
+                <h:panelGroup rendered="#{expedienteManagedBean.visibleAceptarReenviar}">
+                    <p:commandLink action="#{expedienteManagedBean.prepararParaAceptarReenviar()}" style="color: #08446c;">
+                        <i class="pi pi-send" style="margin-right: 5px;" aria-hidden="true"/>
+                        <h:outputText value="#{msg.aceptarReenviar}"/>
+                    </p:commandLink>
+                    |
+                </h:panelGroup>
+                <h:panelGroup rendered="#{expedienteManagedBean.visibleArchivar}">
+                    <p:commandLink action="#{expedienteManagedBean.prepararParaArchivar()}" style="color: #08446c;">
+                        <i class="pi pi-inbox" style="margin-right: 5px;" aria-hidden="true"/>
+                        <h:outputText value="#{msg.archivar}"/>
+                    </p:commandLink>
+                    |
+                </h:panelGroup>
+                <h:panelGroup rendered="#{expedienteManagedBean.visibleEnviar}">
+                    <p:commandLink action="#{expedienteManagedBean.prepararParaEnviar()}" style="color: #08446c;">
+                        <i class="pi pi-send" style="margin-right: 5px;" aria-hidden="true"/>
+                        <h:outputText value="#{msg.enviar}"/>
+                    </p:commandLink>
+                    |
+                </h:panelGroup>
+                <h:panelGroup rendered="#{expedienteManagedBean.visibleReenviar}">
+                    <p:commandLink action="#{expedienteManagedBean.prepararParaReenviar()}" style="color: #08446c;">
+                        <i class="pi pi-replay" style="margin-right: 5px;" aria-hidden="true"/>
+                        <h:outputText value="#{msg.editarReenviar}"/>
+                    </p:commandLink>
+                    |
+                </h:panelGroup>
+                <h:panelGroup rendered="#{expedienteManagedBean.visibleAgregarInst}">
+                    <p:commandLink action="#{expedienteManagedBean.gestionarInstLegal()}" style="color: #08446c;">
+                        <i class="pi pi-paperclip" style="margin-right: 5px;" aria-hidden="true"/>
+                        <h:outputText value="#{msg.confInstLegal}"/>
+                    </p:commandLink>
+                    |
+                </h:panelGroup>
+                <h:panelGroup rendered="#{expedienteManagedBean.visibleReporte}">
+                    <p:commandLink action="#{expedienteManagedBean.prepararParaReeImprimir()}" style="color: #08446c;">
+                        <i class="pi pi-print" style="margin-right: 5px;" aria-hidden="true"/>
+                        <h:outputText value="#{msg.imprimirCaratula}"/>
+                    </p:commandLink>
+                    |
+                </h:panelGroup>
+                <h:panelGroup rendered="#{expedienteManagedBean.visibleDesarchivar}">
+                    <p:commandLink pt:onclick="PF('desarchivarExpedienteConfirmPanel').show();return false;" style="color: #08446c;">
+                        <i class="pi pi-folder-open" style="margin-right: 5px;" aria-hidden="true"/>
+                        <h:outputText value="#{msg.desarchivar}"/>
+                    </p:commandLink>
+                    |
+                    <p:dialog id="desarchivarExpedienteConfirmPanel" widgetVar="desarchivarExpedienteConfirmPanel"
+                                            binding="#{desarchivarExpedienteConfirmPanel}"
+                                            headerText="#{msg.desarchivar}"
+                                            draggable="false">
+                        <p:outputLabel value="#{expedienteManagedBean.msgDesarchivar}" />
+                        <h:panelGrid columns="2" styleClass="panel-confirm-buttons">
+                            <p:commandButton id="yesDes"
+                                            value="#{msg.acep}"
+                                            onclick="PF('desarchivarExpedienteConfirmPanel').hide();"
+                                            actionListener="#{expedienteManagedBean.desarchivarExpediente()}">
+                            </p:commandButton>
+                            <p:commandButton id="noDes"
+                                            value="#{msg.cancel}"
+                                            onclick="PF('desarchivarExpedienteConfirmPanel').hide();">
+                                <f:ajax execute="@this" render="@all"/>
+                            </p:commandButton>
+                        </h:panelGrid>
+                    </p:dialog>
+                </h:panelGroup>
+            </h:panelGrid>
+            <div class="export-actions">
+                <p:commandButton value="Exportar" icon="pi pi-file-excel"
+                                  rendered="#{expedienteManagedBean.perteneceContaduria}"
+                                  actionListener="#{expedienteManagedBean.prepararExportacionExpedientes()}"
+                                  process="@this"
+                                  ajax="false">
+                    <p:fileDownload value="#{expedienteManagedBean.exportacionExpedientesExcelStream}"/>
+                </p:commandButton>
+            </div>
+
+            <div class="tabla-expedientes-wrapper" style="width: 100%; clear: both;">
+            <p:dataTable id="tablita"
+                           style="width: 100%;"
+                           styleClass="tabla-expedientes-full"
+                           binding="#{expedienteManagedBean.tablaExpedientes}"
+                           value="#{expedienteManagedBean.expedientes}"
+                           var="item"
+                           lazy="true"
+                           paginator="true"
+                           paginatorPosition="bottom"
+                           paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {CurrentPageReport}"
+                           rows="10"
+                           rowsPerPageTemplate="10,20,50,100,500,1000">
+
+                <p:column id="checked"
+                    style="width: 20px; text-align: center;">                    
+                    <p:selectBooleanCheckbox value="#{item.checked}"
+                                        valueChangeListener="#{expedienteManagedBean.definirPanel}">
+                        <f:attribute name="expediente" value="#{item}"/>
+                        <f:ajax execute="@this" event="valueChange" render="@this tablita"/>
+                    </p:selectBooleanCheckbox>
+                </p:column>
+                <p:column style="width: 150px; text-align: center;"
+                            headerText="#{msg.num}">
+                    <h:outputText value="#{item.nroExp}"/>
+                </p:column> 
+                <p:column style="width: 90px; text-align: center;"
+                            headerText="#{msg.fechaCreacion}">
+                    <h:outputText value="#{item.fechaCreacion}">
+                        <f:convertDateTime pattern="dd/MM/yyyy" locale="es_AR" timeZone="America/Argentina/Buenos_Aires"/>
+                    </h:outputText>                            
+                </p:column> 
+                <p:column style="width: 90px; text-align: center;" 
+                            headerText="#{msg.fechaUltimoMovimiento}">
+                    <h:outputText value="#{item.ultimoMovimiento}">
+                        <f:convertDateTime pattern="dd/MM/yyyy" locale="es_AR" timeZone="America/Argentina/Buenos_Aires"/>
+                    </h:outputText>                            
+                </p:column> 
+                
+                <p:column style="width: 200px;"
+                            headerText="#{msg.iniciador}">                    
+                    <h:outputText value="#{expedienteManagedBean.arreglarIniciador(item.iniciador.nombre)}"/>                                                          
+                </p:column>
+                <p:column headerText="#{msg.asunto}">
+                    <h:outputText value="#{item.asunto}"/>                                                          
+                </p:column>
+                <p:column headerText="#{msg.ordenPago}" style="text-align: center;" rendered="#{expedienteManagedBean.perteneceContaduria}">
+                    <h:outputText value="#{item.ordenPago != null ? item.ordenPago : '-'}"/>
+                </p:column>
+                <p:column headerText="#{msg.pedidoFondo}" style="text-align: center;" rendered="#{expedienteManagedBean.perteneceContaduria}">
+                    <h:outputText value="#{item.pedidoFondo!=null ? item.pedidoFondo.toString().concat('/').concat(item.pedidoFondoAnio.toString()) : '-'}" />
+                </p:column>
+                <p:column headerText="#{msg.ordenEntrega}" style="text-align: center;" rendered="#{expedienteManagedBean.perteneceContaduria}">
+                    <h:outputText value="#{item.ordenEntrega!=null ? item.ordenEntrega.toString().concat('/').concat(item.ordenEntregaAnio.toString()) : '-'}"/>                                                           
+                </p:column>
+                <p:column style="width: 150px;" headerText="#{msg.origen}" rendered="#{expedienteManagedBean.flagBandeja == 2 || expedienteManagedBean.flagBandeja == 3 || expedienteManagedBean.flagBandeja == 5 || expedienteManagedBean.flagBandeja == 6}">
+                    <h:outputText value="#{expedienteManagedBean.filtrarMesa(item.mesaOrigen)}"/>                                                          
+                </p:column>
+                <p:column style="width: 150px;" headerText="#{msg.destino}" rendered="#{expedienteManagedBean.flagBandeja == 1 || expedienteManagedBean.flagBandeja == 4 || expedienteManagedBean.flagBandeja == 6}">
+                    <h:outputText value="#{expedienteManagedBean.filtrarMesa(item.mesaDestino)}"/>                                                          
+                </p:column> 
+                <p:column style="width: 40px; text-align: center;" headerText="#{msg.fojas}">
+                    <h:outputText value="#{item.fojas}"/>                                                                                    
+                </p:column> 
+            </p:dataTable>
+            </div>
+        </ui:define>  
+
+    </ui:composition> 
+</html>

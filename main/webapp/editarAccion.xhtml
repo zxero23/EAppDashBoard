@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:f="jakarta.faces.core"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="./layoutEdicion.xhtml">
+        <ui:param name="tituloVentana" value="#{msg.editAction}"/>
+        <ui:param name="miBean" value="#{accionManagedBean}"/>
+        <ui:param name="actionListenerEditar" value="guardarEdicion"/>
+        <ui:param name="actionVolver" value="accionConf"/>
+        <ui:param name="actionListenerRefresh" value="limpiar"/>
+        <ui:define name="laEdicion">
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="(*) #{msg.nombre}:" />
+                </td>
+                <td align="left">
+                    <p:inputText
+                        id="nombreAccion"
+                        label="#{msg.nombre}"
+                        value="#{accionManagedBean.nombre}"
+                        required="true">
+                        <f:ajax render="@this nombreAccionError" event="valueChange"/>
+                    </p:inputText>
+                </td>
+                <td align="left">
+                    <p:message id="nombreAccionError" for="nombreAccion" initEffect="slide" changeEffect="fade"></p:message>
+                </td>
+            </tr>
+            <h:inputHidden value="#{accionManagedBean.id}"/>
+        </ui:define>
+    </ui:composition>
+</html>

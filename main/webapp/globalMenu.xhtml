@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition>
+        <h:form id="menuBar" title=" ">
+            <p:menubar id="menu" style="width: 99.5%; font-size: 1.2em !important">
+                <c:forEach items="#{webManagedBean.menu}" var="item">
+                    <p:submenu label="#{item.nombre}" icon="#{webManagedBean.getMenuIcon(item.nombre)}" rendered="#{empty item.menuPadre and webManagedBean.hasVisibleSubMenuItems(item)}">
+                        <c:forEach items="#{item.menus}" var="subItem">
+                            <p:menuitem value="#{subItem.nombre}" outcome="#{webManagedBean.getMenuOutcome(subItem, item)}" ajax="false" icon="#{webManagedBean.getMenuIcon(subItem.nombre)}" rendered="#{webManagedBean.shouldRenderSubMenuItem(subItem, item)}"/>
+                        </c:forEach>
+                    </p:submenu>
+                    <p:menuitem value="#{item.nombre}" outcome="#{webManagedBean.getParentMenuOutcome(item)}" ajax="false" icon="#{webManagedBean.getMenuIcon(item.nombre)}"
+                                rendered="#{empty item.menuPadre and not webManagedBean.hasVisibleSubMenuItems(item) and not empty webManagedBean.getParentMenuOutcome(item)}"/>
+                </c:forEach>
+            </p:menubar>
+        </h:form>
+    </ui:composition>
+</html>
+

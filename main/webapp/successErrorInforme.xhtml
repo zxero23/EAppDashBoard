@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="./layoutSuccessError.xhtml">
+        <ui:param name="imagen" value="#{reporteManagedBean.images}"/>
+        <ui:param name="tituloVentana" value="#{reporteManagedBean.title}"/>
+        <ui:param name="mensaje" value="#{reporteManagedBean.msgSuccessError}"/>
+        <ui:param name="actionVolver" value="reporteConf"/>
+        <ui:param name="miBean" value="#{reporteManagedBean}"/>
+        <ui:param name="actionListenerRefresh" value="limpiar"/>
+
+        <ui:define name="imprimir">
+            <p:graphicImage  resource="#{reporteManagedBean.reporte}"
+                                  label="Imprimir"
+                                  fileName="#{reporteManagedBean.nombrar('enviados','pdf')}"
+                                  mimeType="application/pdf"
+                                  attachment="false"
+                                  rendered="#{reporteManagedBean.flagReporte}"
+                                  icon="pi pi-print"
+                                  type="button"/>
+        </ui:define>
+    </ui:composition>
+</html>

@@ -6,23 +6,15 @@
 
 /* Component containers
 ----------------------------------*/
-@font-face {
-  font-family: 'OpenSans-Regular';
-  font-style: normal;
-  font-weight: 400;
-  src: url("#{resource['ace-ccpm:fonts/OpenSans-Regular.ttf']}");
-  src: url("#{resource['ace-ccpm:fonts/OpenSans-Regular.ttf']}") format('truetype');
-}
-
 body{
-	font-family: 'OpenSans-Regular';
+	font-family: 'Open Sans', Arial, sans-serif;
        
        
         
 }
 
 .ui-widget {
-	font-family: 'OpenSans-Regular';
+	font-family: 'Open Sans', Arial, sans-serif;
 	font-size: 0.9em;
 }
 .ui-widget .ui-widget {
@@ -32,7 +24,7 @@ body{
 .ui-widget select,
 .ui-widget textarea,
 .ui-widget button {
-	font-family: 'OpenSans-Regular';
+	font-family: 'Open Sans', Arial, sans-serif;
 	font-size: 1em;
 	color: #222222
 }
@@ -650,7 +642,7 @@ background:  url("../images/indicador.png") -45px 0px !important;
 }
 
 .content-top1{
-    font-family: "OpenSans-Regular", sans-serif;  
+    font-family: "Open Sans", Arial, sans-serif;
     text-align : left;
     height: auto;
     padding-left: 5px;

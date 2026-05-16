@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/layout.xhtml">
+        <ui:define name="content">
+            <h:form title=" " id="formu">
+                <div>
+                    <div id="titulo" class="principal" style="float:left">
+                        <h1>
+                            <h:outputLabel value="#{msg.ingresarNota}"/>
+                        </h1>
+                    </div>
+                    <div style="float:right">
+                        <div style="text-align: right">                                                                          
+                            <p:commandLink action="notaConf" actionListener="#{notaManagedBean.limpiar()}" value="#{msg.volver}" style="margin-left: 10px;" immediate="true"/>
+                        </div>                       
+                    </div>
+                </div>
+
+                <div style="clear: both">
+                    <table border="0" cellspacing="5">
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="(*) #{msg.id}:" />
+                            </td>
+                            <td align="left">
+                                <p:inputText id="cod" 
+                                               value="#{notaManagedBean.id}"
+                                               required="true" >
+                                    <f:ajax render="@this codError" event="valueChange"/>
+                                </p:inputText>
+                            </td>
+                            <td align="left">
+                                <p:message id="codError" for="cod" initEffect="slide" changeEffect="fade"></p:message>
+                            </td>
+                        </tr>
+                    </table>              
+                </div>
+                <div align="left">
+                    <h:panelGrid columns="2" cellpadding="2">
+                        <p:commandButton id="ingresar" 
+                                        value="#{msg.ingresar}"
+                                        action="#{notaManagedBean.ingresarNota()}" ajax="false">                            
+                        </p:commandButton>
+                        <p:commandButton value="#{msg.cancel}" action="notaConf" actionListener="#{notaManagedBean.limpiar()}" immediate="true" ajax="false"/>
+                    </h:panelGrid>
+                </div>
+                <p:ajaxStatus id="submitMonitorPage"/> 
+            </h:form>           
+        </ui:define>
+    </ui:composition>
+</html>

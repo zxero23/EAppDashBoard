@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/layout.xhtml">
+        <ui:define name="content">
+            <h:form title=" " id="formu">
+                <div>
+                    <div id="titulo" class="principal" style="float:left">
+                        <h1>
+                            <h:outputLabel value="#{tituloVentana}"/>
+                        </h1>
+                    </div>
+                    <div style="float:right">
+                        <div style="text-align: right">                                                        
+                            <ui:insert name="derechaPrimero"/>
+                            <p:commandLink action="#{actionVolver.toString}" actionListener="#{miBean[actionListenerRefresh]}" value="#{msg.volver}" style="margin-left: 10px;" immediate="true"/>
+                        </div>                       
+                    </div>
+                </div>
+
+                <div style="clear: both">
+                    <ui:insert name="posTitulo"/>            
+                </div>
+                <div id="accionesGen">
+                    <table border="0" cellspacing="5">
+                        <ui:insert name="elDetalle"/>
+                    </table>               
+                </div>
+                <div>
+                    <ui:insert name="masInfo"/>            
+                </div>
+                <div align="center">
+                    <p:commandLink action="#{actionVolver.toString}" actionListener="#{miBean[actionListenerRefresh]}" value="- #{msg.volver} -"/>
+                </div>
+                <p:ajaxStatus id="submitMonitorPage"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+

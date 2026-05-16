@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/layout.xhtml">
+        <ui:define name="content">
+            <h:form title=" " id="formu">                
+                <div>
+                    <div id="titulo" class="principal" style="float:left">
+                        <h1>
+                            <h:outputLabel value="#{msg.aceptarReenviarNota}s"/>
+                        </h1>
+                    </div>
+                    <div style="float:right">
+                        <div style="text-align: right">                                                                          
+                            <p:commandLink action="notaConf" actionListener="#{notaManagedBean.limpiar()}" value="#{msg.volver}" style="margin-left: 10px;" immediate="true"/>
+                        </div>                       
+                    </div>
+                </div>
+
+                <div style="clear: both">
+                    <p:dataTable id="tablita"
+                                   value="#{notaManagedBean.notasAux}"
+                                   var="item"                                   >
+
+                        <p:column style="width: 50px;"
+                                    headerText="#{msg.id}">
+                            <center>
+                                <h:outputText value="#{item.id}"/>                                        
+                            </center>                            
+                        </p:column>
+                        <p:column headerText="#{msg.num}">
+                            <center>
+                                <h:outputText value="#{item.nroNota}"/>
+                            </center>                            
+                        </p:column>
+                        <p:column style="width: 180px;"
+                                    headerText="#{msg.iniciador}">                    
+                            <h:outputText value="#{expedienteManagedBean.arreglarIniciador(item.iniciador.nombre)}"/>                                                          
+                        </p:column>
+                        <p:column headerText="#{msg.referencia}">
+                            <h:outputText value="#{item.referencia}"/>                                                          
+                        </p:column>
+                    </p:dataTable>                                                           
+                </div>
+                <div>
+                    <table>
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="#{msg.observacion}:" />
+                            </td>
+                            <td align="left">
+                                <p:inputTextarea value="#{notaManagedBean.observacion}"
+                                                   style="width: 550px;"/>                                                    
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                <h:outputLabel value="(*) #{msg.destino}:" />
+                            </td>
+                            <td align="left">
+                                <p:selectOneMenu
+                                    id="mesaDestino"
+                                    value="#{notaManagedBean.idMesa}"
+                                    label="#{msg.destino}"
+                                    required="true" 
+                                    style="width: 560px;">
+                                    <f:selectItem  noSelectionOption="true"  itemValue="0"  itemLabel="#{msg.ninguno}"/>
+                                    <f:selectItems value="#{notaManagedBean.selectItemsDestino}" />
+                                    <f:ajax render="@this mesaDestinoError" event="valueChange"/>
+                                </p:selectOneMenu>
+                            </td>
+                            <td align="left">
+                                <p:message id="mesaDestinoError" for="mesaDestino" initEffect="slide" changeEffect="fade"></p:message>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div align="left">
+                    <h:panelGrid columns="2">
+                        <p:commandButton value="#{msg.enviar}" action="#{notaManagedBean.aceptarReenviarNotas()}" style="margin-left:5px;"/>
+                        <p:commandButton value="#{msg.cancel}" action="notaConf" actionListener="#{notaManagedBean.limpiar()}" immediate="true"/>
+                    </h:panelGrid>                     
+                </div>
+                <p:ajaxStatus id="submitMonitorPage"/> 
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

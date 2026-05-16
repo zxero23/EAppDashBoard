@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:f="jakarta.faces.core"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="./layoutEdicion.xhtml">
+        <ui:param name="tituloVentana" value="#{msg.editGrupo}"/>
+        <ui:param name="miBean" value="#{grupoManagedBean}"/>
+        <ui:param name="actionListenerEditar" value="guardarEdicion"/>
+        <ui:param name="actionListenerRefresh" value="limpiar"/>
+        <ui:param name="actionVolver" value="grupoConf"/>
+        <ui:define name="laEdicion">
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="(*) #{msg.nombre}:" />
+                </td>
+                <td align="left">
+                    <p:inputText
+                        id="nombreGrupo"
+                        value="#{grupoManagedBean.nombre}"
+                        label="#{msg.nombre}"
+                        required="true"
+                        styleClass="muyancho">
+                        <f:ajax render="@this nombreGrupoError" event="valueChange"/>
+                    </p:inputText>
+                </td>
+                <td align="left">
+                    <p:message id="nombreGrupoError" for="nombreGrupo" initEffect="slide" changeEffect="fade"></p:message>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="(*) #{msg.descripcion}:" />
+                </td>
+                <td align="left">
+
+                    <p:inputText
+                        id="descripcionGrupo"
+                        value="#{grupoManagedBean.descripcion}"
+                        label="#{msg.descripcion}"
+                        required="true"
+                        styleClass="muyancho">
+                        <f:ajax render="@this descripcionGrupoError" event="valueChange"/>
+                    </p:inputText>
+                </td>
+                <td align="left">
+                    <p:message id="descripcionGrupoError" for="descripcionGrupo" initEffect="slide" changeEffect="fade"></p:message>
+                </td>
+            </tr>
+            <h:inputHidden value="#{grupoManagedBean.id}"/>
+        </ui:define>
+    </ui:composition>
+</html>

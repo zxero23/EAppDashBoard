@@ -1,0 +1,186 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="jakarta.faces.core"
+      xmlns:pt="jakarta.faces.passthrough">      
+    <ui:composition template="./layout.xhtml">
+        <ui:define name="content">
+            <h:form id="formMesa" title=" ">
+                <div id="titulo" class="principal">
+                    <h1>
+                        <i class="pi pi-users" style="margin-right: 8px; vertical-align: middle; color: #08446c;" aria-hidden="true"/>
+                        <h:outputLabel value="#{msg.confUsuario}"/>
+                    </h1>
+                </div>    
+                <h:panelGrid  columns="2" class="panel-buttons">
+                    <h:panelGroup>
+                        <span class="pi pi-refresh" aria-hidden="true" style="margin-right: 5px;"/>
+                        <p:commandLink action="usuarioConf" actionListener="#{usuarioManagedBean.actualizar}" value="#{msg.confUsuario}"/>
+                        |
+                    </h:panelGroup>
+
+                    <h:panelGroup rendered="#{usuarioManagedBean.alta}">
+                        <span class="pi pi-plus" aria-hidden="true" style="margin-right: 5px;"/>
+                        <p:commandLink action="nuevoUsuario" value="#{msg.newUsuario}"/>
+                    </h:panelGroup>
+                </h:panelGrid>
+
+                <h:panelGroup id="panelbusqueda" layout="block" styleClass="panelbusqueda">
+                <p:panel id="expPanelBusqueda" toggleable="true" toggleSpeed="500" collapsed="true" styleClass="panel-buttons">
+                    <f:facet name="header">
+                        <h:outputText value="#{msg.busqueda}"/>
+                    </f:facet>
+                    <h:panelGrid columns="2" cellspacing="4">
+                        <h:panelGroup>
+                            <h:outputLabel value="#{msg.usuario}:"/>
+                            <p:inputText id="nombreBuscar" value="#{usuarioManagedBean.nombreBuscar}"/>
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <h:outputLabel value="#{msg.nombre}:"/>
+                            <p:inputText id="nomBusq" value="#{usuarioManagedBean.nomBusq}"/>
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <h:outputLabel value="#{msg.apellido}:"/>
+                            <p:inputText id="apellidoBusq" value="#{usuarioManagedBean.apellidoBusq}"/>
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <h:outputLabel value="#{msg.organismo}:"/>
+                            <p:selectOneMenu id="orgSelect" style="width: 200px;" value="#{usuarioManagedBean.idOrganismoBsq}">
+                                <f:selectItem itemLabel="#{msg.elegir}" itemValue="0"/>
+                                <f:selectItems value="#{usuarioManagedBean.selectItemsOrganismoBsq}" />
+                                <f:ajax execute="@this" render="@this mesaSelect" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <h:outputLabel value="#{msg.mesa}:"/>
+                            <p:selectOneMenu id="mesaSelect" style="width: 200px;" value="#{usuarioManagedBean.idMesaBsq}">
+                                <f:selectItem itemLabel="#{msg.elegir}" itemValue="0"/>
+                                <f:selectItems value="#{usuarioManagedBean.selectItemsMesaBsq}" />
+                                <f:ajax render="@this" execute="@this" />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                    <div class="panel-busqueda-botones">
+                        <p:commandButton id="btnBuscar" value="#{msg.find}" actionListener="#{usuarioManagedBean.aplicarFiltro}" update="@form" process="@form"/>
+                        <p:defaultCommand target="btnBuscar"/>
+                        <p:commandButton value="#{msg.actualizar}" actionListener="#{usuarioManagedBean.actualizar}" update="@form" process="@form"/>
+                    </div>
+                </p:panel>
+                </h:panelGroup>
+
+                <div style="display:inline-block;width:100%;"> 
+                    <div style="float:right; width:50%; text-align:right">
+                        <p:commandButton value="Imprimir Tabla" style="margin-right: 10px">
+                            <p:dataExporter target="usuarioDataTable" type="xlsxstream" fileName="usuarios"/>
+                        </p:commandButton>
+                    </div>                        
+                </div>
+
+                <p:dataTable id="usuarioDataTable" value="#{usuarioManagedBean.usuarios}"
+                               var="item"
+                               rows="10"
+                               page="#{usuarioManagedBean.page}"
+                               style="width:100%; margin-top: 10px;"
+                               paginator="true"
+                               lazy="true"
+                               rowsPerPageTemplate="10,20,30,50,100,500"
+                               paginatorTemplate="#{msg.paginatorTemplate}"
+                               currentPageReportTemplate="#{msg.pageReportTemplate}"
+                               rowIndexVar="row"
+                               paginatorPosition="bottom">
+
+                    <p:column id="id" headerText="#{msg.id}">
+                        <!-- p:column exportable="false" -->
+                        <center>
+                            <h:outputText id="cellId" value="#{item.id}"/>
+                        </center>
+                    </p:column>
+
+                    <p:column id="ape" headerText="#{msg.apellido} y #{msg.nombre}">
+                        <h:outputText value="#{item.apellidoNombre}"/>
+                    </p:column>
+                    <p:column id="nomb" headerText="#{msg.usuario}">
+                        <h:outputText value="#{item.nombreUsuario}"/>
+                    </p:column>
+
+                    <p:column id="organimo" headerText="#{msg.organismo}">                
+                        <h:outputText value="#{item.mesa.organismo.nombre!=null?item.mesa.organismo.nombre:''}"/>
+                    </p:column> 
+
+                    <p:column id="mesa" headerText="#{msg.mesa}">                
+                        <h:outputText value="#{item.mesa!=null?item.mesa.nombre:''}"/>
+                    </p:column> 
+
+                    <p:column id="passwordChanged" class="" headerText="#{msg.passwordChanged}" > 
+                        <!-- p:column exportable="false" -->
+                        <center>
+                            <span class="#{item.updatedPassword?'fa fa-times':'fa fa-check'}"/>  
+                        </center>
+                    </p:column> 
+
+                    <p:column id="accion" headerText="#{msg.confAction}" >
+                        <h:panelGroup layout="block" styleClass="acciones-tabla">
+
+                            <p:commandButton id="detalle" p:title="#{msg.detalle}" action="detalleUsuario" actionListener="#{usuarioManagedBean.verDetalle}" rendered="#{usuarioManagedBean.detalle}" ajax="false"
+                                icon="pi pi-search" value="">
+                                <f:param name="id" value="#{item.id}"/>
+                            </p:commandButton>
+
+                            <p:commandButton id="editar" p:title="Editar" action="editarUsuario" actionListener="#{usuarioManagedBean.prepararParaEditar()}" rendered="#{usuarioManagedBean.modificacion}" ajax="false"
+                                icon="pi pi-pencil" value="">
+                                <f:param name="id" value="#{item.id}"/>
+                            </p:commandButton>
+
+                            <p:commandButton id="eliminar" p:title="Eliminar" rendered="#{usuarioManagedBean.baja}" p:onclick="PF('confirmDialogUsuario').show();return false;"
+                                icon="pi pi-trash" value="">
+                            </p:commandButton>
+
+                            <p:commandButton id="restorePassword" p:title="#{msg.restorePassword}" p:onclick="PF('confirmDialogRestorePassword').show();return false;"
+                                icon="pi pi-key" value="">
+                            </p:commandButton>
+
+                            <p:dialog id="confirmDialogUsuario" widgetVar="confirmDialogUsuario" binding="#{confirmDialogUsuario}"
+                                                    header="${msg.confirm}"
+                                                    modal="true"
+                                                    width="300"
+                                                    height="155"
+                                                    position="center">
+                                <p:outputLabel value="${msg.msgDelete}"/>
+                                <h:panelGrid columns="2" class="panel-confirm-buttons">
+                                    <p:commandButton id="yes" value="${msg.acep}" p:onclick="PF('confirmDialogUsuario').hide();" actionListener="#{usuarioManagedBean.guardarBorrado()}">
+                                        <f:param name="id" value="#{item.id}" />
+                                        <f:ajax execute="@this" render="@all"/>
+                                    </p:commandButton>
+                                    <p:commandButton id="no" value="${msg.cancel}" p:onclick="PF('confirmDialogUsuario').hide();">
+                                        <f:ajax execute="@this" render="@all"/>
+                                    </p:commandButton>
+                                </h:panelGrid>
+                            </p:dialog>
+                            <p:dialog id="confirmDialogRestorePassword" widgetVar="confirmDialogRestorePassword" binding="#{confirmDialogRestorePassword}"
+                                                    header="#{msg.restorePassword}"
+                                                    modal="true"
+                                                    width="400"
+                                                    height="200"
+                                                    position="center">
+                                <p:outputLabel value="#{msg.msgRestorePassword}"/>
+                                <h:panelGrid columns="2" class="panel-confirm-buttons">
+                                    <p:commandButton id="yesRP" value="#{msg.acep}" p:onclick="PF('confirmDialogRestorePassword').hide();" action="#{usuarioManagedBean.retorePassword()}">
+                                        <f:param name="id" value="#{item.id}" />
+                                        <f:ajax execute="@this" render="@all"/>
+                                    </p:commandButton>
+                                    <p:commandButton id="noRP" value="#{msg.cancel}" p:onclick="PF('confirmDialogRestorePassword').hide();">
+                                        <f:ajax execute="@this" render="@all"/>
+                                    </p:commandButton>
+                                </h:panelGrid>
+                            </p:dialog>
+                        </h:panelGroup>
+                    </p:column>                    
+                </p:dataTable>          
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

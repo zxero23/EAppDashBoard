@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="jakarta.faces.core"
+      xmlns:h="jakarta.faces.html">
+    <ui:composition template="./layoutNuevo.xhtml">
+        <ui:param name="tituloVentana" value="#{msg.newOrganismo}"/>
+        <ui:param name="miBean" value="#{organismoManagedBean}"/>
+        <ui:param name="actionListenerCrear" value="crear"/>
+        <ui:param name="actionListenerCrearOtro" value="crearOtro"/>
+        <ui:param name="actionListenerRefresh" value="limpiar"/>
+        <ui:param name="actionVolver" value="organismoConf"/>
+        <ui:define name="loNuevo">
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="#{msg.organismoPadre}:" />
+                </td>
+                <td align="left">
+                    <p:selectOneMenu
+                        id="organismo"
+                        value="#{organismoManagedBean.idOrganismoPadre}"
+                        style="width: 360px !important;">
+                        <f:selectItem  noSelectionOption="true"  itemValue="0"  itemLabel="#{msg.ninguno}"/>
+                        <f:selectItems value="#{organismoManagedBean.selectItems}" />
+                        <f:ajax render="@this organismoError" event="valueChange"/>
+                    </p:selectOneMenu>
+                </td>
+                <td align="left">
+                    <p:message id="organismoError" for="organismo" initEffect="slide" changeEffect="fade"></p:message>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="(*) #{msg.cod}:" />
+                </td>
+                <td align="left">
+                    <p:inputText
+                        id="codigo"
+                        value="#{organismoManagedBean.codOrganigrama}"
+                        type="number"
+                        label="#{msg.codOrganismo}"
+                        required="true" 
+                        styleClass="ancho">
+                        <f:ajax render="@this codigoError" event="valueChange"/>
+                    </p:inputText>
+                </td>
+                <td align="left">
+                    <p:message id="codigoError" for="codigo" initEffect="slide" changeEffect="fade"></p:message>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="(*) #{msg.nombre}:" />
+                </td>
+                <td align="left">
+                    <p:inputText
+                        id="nombre"
+                        value="#{organismoManagedBean.nombre}"
+                        label="#{msg.nombre}"
+                        required="true" 
+                        styleClass="ancho">
+                        <f:ajax render="@this nombreError" event="valueChange"/>
+                    </p:inputText>
+                </td>
+                <td align="left">
+                    <p:message id="nombreError" for="nombre" initEffect="slide" changeEffect="fade"></p:message>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:outputLabel value="(*) #{msg.descripcion}:" />
+                </td>
+                <td align="left">
+                    <p:inputText
+                        id="descripcion"
+                        value="#{organismoManagedBean.descripcion}"
+                        label="#{msg.descripcion}"
+                        required="true" 
+                        styleClass="ancho">
+                        <f:ajax render="@this descripcionError" event="valueChange"/>
+                    </p:inputText>
+                </td>
+                <td align="left">
+                    <p:message id="descripcionError" for="descripcion" initEffect="slide" changeEffect="fade"></p:message>
+                </td>
+            </tr>
+        </ui:define>
+    </ui:composition>
+</html>

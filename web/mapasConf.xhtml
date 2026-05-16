@@ -12,11 +12,9 @@
                     <table border="0" cellspacing="5" class="panel-buttons" width="800">
                         <tr style="width: 800px">
                             <td align="right" width="800" style="width: 800px">
-                                <h:panelGroup id="gMapLayer" rendered="false" style="width: 1024px; height: 720px" zoomLevel="8" latitude="-27.39" longitude="-55.98">
-                                    <h:panelGroupLayer id="KMLLayer" layerType="KML" visible="TRUE" url="${gMapLayerBean.kmlURL}"/>
-                                </h:panelGroup>
-                            </td>                            
-                        </tr>                        
+                                <h:outputText value="Vista de mapa deshabilitada en la migracion a PrimeFaces." />
+                            </td>
+                        </tr>
                      </table>
                     <p:panel id="kmlinputs" header="KML layer inputs" closable="false" toggleable="false" collapsed="false" visible="TRUE">
                         <h:outputLabel for="kmlLayer" value="Options for KML"/>
