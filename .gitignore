@@ -6,3 +6,8 @@ Thumbs.db
 *.iml
 .vscode/
 payara-micro-5.2022.5.jar
+
+# v2
+node_modules/
+# Lo genera `npm run build` en frontend/
+backend/src/main/resources/static/

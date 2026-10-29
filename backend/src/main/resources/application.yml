@@ -1,0 +1,30 @@
+server:
+  port: ${PORT:8080}
+  servlet:
+    session:
+      timeout: 30m
+
+spring:
+  mvc:
+    problemdetails:
+      enabled: true
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/tableroDB}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD}
+  jpa:
+    open-in-view: false
+    hibernate:
+      # El esquema lo comparte la app legacy: nunca lo modificamos desde aca.
+      ddl-auto: none
+      naming:
+        # Nombres de columna tal cual el campo (Postgres los pasa a minusculas), igual que EclipseLink en la v1.
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        default_batch_fetch_size: 100
+
+tablero:
+  # Al loguear con una clave legacy en texto plano, se reemplaza por su hash BCrypt.
+  # Ojo: despues de migrar, ese usuario ya no puede entrar a la app legacy.
+  migrar-claves: ${MIGRAR_CLAVES:true}
