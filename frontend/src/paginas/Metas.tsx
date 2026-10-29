@@ -45,9 +45,11 @@ export default function Metas() {
 
   return (
     <>
+      <h1 className="titulo-pagina">Metas</h1>
+      <p className="subtitulo">Cada meta busca aumentar o reducir un porcentaje respecto del primer período de su indicador.</p>
       <section className="tarjeta">
         <div className="barra-titulo">
-          <h2>Metas</h2>
+          <h2 className="tenue">{lista.length} metas</h2>
           {yo.global && <select value={filtro.organismoId} onChange={e => set({ organismoId: e.target.value, objetivoId: '' })}><Opciones items={cat.organismos} vacio="Todos los organismos" /></select>}
           <select value={filtro.objetivoId} onChange={e => set({ objetivoId: e.target.value })}><Opciones items={objetivos} vacio="Todos los objetivos" /></select>
           <select value={filtro.situacionId} onChange={e => set({ situacionId: e.target.value })}><Opciones items={cat.situaciones} vacio="Todas las situaciones" /></select>

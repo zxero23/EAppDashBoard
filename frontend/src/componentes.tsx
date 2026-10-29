@@ -4,22 +4,13 @@ import { Bar, CartesianGrid, Cell, ComposedChart, LabelList, ReferenceLine, Resp
 import type { Catalogos, Indicador, Meta, Obra } from './api'
 
 const COLORES = ['verde', 'amarillo', 'rojo', 'azul'] as const
-const HEX: Record<string, string> = { verde: '#3f9b4f', amarillo: '#e0a800', rojo: '#d9534f', azul: '#2b7bb9', gris: '#8a94a0' }
+// Colores del sistema de Apple; se ven bien en modo claro y oscuro (SVG no toma variables CSS en atributos).
+const HEX: Record<string, string> = { verde: '#34c759', amarillo: '#ff9f0a', rojo: '#ff3b30', azul: '#0a84ff', gris: '#8e8e93' }
 
 /** Color del semaforo segun la posicion de la situacion en catalogos.semaforo (verde, amarillo, rojo, azul). */
 export function color(cat: Catalogos, situacionId: number | null | undefined) {
   const i = cat.semaforo.findIndex(s => s.id === situacionId)
   return i >= 0 ? COLORES[i] : 'gris'
-}
-
-export function Leyenda({ cat }: { cat: Catalogos }) {
-  return (
-    <div className="leyenda">
-      {cat.semaforo.map(s => (
-        <span key={s.id}><i className={'punto ' + color(cat, s.id)} />{s.leyenda}</span>
-      ))}
-    </div>
-  )
 }
 
 export function Chip({ cat, id, texto }: { cat: Catalogos; id: number | null; texto: string | null }) {
@@ -99,17 +90,19 @@ export function PanelIndicadores({ meta, indicadores, acciones }: {
         <figcaption><strong>{ind.leyenda}</strong>{ind.descripcion && ind.descripcion !== ind.leyenda && <span>{ind.descripcion}</span>}</figcaption>
         <ResponsiveContainer width="100%" height={280}>
           <ComposedChart data={ind.puntos} margin={{ top: 22, right: 16, bottom: 0, left: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#e3e7ec" vertical={false} />
-            <XAxis dataKey="periodo" fontSize={12} tickLine={false} />
-            <YAxis fontSize={12} tickFormatter={v => compacto.format(v)} width={56} />
-            <Tooltip formatter={v => [num(Number(v)), ind.variable]} cursor={{ fill: '#eef2f6' }} />
+            <CartesianGrid stroke="rgba(142,142,147,.18)" vertical={false} />
+            <XAxis dataKey="periodo" fontSize={12} tickLine={false} axisLine={false} tick={{ fill: HEX.gris }} dy={6} />
+            <YAxis fontSize={12} tickFormatter={v => compacto.format(v)} width={52} tickLine={false} axisLine={false} tick={{ fill: HEX.gris }} />
+            <Tooltip formatter={v => [num(Number(v)), ind.variable]} cursor={{ fill: 'rgba(142,142,147,.12)', radius: 8 }} />
+            <Bar dataKey="valor" maxBarSize={48} radius={[8, 8, 8, 8]} isAnimationActive={false}>
+              {ind.puntos.map((p, n) => <Cell key={n} fill={p.valor !== null && cumple(p.valor) ? HEX.verde : HEX.azul} />)}
+              <LabelList dataKey="valor" position="top" fontSize={11} fontWeight={600} fill={HEX.gris}
+                         formatter={(v: unknown) => v === null || v === undefined ? '' : compacto.format(Number(v))} />
+            </Bar>
+            {/* Después de las barras para que la línea de meta quede por encima. */}
             {objetivo !== null && (
               <ReferenceLine y={objetivo} stroke={HEX.verde} strokeWidth={2} strokeDasharray="6 4" ifOverflow="extendDomain" />
             )}
-            <Bar dataKey="valor" maxBarSize={56} radius={[4, 4, 0, 0]} isAnimationActive={false}>
-              {ind.puntos.map((p, n) => <Cell key={n} fill={p.valor !== null && cumple(p.valor) ? HEX.verde : HEX.azul} />)}
-              <LabelList dataKey="valor" position="top" fontSize={11} formatter={(v: unknown) => v === null || v === undefined ? '' : compacto.format(Number(v))} />
-            </Bar>
           </ComposedChart>
         </ResponsiveContainer>
         <div className="pie-grafico">
@@ -150,7 +143,7 @@ export function Mapa({ cat, obras, onClick, alto = 420 }: {
   cat: Catalogos; obras: Obra[]; onClick?: (lat: number, lng: number) => void; alto?: number
 }) {
   return (
-    <MapContainer center={[-26.9, -54.65]} zoom={7} style={{ height: alto }} className="mapa">
+    <MapContainer center={[-26.9, -54.65]} zoom={7} style={{ height: alto }} className="mapa" scrollWheelZoom={false}>
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' />
       {obras.filter(o => o.latitud !== null && o.longitud !== null).map(o => (

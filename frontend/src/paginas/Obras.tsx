@@ -48,9 +48,12 @@ export default function Obras() {
   } as Obra] : lista
 
   return (
+    <>
+    <h1 className="titulo-pagina">Obras</h1>
+    <p className="subtitulo">Obras de los entes ejecutores, ubicadas en el mapa de la provincia.</p>
     <section className="tarjeta">
       <div className="barra-titulo">
-        <h2>Obras <small className="tenue">({lista.length})</small></h2>
+        <h2 className="tenue">{lista.length} obras</h2>
         {yo.global && <select value={filtro.organismoId} onChange={e => set({ organismoId: e.target.value })}><Opciones items={entes} vacio="Todos los entes" /></select>}
         <select value={filtro.situacionId} onChange={e => set({ situacionId: e.target.value })}><Opciones items={cat.situaciones} vacio="Todas las situaciones" /></select>
         <select value={filtro.localidadId} onChange={e => set({ localidadId: e.target.value })}><Opciones items={cat.localidades} vacio="Todas las localidades" /></select>
@@ -94,5 +97,6 @@ export default function Obras() {
         </tbody>
       </table>
     </section>
+    </>
   )
 }

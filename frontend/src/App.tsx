@@ -47,10 +47,12 @@ export default function App() {
             <span>Provincia de Misiones</span>
           </div>
           <nav>
-            <NavLink to="/tablero">Tablero</NavLink>
-            <NavLink to="/objetivos">Objetivos</NavLink>
-            <NavLink to="/metas">Metas</NavLink>
-            <NavLink to="/obras">Obras</NavLink>
+            <div className="segmentos">
+              <NavLink to="/tablero">Tablero</NavLink>
+              <NavLink to="/objetivos">Objetivos</NavLink>
+              <NavLink to="/metas">Metas</NavLink>
+              <NavLink to="/obras">Obras</NavLink>
+            </div>
           </nav>
           <div className="usuario">
             <span>{yo.nombre || yo.usuario}<small>{yo.global ? 'Vista provincial' : yo.organismo}</small></span>

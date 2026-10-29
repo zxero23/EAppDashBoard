@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { api, query, type Fila, type Indicador, type Item, type Meta, type Obra, type Tablero } from '../api'
 import { useSesion } from '../App'
-import { Avance, Chip, color, fecha, Leyenda, Mapa, PanelIndicadores } from '../componentes'
+import { Avance, Chip, color, fecha, Mapa, PanelIndicadores } from '../componentes'
 
 type Seleccion = { tipo: 'metas' | 'obras'; organismo: Fila | null; situacion: Item | null }
 
@@ -63,24 +63,48 @@ export default function TableroPagina() {
 
   const titulo = sel && [sel.tipo === 'metas' ? 'Metas' : 'Obras', sel.situacion?.leyenda.toLowerCase(), sel.organismo && '· ' + sel.organismo.leyenda].filter(Boolean).join(' ')
 
+  const totalMetas = (id: number) => tablero.ministerios.reduce((s, f) => s + (f.conteos[id] ?? 0), 0)
+  const totalObras = (id: number) => tablero.entes.reduce((s, f) => s + (f.conteos[id] ?? 0), 0)
+
   return (
+    <>
+    <h1 className="titulo-pagina">Tablero</h1>
+    <p className="subtitulo">Estado de las metas de cada ministerio y de las obras en ejecución.</p>
+
+    {/* Resumen provincial: también funciona como leyenda del semáforo. Click = todas las metas en esa situación. */}
+    <div className="resumen">
+      {cat.semaforo.map(s => (
+        <div key={s.id} className="clic" role="button" tabIndex={0}
+             onClick={() => setSel({ tipo: 'metas', organismo: null, situacion: s })}
+             onKeyDown={e => e.key === 'Enter' && setSel({ tipo: 'metas', organismo: null, situacion: s })}>
+          <span><i className={'punto ' + color(cat, s.id)} />{s.leyenda.charAt(0) + s.leyenda.slice(1).toLowerCase()}</span>
+          <strong>{totalMetas(s.id)}</strong>
+          <small>metas · {totalObras(s.id)} obras</small>
+        </div>
+      ))}
+    </div>
+
     <div className="tablero">
       <div className="columna">
-        <Leyenda cat={cat} />
         {tabla('Metas por ministerio', 'metas', tablero.ministerios, 'metas')}
         {tabla('Obras por ente ejecutor', 'obras', tablero.entes, 'obras')}
         <button className="ancho" onClick={() => setSel({ tipo: 'obras', organismo: null, situacion: null })}>Ver todas las obras en el mapa</button>
       </div>
 
       <div className="detalle">
-        {!sel && <section className="tarjeta vacia">Elegí un número del semáforo para ver sus metas u obras.</section>}
+        {!sel && (
+          <section className="tarjeta vacia">
+            <strong>Elegí qué querés ver</strong>
+            Tocá un número del semáforo o una tarjeta del resumen para ver sus metas u obras.
+          </section>
+        )}
 
         {sel?.tipo === 'metas' && meta && (
           <section className="tarjeta" ref={panel}>
             <div className="barra-titulo">
               <h2>{meta.leyenda}<small className="tenue bloque">{meta.organismo} · {meta.objetivo}</small></h2>
               <Chip cat={cat} id={meta.situacionId} texto={meta.situacion} />
-              <button className="secundario" onClick={() => setMeta(null)} aria-label="Cerrar indicadores">✕</button>
+              <button className="secundario circular" onClick={() => setMeta(null)} aria-label="Cerrar indicadores">✕</button>
             </div>
             <PanelIndicadores key={meta.id} meta={meta} indicadores={indicadores} />
           </section>
@@ -126,5 +150,6 @@ export default function TableroPagina() {
         )}
       </div>
     </div>
+    </>
   )
 }

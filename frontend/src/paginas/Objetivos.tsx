@@ -34,9 +34,12 @@ export default function Objetivos() {
   }
 
   return (
+    <>
+    <h1 className="titulo-pagina">Objetivos</h1>
+    <p className="subtitulo">Lo que cada organismo se propone lograr. Cada objetivo agrupa metas medibles.</p>
     <section className="tarjeta">
       <div className="barra-titulo">
-        <h2>Objetivos</h2>
+        <h2 className="tenue">{lista.length} objetivos</h2>
         {yo.global && <select value={organismo} onChange={e => setOrganismo(e.target.value)}><Opciones items={cat.organismos} vacio="Todos los organismos" /></select>}
         {puede('nuevoObjetivos') && <button onClick={nuevo}>Nuevo objetivo</button>}
       </div>
@@ -71,5 +74,6 @@ export default function Objetivos() {
         </tbody>
       </table>
     </section>
+    </>
   )
 }
