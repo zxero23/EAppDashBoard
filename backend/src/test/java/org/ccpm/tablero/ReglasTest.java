@@ -15,12 +15,17 @@ import static org.junit.jupiter.api.Assertions.*;
 class ReglasTest {
 
     @Test
-    void avance() {
-        assertEquals(84.0, Indicador.avance(List.of(40.0, 95.0, 210.0), 250, false));
-        // reduccion: de 12% a 8% con meta 7% -> se bajo 4 de 5
-        assertEquals(80.0, Indicador.avance(List.of(12.0, 11.0, 8.0), 7, true));
-        assertEquals(0.0, Indicador.avance(List.of(10.0, 14.0), 7, true));
+    void metaEsPorcentajeSobreElPrimerValor() {
+        // aumentar 50% desde 100 -> meta 150; con 120 se logro 20 de 50
+        assertEquals(150.0, Indicador.valorMeta(List.of(100.0, 110.0, 120.0), 50, false));
+        assertEquals(40.0, Indicador.avance(List.of(100.0, 110.0, 120.0), 50, false));
+        // reducir 25% desde 12 -> meta 9; llegar a 9 es 100%
+        assertEquals(9.0, Indicador.valorMeta(List.of(12.0, 11.0, 9.0), 25, true));
+        assertEquals(100.0, Indicador.avance(List.of(12.0, 11.0, 9.0), 25, true));
+        // empeoro en vez de reducir -> 0, nunca negativo
+        assertEquals(0.0, Indicador.avance(List.of(10.0, 14.0), 30, true));
         assertNull(Indicador.avance(List.of(), 10, false));
+        assertNull(Indicador.avance(List.of(5.0), 0, false));
     }
 
     @Test

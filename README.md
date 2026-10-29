@@ -55,8 +55,10 @@ DB_PASSWORD=... java -jar target/tablero-backend-2.0.0-SNAPSHOT.jar
 ## Diferencias con la v1
 
 - Los ids de situación del semáforo (7, 8, 10, 11) están en un solo lugar: `backend/.../modelo/Semaforo.java`.
-- "Avance" es un % real: último valor del indicador sobre la meta (o, en metas de reducción, cuánto se bajó
-  respecto de lo que había que bajar). La v1 mostraba la cantidad de la meta como si fuera un porcentaje.
+- Igual que en la v1, la cantidad de una meta es un **% de variación respecto del primer valor del indicador**
+  ("reducir 20" = bajar un 20% desde la línea de base). Lo nuevo es el **avance**: qué parte de ese cambio ya se
+  logró con el último valor, más un panel con último valor, valor meta, variación contra el período anterior y
+  cuánto falta. En el gráfico, las barras de los períodos que ya cumplen la meta se pintan de verde.
 - El mapa usa OpenStreetMap: no hace falta API key de Google.
 
 ## Pendiente respecto de la v1

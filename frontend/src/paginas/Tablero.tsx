@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { api, query, type Fila, type Indicador, type Item, type Meta, type Obra, type Tablero } from '../api'
 import { useSesion } from '../App'
-import { Avance, Chip, color, fecha, Grafico, Leyenda, Mapa } from '../componentes'
+import { Avance, Chip, color, fecha, Leyenda, Mapa, PanelIndicadores } from '../componentes'
 
 type Seleccion = { tipo: 'metas' | 'obras'; organismo: Fila | null; situacion: Item | null }
 
@@ -13,6 +13,7 @@ export default function TableroPagina() {
   const [obras, setObras] = useState<Obra[]>([])
   const [meta, setMeta] = useState<Meta | null>(null)
   const [indicadores, setIndicadores] = useState<Indicador[]>([])
+  const panel = useRef<HTMLElement>(null)
 
   useEffect(() => { api<Tablero>('/tablero').then(setTablero) }, [])
 
@@ -27,6 +28,7 @@ export default function TableroPagina() {
   useEffect(() => {
     setIndicadores([])
     if (meta) api<Indicador[]>(`/metas/${meta.id}/indicadores`).then(setIndicadores)
+    panel.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }, [meta])
 
   if (!tablero) return <p className="cargando">Cargando tablero…</p>
@@ -73,25 +75,34 @@ export default function TableroPagina() {
       <div className="detalle">
         {!sel && <section className="tarjeta vacia">Elegí un número del semáforo para ver sus metas u obras.</section>}
 
+        {sel?.tipo === 'metas' && meta && (
+          <section className="tarjeta" ref={panel}>
+            <div className="barra-titulo">
+              <h2>{meta.leyenda}<small className="tenue bloque">{meta.organismo} · {meta.objetivo}</small></h2>
+              <Chip cat={cat} id={meta.situacionId} texto={meta.situacion} />
+              <button className="secundario" onClick={() => setMeta(null)} aria-label="Cerrar indicadores">✕</button>
+            </div>
+            <PanelIndicadores key={meta.id} meta={meta} indicadores={indicadores} />
+          </section>
+        )}
+
         {sel?.tipo === 'metas' && (
           <section className="tarjeta">
-            <h2>{titulo}</h2>
+            <h2>{titulo} <small className="tenue">({metas.length}) · hacé click en una meta para ver su indicador</small></h2>
             <table>
-              <thead><tr><th>Objetivo</th><th>Meta</th><th>Situación</th><th>Plazo</th><th>Avance</th><th /></tr></thead>
+              <thead><tr><th>Objetivo</th><th>Meta</th><th>Situación</th><th>Plazo</th><th>Avance</th></tr></thead>
               <tbody>
                 {metas.map(m => (
-                  <tr key={m.id} className={meta?.id === m.id ? 'activa' : ''}>
+                  <tr key={m.id} className={'clic ' + (meta?.id === m.id ? 'activa' : '')} onClick={() => setMeta(m)}>
                     <td>{m.objetivo}</td>
-                    <td>{m.leyenda}</td>
+                    <td>{m.leyenda}{m.indicadores === 0 && <small className="tenue bloque">sin indicador</small>}</td>
                     <td><Chip cat={cat} id={m.situacionId} texto={m.situacion} /></td>
                     <td className="nowrap">{fecha(m.fechaInicio)} – {fecha(m.fechaFinal)}</td>
                     <td><Avance valor={m.avance} /></td>
-                    <td><button className="enlace" disabled={m.indicadores === 0} onClick={() => setMeta(m)}>Indicadores ({m.indicadores})</button></td>
                   </tr>
                 ))}
               </tbody>
             </table>
-            {meta && indicadores.map(i => <Grafico key={i.id} indicador={i} meta={meta} />)}
           </section>
         )}
 

@@ -18,7 +18,11 @@ export type Meta = {
   avance: number | null; indicadores: number
 }
 export type Punto = { periodo: string; valor: number | null }
-export type Indicador = { id: number; leyenda: string; descripcion: string | null; variable: string; puntos: Punto[] }
+/** valorMeta: valor a alcanzar (primer periodo ± cantidad% de la meta). */
+export type Indicador = {
+  id: number; leyenda: string; descripcion: string | null; variable: string; puntos: Punto[]
+  valorMeta: number | null; avance: number | null
+}
 export type Actividad = { id: number; leyenda: string; cantidad: number }
 export type Obra = {
   id: number; leyenda: string; latitud: number | null; longitud: number | null

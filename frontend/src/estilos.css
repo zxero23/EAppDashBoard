@@ -110,6 +110,28 @@ table.semaforo td:not(:first-child), table.semaforo th:not(:first-child) { text-
 .grafico { margin: 1rem 0 0; }
 .grafico figcaption { display: flex; flex-direction: column; margin-bottom: .4rem; }
 .grafico figcaption span { color: var(--tenue); font-size: .85rem; }
+.pie-grafico { display: flex; align-items: center; gap: .9rem; flex-wrap: wrap; font-size: .82rem; color: var(--tenue); margin-top: .25rem; }
+.pie-grafico span { display: inline-flex; align-items: center; gap: .35rem; }
+.flex { flex: 1; }
+.linea-meta { display: inline-block; width: 1.4rem; border-top: 2px dashed var(--verde); }
+
+/* Indicadores: pestañas + resumen */
+.pestanas { display: flex; gap: .25rem; border-bottom: 1px solid var(--borde); margin-bottom: .9rem; overflow-x: auto; }
+.pestanas button { background: none; color: var(--tenue); border-radius: 6px 6px 0 0; border-bottom: 2px solid transparent; white-space: nowrap; }
+.pestanas button:hover:not(:disabled) { background: #f1f5f9; }
+.pestanas button.activa { color: var(--primario); border-bottom-color: var(--primario); font-weight: 600; }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: .6rem; }
+.kpis > div { background: #f6f9fb; border: 1px solid var(--borde); border-radius: 8px; padding: .6rem .75rem; display: flex; flex-direction: column; gap: .15rem; min-width: 0; }
+.kpis span:first-child { color: var(--tenue); font-size: .75rem; text-transform: uppercase; letter-spacing: .03em; }
+.kpis strong { font-size: 1.35rem; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.kpis small { color: var(--tenue); }
+.kpis .sube { color: var(--verde); }
+.kpis .baja { color: var(--rojo); }
+.barra.ancha { width: 100%; margin-top: .3rem; }
+.barra span.ok { background: var(--verde); }
+table.datos { margin-top: .5rem; max-width: 520px; }
+table.datos td:not(:first-child), table.datos th:not(:first-child) { text-align: right; font-variant-numeric: tabular-nums; }
+tr.clic { cursor: pointer; }
 
 .mapa { border-radius: 8px; margin-bottom: .75rem; z-index: 0; }
 

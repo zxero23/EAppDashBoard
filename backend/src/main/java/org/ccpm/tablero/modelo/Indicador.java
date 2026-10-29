@@ -64,21 +64,22 @@ public class Indicador {
     }
 
     /**
-     * % de cumplimiento con el ultimo valor. Aumento: ultimo/meta. Reduccion: cuanto se bajo desde el
-     * primer valor respecto de lo que habia que bajar. Nunca negativo; puede pasar de 100.
+     * Valor a alcanzar. Como en la v1, la "cantidad" de la meta es un % de variacion respecto del primer
+     * valor del indicador: aumentar/reducir un X% desde la linea de base.
      */
-    public static Double avance(List<Double> valores, Integer meta, boolean reduccion) {
-        if (valores.isEmpty() || meta == null) return null;
-        double ultimo = valores.get(valores.size() - 1);
-        double pct;
-        if (!reduccion) {
-            if (meta == 0) return null;
-            pct = ultimo / meta * 100;
-        } else {
-            double base = valores.get(0);
-            if (base <= meta) return ultimo <= meta ? 100.0 : 0.0;
-            pct = (base - ultimo) / (base - meta) * 100;
-        }
+    public static Double valorMeta(List<Double> valores, Integer porcentaje, boolean reduccion) {
+        if (valores.isEmpty() || porcentaje == null) return null;
+        double base = valores.get(0);
+        return base * (1 + (reduccion ? -porcentaje : porcentaje) / 100.0);
+    }
+
+    /** % del cambio buscado que ya se logro con el ultimo valor. Nunca negativo; puede pasar de 100. */
+    public static Double avance(List<Double> valores, Integer porcentaje, boolean reduccion) {
+        Double meta = valorMeta(valores, porcentaje, reduccion);
+        if (meta == null) return null;
+        double base = valores.get(0), ultimo = valores.get(valores.size() - 1);
+        if (meta == base) return null;
+        double pct = (ultimo - base) / (meta - base) * 100;
         return Math.max(0, Math.round(pct * 10) / 10.0);
     }
 

@@ -54,9 +54,14 @@ public class MetaController {
                         boolean reduccion, @NotNull LocalDate fechaInicio, @NotNull LocalDate fechaFinal,
                         @NotNull Long objetivoId, @NotNull Long situacionId) {}
 
-    public record IndicadorDto(Long id, String leyenda, String descripcion, String variable, List<Indicador.Punto> puntos) {
+    /** valorMeta: valor a alcanzar segun la linea de base (primer periodo) y el % de la meta. */
+    public record IndicadorDto(Long id, String leyenda, String descripcion, String variable, List<Indicador.Punto> puntos,
+                               Double valorMeta, Double avance) {
         static IndicadorDto de(Indicador i) {
-            return new IndicadorDto(i.id, i.leyenda, i.descripcion, i.variable(), i.puntos());
+            List<Double> v = i.valores();
+            return new IndicadorDto(i.id, i.leyenda, i.descripcion, i.variable(), i.puntos(),
+                    Indicador.valorMeta(v, i.meta.cantidad, i.meta.esReduccion()),
+                    Indicador.avance(v, i.meta.cantidad, i.meta.esReduccion()));
         }
     }
 

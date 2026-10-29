@@ -11,8 +11,9 @@ public class Meta {
     public Long id;
     public String leyenda;
     public String descripcion;
+    /** % de variacion buscado respecto del primer valor del indicador (como en la v1), no un valor absoluto. */
     public Integer cantidad;
-    /** true: la meta es bajar hasta "cantidad" (ej. desercion); false o null (metas viejas): llegar a "cantidad". */
+    /** true: reducir un "cantidad"%; false o null (metas viejas): aumentar un "cantidad"%. */
     public Boolean reduccion;
     public LocalDateTime fechaInicio;
     public LocalDateTime fechaFinal;

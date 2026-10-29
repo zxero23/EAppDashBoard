@@ -1,7 +1,7 @@
 import { useEffect, useState, type FormEvent } from 'react'
 import { api, query, type Actividad, type Indicador, type Meta, type Objetivo } from '../api'
 import { useSesion } from '../App'
-import { Avance, Aviso, Chip, fecha, Grafico, intentar, Opciones } from '../componentes'
+import { Avance, Aviso, Chip, fecha, intentar, Opciones, PanelIndicadores } from '../componentes'
 
 type Form = {
   id?: number; leyenda: string; descripcion: string; cantidad: string; reduccion: boolean
@@ -61,9 +61,10 @@ export default function Metas() {
             <label className="ancho">Objetivo<select value={form.objetivoId} onChange={e => setForm({ ...form, objetivoId: e.target.value })} required>
               <option value="" />{objetivos.map(o => <option key={o.id} value={o.id}>{o.organismo} · {o.leyenda}</option>)}</select></label>
             <label className="ancho">Meta<input value={form.leyenda} onChange={e => setForm({ ...form, leyenda: e.target.value })} required /></label>
-            <label>Cantidad objetivo<input type="number" min={0} value={form.cantidad} onChange={e => setForm({ ...form, cantidad: e.target.value })} required /></label>
-            <label>Tipo<select value={form.reduccion ? '1' : '0'} onChange={e => setForm({ ...form, reduccion: e.target.value === '1' })}>
-              <option value="0">Alcanzar la cantidad</option><option value="1">Reducir hasta la cantidad</option></select></label>
+            <label>Sentido<select value={form.reduccion ? '1' : '0'} onChange={e => setForm({ ...form, reduccion: e.target.value === '1' })}>
+              <option value="0">Aumentar</option><option value="1">Reducir</option></select></label>
+            <label>Variación buscada (%)<input type="number" min={0} value={form.cantidad} onChange={e => setForm({ ...form, cantidad: e.target.value })} required
+                                               title="Respecto del primer período del indicador" /></label>
             <label>Inicio<input type="date" value={form.fechaInicio} onChange={e => setForm({ ...form, fechaInicio: e.target.value })} required /></label>
             <label>Fin<input type="date" value={form.fechaFinal} onChange={e => setForm({ ...form, fechaFinal: e.target.value })} required /></label>
             <label>Situación<select value={form.situacionId} onChange={e => setForm({ ...form, situacionId: e.target.value })} required><Opciones items={cat.situaciones} vacio="" /></select></label>
@@ -78,7 +79,7 @@ export default function Metas() {
             {lista.map(m => (
               <tr key={m.id} className={meta?.id === m.id ? 'activa' : ''}>
                 <td>{m.organismo}</td><td>{m.objetivo}</td>
-                <td>{m.leyenda}<small className="tenue bloque">{m.reduccion ? 'Reducir a' : 'Alcanzar'} {m.cantidad.toLocaleString('es-AR')}</small></td>
+                <td>{m.leyenda}<small className="tenue bloque">{m.reduccion ? 'Reducir' : 'Aumentar'} {m.cantidad.toLocaleString('es-AR')}% respecto del primer período</small></td>
                 <td><Chip cat={cat} id={m.situacionId} texto={m.situacion} /></td>
                 <td className="nowrap">{fecha(m.fechaInicio)} – {fecha(m.fechaFinal)}</td>
                 <td><Avance valor={m.avance} /></td>
@@ -177,16 +178,10 @@ function DetalleMeta({ meta, alCambiar }: { meta: Meta; alCambiar: () => void })
         </form>
       )}
 
-      {indicadores.length === 0 && <p className="tenue">La meta no tiene indicadores: sin indicador no se puede calcular el avance.</p>}
-      {indicadores.map(i => (
-        <div key={i.id}>
-          <Grafico indicador={i} meta={meta} />
-          <div className="acciones derecha">
-            {puede('editarIndicador') && <button className="enlace" onClick={() => editar(i)}>Editar indicador</button>}
-            {puede('borrarIndicador') && <button className="enlace peligro" onClick={() => borrar(i)}>Borrar indicador</button>}
-          </div>
-        </div>
-      ))}
+      <PanelIndicadores meta={meta} indicadores={indicadores} acciones={i => <>
+        {puede('editarIndicador') && <button className="enlace" onClick={() => editar(i)}>Editar indicador</button>}
+        {puede('borrarIndicador') && <button className="enlace peligro" onClick={() => borrar(i)}>Borrar indicador</button>}
+      </>} />
 
       <h3>Actividades</h3>
       <ul className="actividades">
