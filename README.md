@@ -17,7 +17,21 @@ versiones pueden convivir sobre la misma base durante la migración.
 
 ## Desarrollo
 
-Requisitos: JDK 21+, Maven 3.6.3+, Node 20+ y PostgreSQL con la base `tableroDB`.
+Requisitos: JDK 21+, Maven 3.6.3+, Node 20+ y PostgreSQL 16+ con la base `tableroDB`.
+
+### Base de datos de prueba
+
+`database/tableroDB-anonimizado.dump` es un backup de la base real con los datos de gestión intactos (organismos,
+objetivos, metas, indicadores, obras, localidades, menús y permisos) y **los datos personales reemplazados**:
+los usuarios pasan a llamarse `usuarioN` con nombre y email ficticios, y las fotos/adjuntos de obras se vaciaron.
+Todos los usuarios tienen la clave `demo`; `demo` ve toda la provincia y el resto conserva su organismo y grupo.
+
+```bash
+createdb -U postgres tableroDB
+pg_restore -U postgres --no-owner -d tableroDB database/tableroDB-anonimizado.dump
+```
+
+### Correr
 
 ```bash
 # backend en http://localhost:8080
